@@ -3,9 +3,10 @@
    ========================================================================== */
 
 body {
-    background: url(
+    /*background: url(
         data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQImWMQFxf/D8MMDAz/GZA54uLiEAEYB8pGcMTFxf8DAHXwEy2HBXOBAAAAAElFTkSuQmCC
-    ) repeat;
+    ) repeat;*/
+    background-color: #fff;
 }
 
 .maincont {
@@ -56,3 +57,71 @@ body {
 #dtable tbody tr:nth-of-type(even) {
     background-color: #e2e2e2;
 }
+
+#wrapper {
+    padding-left: 150px;
+    transition: all 0.4s ease 0s;
+}
+
+#sidebar-wrapper {
+    margin-left: -150px;
+    left: 150px;
+    width: 150px;
+    background: #fff;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: all 0.4s ease 0s;
+    border: 1px solid #000;
+}
+
+#page-content-wrapper {
+    width: 100%;
+}
+
+/* SIDEBAR TESTING */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 150px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width:797px) {
+
+    #wrapper {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        left: 0;
+    }
+
+    #wrapper.active {
+        position: relative;
+        left: 150px;
+    }
+
+    #wrapper.active #sidebar-wrapper {
+        left: 150px;
+        width: 150px;
+        transition: all 0.4s ease 0s;
+    }
+
+}
+
+#sidebar-wrapper li {
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#sidebar-wrapper li:hover {
+    background-color: #0063DC;
+}
+

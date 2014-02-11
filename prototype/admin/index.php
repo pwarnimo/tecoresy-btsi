@@ -64,30 +64,41 @@
             </div>
         </div>
 
-        <!--<div class="container maincont">
-            <?php
-                /*$page = filter_input(INPUT_GET, "page");
 
-                if ($page != false) {
-                    if (in_array($page, $whitelist)) {
-                        include("inc/pages/" . $page . ".inc.php");
-                    }
-                    else {
-                        include "inc/pages/error.inc.php";
-                    }
-                }
-                else {
-                    include "inc/pages/home.inc.php";
-                }*/
-            ?>
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li><a href="#">New Terrain</a></li>
+                    <li><a href="#">Delete Terrains</a></li>
+                    <li><a href="#">Refresh</a></li>
+                </ul>
+            </div>
+            <div id="page-content-wrapper">
+                <div class="page-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php
+                                    $page = filter_input(INPUT_GET, "page");
 
-            <hr>
-
-            <footer>
-                <p>Copyright &copy; 2014 Warnimont Pol</p>
-            </footer>
+                                    if ($page != false) {
+                                        if (in_array($page, $whitelist)) {
+                                            include("inc/pages/" . $page . ".inc.php");
+                                        }
+                                        else {
+                                            include "inc/pages/error.inc.php";
+                                        }
+                                    }
+                                    else {
+                                        include "inc/pages/home.inc.php";
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /container -->
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
