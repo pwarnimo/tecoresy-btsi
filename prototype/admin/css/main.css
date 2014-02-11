@@ -1,22 +1,15 @@
-
-
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
+body {
+    background:url(
+        data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAJElEQVQImWMQFxf/D8MMDAz/GZA54uLiEAEYB8pGcMTFxf8DAHXwEy2HBXOBAAAAAElFTkSuQmCC
+    ) repeat;
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.maincont {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    background : #fff;
+}
