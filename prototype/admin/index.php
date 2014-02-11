@@ -64,29 +64,32 @@
             </div>
         </div>
 
-    <div class="container maincont">
-        <?php
-            $page = filter_input(INPUT_GET, "page");
+        <div class="container maincont">
+            <?php
+                $page = filter_input(INPUT_GET, "page");
 
-            if ($page != false) {
-                if (in_array($page, $whitelist)) {
-                    include("inc/pages/" . $page . ".inc.php");
+                if ($page != false) {
+                    if (in_array($page, $whitelist)) {
+                        include("inc/pages/" . $page . ".inc.php");
+                    }
+                    else {
+                        include "inc/pages/error.inc.php";
+                    }
                 }
                 else {
-                    include "inc/pages/error.inc.php";
+                    include "inc/pages/home.inc.php";
                 }
-            }
-            else {
-                include "inc/pages/home.inc.php";
-            }
-        ?>
+            ?>
 
-        <hr>
+            <hr>
 
-        <footer>
-            <p>Copyright &copy; 2014 Warnimont Pol</p>
-        </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+            <footer>
+                <p>Copyright &copy; 2014 Warnimont Pol</p>
+            </footer>
+        </div>
+        <!-- /container -->
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
