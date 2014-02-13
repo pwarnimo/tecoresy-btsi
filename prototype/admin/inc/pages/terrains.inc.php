@@ -11,7 +11,7 @@ echo <<< PAGE
                 <th style="width: 32px;"><input type="checkbox"></th>
                 <th>Terrain No°</th>
                 <th>Description</th>
-                <th>Available</th>
+                <th>Libre</th>
                 <th colspan="2"></th>
             </tr>
         </thead>
@@ -21,7 +21,7 @@ echo <<< PAGE
                 <td><input type="checkbox"></td>
                 <td style="width: 100px;">01</td>
                 <td>Lorem ipsum</td>
-                <td style="width: 60px;" class="yes">Yes</td>
+                <td style="width: 60px;" class="yes">Oui</td>
                 <td style="width: 20px;"><span class="glyphicon glyphicon-pencil"></span></td>
                 <td style="width: 20px;"><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
@@ -29,7 +29,7 @@ echo <<< PAGE
                 <td><input type="checkbox"></td>
                 <td>02</td>
                 <td>Lorem ipsum</td>
-                <td class="yes">Yes</td>
+                <td class="yes">Oui</td>
                 <td><span class="glyphicon glyphicon-pencil"></span></td>
                 <td><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
@@ -37,7 +37,7 @@ echo <<< PAGE
                 <td><input type="checkbox"></td>
                 <td>03</td>
                 <td>Lorem ipsum</td>
-                <td class="no">No</td>
+                <td class="no">Non</td>
                 <td><span class="glyphicon glyphicon-pencil"></span></td>
                 <td><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
@@ -45,7 +45,7 @@ echo <<< PAGE
                 <td><input type="checkbox"></td>
                 <td>04</td>
                 <td>Lorem ipsum</td>
-                <td class="yes">Yes</td>
+                <td class="yes">Oui</td>
                 <td><span class="glyphicon glyphicon-pencil"></span></td>
                 <td><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
@@ -53,7 +53,7 @@ echo <<< PAGE
                 <td><input type="checkbox"></td>
                 <td>05</td>
                 <td>Lorem ipsum</td>
-                <td class="yes">Yes</td>
+                <td class="yes">Oui</td>
                 <td><span class="glyphicon glyphicon-pencil"></span></td>
                 <td><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
@@ -61,7 +61,7 @@ echo <<< PAGE
                 <td><input type="checkbox"></td>
                 <td>06</td>
                 <td>Lorem ipsum</td>
-                <td class="yes">Yes</td>
+                <td class="yes">Oui</td>
                 <td><span class="glyphicon glyphicon-pencil"></span></td>
                 <td><span class="glyphicon glyphicon-trash"></span></td>
             </tr>
@@ -69,7 +69,7 @@ echo <<< PAGE
                 <td><input type="checkbox"></td>
                 <td>07</td>
                 <td>Lorem ipsum</td>
-                <td class="yes">Yes</td>
+                <td class="yes">Oui</td>
                 <td><span class="glyphicon glyphicon-pencil"></span></td>
                 <td><span class="glyphicon glyphicon-trash"></span></td>
             </tr>

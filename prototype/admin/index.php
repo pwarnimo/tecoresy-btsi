@@ -46,48 +46,61 @@
                     <a class="navbar-brand" href="index.php">TECORESY</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> Administration <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="index.php?page=terrains">Terrains</a></li>
-                                <li><a href="index.php?page=reservations">Reservations</a></li>
-                                <li><a href="index.php?page=invoices">Invoices</a></li>
-                                <li><a href="index.php?page=users">Users</a></li>
-                                <li class="divider"></li>
-                                <li><a href="index.php?page=settings">TECORESY Settings</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <!--<ul class="nav navbar-nav">
+                        <li class="active"><a href="index.php"><span class="glyphicon glyphicon-refresh"></span> Actualiser</a></li>
+
+                    </ul>-->
+                    <button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>
+                    <button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</button>
+                    <button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-pencil"></span> Modifier</button>
+                    <button type="button" class="btn btn-danger navbar-btn navbar-right"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
                 </div><!--/.navbar-collapse -->
             </div>
         </div>
 
-        <div class="container maincont">
-            <?php
-                $page = filter_input(INPUT_GET, "page");
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="norm"><a href="index.php"><span class="glyphicon glyphicon-home"></span> Page d'acceuil</a></li>
+                    <li></li>
+                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-tags"></span> Terrains</a></li>
+                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-book"></span> Reservations</a></li>
+                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-credit-card"></span> Factures</a></li>
+                    <li class="norm linkact"><a href="#"><span class="glyphicon glyphicon-user"></span> Utilisateurs</a></li>
+                    <li></li>
+                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                </ul>
+            </div>
+            <div id="page-content-wrapper">
+                <div class="page-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?php
+                                    $page = filter_input(INPUT_GET, "page");
 
-                if ($page != false) {
-                    if (in_array($page, $whitelist)) {
-                        include("inc/pages/" . $page . ".inc.php");
-                    }
-                    else {
-                        include "inc/pages/error.inc.php";
-                    }
-                }
-                else {
-                    include "inc/pages/home.inc.php";
-                }
-            ?>
-
-            <hr>
-
-            <footer>
-                <p>Copyright &copy; 2014 Warnimont Pol</p>
-            </footer>
+                                    if ($page != false) {
+                                        if (in_array($page, $whitelist)) {
+                                            include("inc/pages/" . $page . ".inc.php");
+                                        }
+                                        else {
+                                            include("inc/pages/error.inc.php");
+                                        }
+                                    }
+                                    else {
+                                        include("inc/pages/home.inc.php");
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /container -->
+
+        <footer id="colophon">
+            <p>Tennis Court Reservation System Admin Panel <strong>PROTOTYPE</strong>, Copyright &copy; 2014 Warnimont Pol</p>
+        </footer>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
