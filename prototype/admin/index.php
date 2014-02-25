@@ -38,13 +38,20 @@ if (isset($usernm) && isset($password)) {
         if (hash_hmac("sha512", $password, $saltFromDB) === $hashFromDB) {
             echo "<pre>SETTING SESSION . . .</pre>";
 
-            include "inc/classes/user.class.php";
+            include "inc/classes/User.class.php";
 
             $user = new User();
 
-            foreach ($user->getUserDataArray($usernm) as $v => $k) {
-                echo $v . " -> " . $k;
+            session_start();
+
+            $_SESSION = $user->getUserDataArray($usernm);
+            $_SESSION["login"] = true;
+
+            echo "<pre>";
+            foreach ($_SESSION as $k => $v) {
+                echo $k . " -> " . $v . "<br>";
             }
+            echo "</pre>";
 
             echo "<pre>OK --> <a href=\"main.php\">PROCEED</a></pre>";
         }

@@ -1,9 +1,15 @@
 <?php
+    session_start();
+
     include "inc/whitelists/whitelist.inc.php";
+    include "inc/dbconfig.inc.php";
 
     function __autoload($class_name) {
         require_once "inc/classes/" . $class_name . ".class.php";
     }
+
+    $user = new User();
+    $user->checkLogin();
 ?>
 
 <!DOCTYPE html>

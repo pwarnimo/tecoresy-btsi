@@ -17,22 +17,23 @@ class User {
     }
 
     public function getUserDataArray($username) {
-        $qry = "SELECT dtUsername, dtFirstname, dtLastname, dtEmail, dtAbo, dtType FROM tblUser WHERE dtUsername = :username";
+        $qry = "SELECT dtUsername, dtFirstname, dtLastname, dtEmail, fiAbo, fiType FROM tblUser WHERE dtUsername = :username";
 
         try {
             $stmt = $this->dbh->prepare($qry);
 
             $stmt->bindValue(":username", $username, PDO::PARAM_STR);
+            $stmt->execute();
 
             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             $userdata = array(
-                username  => $res[0]["dtUsername"],
-                firstname => $res[0]["dtFirstname"],
-                lastname  => $res[0]["dtLastname"],
-                email     => $res[0]["dtEmail"],
-                abo       => $res[0]["dtAbo"],
-                type      => $res[0]["dtType"]
+                "uname" => $res[0]["dtUsername"],
+                "fname" => $res[0]["dtFirstname"],
+                "lname" => $res[0]["dtLastname"],
+                "email" => $res[0]["dtEmail"],
+                "abo"   => $res[0]["fiAbo"],
+                "type"  => $res[0]["fiType"]
             );
 
             return $userdata;
@@ -76,6 +77,17 @@ class User {
         catch(PDOException $e) {
             echo "PDO has encountered an error: " + $e->getMessage();
             die();
+        }
+    }
+
+    public function checkLogin() {
+        if (isset($_SESSION["login"])) {
+            if ($_SESSION["login"] === false) {
+                header("Location: index.php");
+            }
+        }
+        else {
+            header("Location: index.php");
         }
     }
 }
