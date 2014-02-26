@@ -16,14 +16,26 @@ class UserMgr {
         }
     }
 
-    public function getUsersFromDB() {
-        $qry = "SELECT dtUsername, dtFirstname, dtLastname, dtEmail, fiType, fiAbo FROM tblUser";
+    public function getUsersFromDB($convertFI) {
+        $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiType, fiAbo, dtBirthdate FROM tblUser";
 
         try {
             $stmt = $this->dbh->prepare($qry);
 
             if ($stmt->execute()) {
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if ($convertFI === true) {
+                    $tmpuser = new User();
+
+                    //$res["fiAbo"] = $tmpuser->TypeAboToDescription($res["fiAbo"]);
+                    //$res["fiType"] = $tmpuser->TypeIDToDescription($res["fiType"]);
+
+                    return $res;
+                }
+                else {
+                    return $res;
+                }
             }
             else {
                 return false;
