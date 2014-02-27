@@ -34,8 +34,12 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/jquery.dataTables.css">
+        <link rel="stylesheet" href="js/vendor/jquery-ui-1.10.4/themes/base/jquery-ui.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -56,10 +60,10 @@
                         <li class="active"><a href="index.php"><span class="glyphicon glyphicon-refresh"></span> Actualiser</a></li>
 
                     </ul>-->
-                    <button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>
-                    <button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</button>
-                    <button type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-pencil"></span> Modifier</button>
-                    <button type="button" class="btn btn-danger navbar-btn navbar-right"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
+                    <button id="btnRefresh "type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>
+                    <button id="btnAdd" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</button>
+                    <button id="btnEdit" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-pencil"></span> Modifier</button>
+                    <button id="btnDelete" type="button" class="btn btn-danger navbar-btn navbar-right"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
                 </div><!--/.navbar-collapse -->
             </div>
         </div>
@@ -108,11 +112,9 @@
             <p>Tennis Court Reservation System Admin Panel <strong>PROTOTYPE</strong>, Copyright &copy; 2014 Warnimont Pol</p>
         </footer>
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
-
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/jquery.dataTables.min.js"></script>
+        <script src="js/vendor/jquery-ui-1.10.4/ui/jquery-ui.js"></script>
 
         <script src="js/main.js"></script>
 

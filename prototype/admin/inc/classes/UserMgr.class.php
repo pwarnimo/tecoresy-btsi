@@ -17,7 +17,7 @@ class UserMgr {
     }
 
     public function getUsersFromDB($convertFI) {
-        $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiType, fiAbo, dtBirthdate FROM tblUser";
+        $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiType, fiAbo, dtBirthdate, dtLicence, dtState FROM tblUser";
 
         try {
             $stmt = $this->dbh->prepare($qry);
@@ -36,6 +36,25 @@ class UserMgr {
                 else {
                     return $res;
                 }
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function getUserTypesFromDB() {
+        $qry = "SELECT * FROM tblTypeUser";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             else {
                 return false;
