@@ -52,9 +52,14 @@ class User {
 
             $stmt->bindValue(":tid", $tID, PDO::PARAM_INT);
 
-            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($stmt->execute()) {
+                $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $res[0]["dtDescription"];
+                return $res[0]["dtDescription"];
+            }
+            else {
+                return false;
+            }
         }
         catch(PDOException $e) {
             echo "PDO has encountered an error: " + $e->getMessage();
@@ -70,9 +75,14 @@ class User {
 
             $stmt->bindValue(":tid", $tID, PDO::PARAM_INT);
 
-            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($stmt->execute()) {
+                $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            return $res[0]["dtDescription"];
+                return $res[0]["dtDescription"];
+            }
+            else {
+                return false;
+            }
         }
         catch(PDOException $e) {
             echo "PDO has encountered an error: " + $e->getMessage();

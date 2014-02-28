@@ -1,12 +1,22 @@
 $(document).ready(function() {
     $("#dlgAddUser").dialog({
         resizable: false,
-        height: 500,
-        width: 350,
+        height: 585,
+        width: 640,
         modal: true,
         buttons: {
             Add: function() {
-                $( this ).dialog( "close" );
+                var user = {
+                    "username"  : $("#edtUsername").val(),
+                    "password"  : $("#edtPassword").val(),
+                    "email"     : $("#edtEmail").val(),
+                    "firstname" : $("#edtFirstname").val(),
+                    "lastname"  : $("#edtLastname").val(),
+                    "type"      : $("#cmbType").val(),
+                    "license"   : $("#edtLicense").val()
+                }
+
+                console.log(user);
             },
             Cancel: function() {
                 $( this ).dialog( "close" );

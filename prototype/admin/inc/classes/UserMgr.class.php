@@ -65,4 +65,27 @@ class UserMgr {
             die();
         }
     }
+
+    public function getAbosFromDB() {
+        $qry = "SELECT * FROM tblAbo";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function addUserToDB($userdata) {
+
+    }
 }

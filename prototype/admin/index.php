@@ -21,7 +21,7 @@ if (isset($usernm) && isset($password)) {
     try {
         $dbh = new PDO($dsn, username, password);
 
-        $qry = "SELECT dtSalt, dtPassword FROM tblUser WHERE dtUsername = :username";
+        $qry = "SELECT dtSalt, dtHash FROM tblUser WHERE dtUsername = :username";
 
         $stmt = $dbh->prepare($qry);
 
@@ -31,7 +31,7 @@ if (isset($usernm) && isset($password)) {
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $saltFromDB = $res[0]["dtSalt"];
-        $hashFromDB = $res[0]["dtPassword"];
+        $hashFromDB = $res[0]["dtHash"];
 
         echo "<pre>-- LOCAL  " . hash_hmac("sha512", $password, $saltFromDB) . "<br>-- REMOTE " . $hashFromDB . "</pre>";
 
