@@ -71,14 +71,14 @@
         <div id="wrapper">
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
-                    <li class="norm"><a href="main.php"><span class="glyphicon glyphicon-home"></span> Page d'acceuil</a></li>
+                    <li id="main" class="norm"><a href="main.php"><span class="glyphicon glyphicon-home"></span> Page d'acceuil</a></li>
                     <li></li>
-                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-tags"></span> Terrains</a></li>
-                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-book"></span> Reservations</a></li>
-                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-credit-card"></span> Factures</a></li>
-                    <li class="norm linkact"><a href="#"><span class="glyphicon glyphicon-user"></span> Utilisateurs</a></li>
+                    <li id="terrains" class="norm"><a href="main.php?page=terrains"><span class="glyphicon glyphicon-tags"></span> Terrains</a></li>
+                    <li id="reservations" class="norm"><a href="main.php?page=reservations"><span class="glyphicon glyphicon-book"></span> Reservations</a></li>
+                    <li id="invoices" class="norm"><a href="main.php?page=invoices"><span class="glyphicon glyphicon-credit-card"></span> Factures</a></li>
+                    <li id="users" class="norm"><a href="main.php?page=users"><span class="glyphicon glyphicon-user"></span> Utilisateurs</a></li>
                     <li></li>
-                    <li class="norm"><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                    <li id="settings" class="norm"><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
                 </ul>
             </div>
             <div id="page-content-wrapper">

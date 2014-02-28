@@ -142,4 +142,10 @@ echo <<< PAGE
     </ul>
 
     <script src="js/dialogs/dlgAddUser.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".sidebar-nav li").removeClass("linkact");
+            $("#users").addClass("linkact");
+        });
+    </script>
 PAGE;

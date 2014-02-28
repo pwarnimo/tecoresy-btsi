@@ -1,78 +1,55 @@
 <?php
 
+$terrainMgr = new TerrainMgr();
+
 echo <<< PAGE
     <div class="page-header">
         <h1>Terrains <small>TECORESY Admin</small></h1>
     </div>
 
-    <table id="dtable">
+    <table class="table striped">
         <thead>
             <tr>
-                <th style="width: 32px;"><input type="checkbox"></th>
-                <th>Terrain No°</th>
-                <th>Description</th>
-                <th>Libre</th>
-                <th colspan="2"></th>
+                <th><input type="checkbox"></th>
+                <th>Terrain N°</th>
+                <th>Joueurs (1 Semaine)</th>
+                <th>Disponible</th>
+                <th colspan="3"></th>
             </tr>
         </thead>
 
         <tbody>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td style="width: 100px;">01</td>
-                <td>Lorem ipsum</td>
-                <td style="width: 60px;" class="yes">Oui</td>
-                <td style="width: 20px;"><span class="glyphicon glyphicon-pencil"></span></td>
-                <td style="width: 20px;"><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>02</td>
-                <td>Lorem ipsum</td>
-                <td class="yes">Oui</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>03</td>
-                <td>Lorem ipsum</td>
-                <td class="no">Non</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>04</td>
-                <td>Lorem ipsum</td>
-                <td class="yes">Oui</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>05</td>
-                <td>Lorem ipsum</td>
-                <td class="yes">Oui</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>06</td>
-                <td>Lorem ipsum</td>
-                <td class="yes">Oui</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>07</td>
-                <td>Lorem ipsum</td>
-                <td class="yes">Oui</td>
-                <td><span class="glyphicon glyphicon-pencil"></span></td>
-                <td><span class="glyphicon glyphicon-trash"></span></td>
-            </tr>
+PAGE;
+
+$terrains = $terrainMgr->getTerrainsFromDB();
+
+foreach ($terrains as $terrain) {
+    if ($terrain["dtState"] == true) {
+        $state = "<p class=\"bg-success\">Disponible</p>";
+        echo "<tr>";
+    }
+    else {
+        $state = "<p class=\"bg-danger\">Non disponible</p>";
+        echo "<tr class=\"danger\">";
+    }
+
+    echo "<td><input type=\"checkbox\" value=\"" . $terrain["idTerrain"] . "\"></td>
+        <td><img width=\"150px\" alt=\"tennis\" src=\"images/tennis-court.png\"><p>Terrain N°" . $terrain["idTerrain"] . "</p></td>
+        <td>Pas de joueurs.</td>
+        <td>" . $state . "</td>
+        <td width=\"32\"><span class=\"glyphicon glyphicon-ok-circle\"></span></td>
+        <td width=\"32\"><span class=\"glyphicon glyphicon-pencil\"></span></td>
+        <td width=\"32\"><span class=\"glyphicon glyphicon-trash\"></span></td></tr>";
+}
+
+echo <<< PAGE
         </tbody>
     </table>
+
+    <script>
+        $(document).ready(function() {
+            $(".sidebar-nav li").removeClass("linkact");
+            $("#terrains").addClass("linkact");
+        });
+    </script>
 PAGE;
