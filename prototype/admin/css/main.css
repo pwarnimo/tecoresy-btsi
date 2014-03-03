@@ -162,3 +162,7 @@ table tbody tr:hover {
 .linkact {
     background-image: url("../images/nav-arr-blu.png");
 }
+
+table tbody td,tr {
+    text-align: center;
+}
