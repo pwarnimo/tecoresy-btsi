@@ -19,4 +19,17 @@ switch ($action) {
         echo $userMgr->getUsersFromDB(false, true);
 
         break;
+
+    case "deleteUsers" :
+        $userMgr = new UserMgr();
+        echo $userMgr->deleteUserFromDB(filter_input(INPUT_POST, "uid"));
+
+        break;
+
+    case "changeUserState" :
+        $userMgr = new UserMgr();
+        echo $userMgr->setUserState(filter_input(INPUT_POST, "uid"), filter_input(INPUT_POST, "state"));
+        //echo filter_input(INPUT_POST, "uid") . "  " . filter_input(INPUT_POST, "state");
+
+        break;
 }

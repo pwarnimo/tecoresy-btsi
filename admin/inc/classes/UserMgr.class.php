@@ -44,7 +44,13 @@ class UserMgr {
                         $row["checkbox"] = "<input type=\"checkbox\" id=\"C" . $row["idUser"] . "\">";
                         $row["funcedit"] = "<span id=\"E" . $row["idUser"] . "\" class=\"glyphicon glyphicon-pencil edit\"></span>";
                         $row["funcdel"] = "<span id=\"D" . $row["idUser"] . "\" class=\"glyphicon glyphicon-trash delete\"></span>";
-                        $row["funcstate"] = "<span id=\"S" . $row["idUser"] . "\" class=\"glyphicon glyphicon-ok-circle state\"></span>";
+
+                        if ($row["dtState"] == 1) {
+                            $row["funcstate"] = "<span title=\"Cliquez ici pour deactiver l'utilisateur.\" style=\"color: #0a0;\" id=\"A" . $row["idUser"] . "\" class=\"glyphicon glyphicon-ok-circle state\"></span>";
+                        }
+                        else {
+                            $row["funcstate"] = "<span title=\"Cliquez ici pour activer l'utilisateur.\" style=\"color: #a00;\" id=\"D" . $row["idUser"] . "\" class=\"glyphicon glyphicon-ban-circle state\"></span>";
+                        }
 
                         array_push($arrWithOptions, $row);
                     }
@@ -147,13 +153,13 @@ class UserMgr {
         }
     }
 
-    public function deleteUserFromDB($username) {
-        $qry = "DELETE FROM tblUser WHERE dtUsername = :username";
+    public function deleteUserFromDB($id) {
+        $qry = "DELETE FROM tblUser WHERE idUser = :id";
 
         try {
             $stmt = $this->dbh->prepare($qry);
 
-            $stmt->bindValue(":username", $username);
+            $stmt->bindValue(":id", $id);
 
             if ($stmt->execute()) {
                 return true;
@@ -172,20 +178,22 @@ class UserMgr {
 
     }
 
-    public function setUserState($username, $state) {
-        $qry = "UPDATE tblUser SET dtState = :state WHERE dtUsername = :username";
+    public function setUserState($id, $state) {
+        $qry = "UPDATE tblUser SET dtState = :state WHERE idUser = :id";
 
         try {
             $stmt = $this->dbh->prepare($qry);
 
-            $stmt->bindValue(":state", $state);
-            $stmt->bindValue(":username", $username);
+            $stmt->bindValue(":state", (int)$state);
+            $stmt->bindValue(":id", $id);
 
             if ($stmt->execute()) {
-                return true;
+                //return true;
+                return "T" . $state . " for " . $id;
             }
             else {
-                return false;
+                //return false;
+                return "F" . $state . " for " . $id;
             }
         }
         catch(PDOException $e) {

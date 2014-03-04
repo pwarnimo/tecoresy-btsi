@@ -3,6 +3,14 @@
 $userMgr = new UserMgr();
 
 echo <<< PAGE
+    <div id="dlgChangeState" title="Activer/Deactiver l'utilisateur?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Voulez-vous vraiment changer le statut de cet utilisateur?</p>
+    </div>
+
+    <div id="dlgDelete" title="Supprimer l'utilisateur?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Voulez-vous vraiment supprimer cet utilisateur?</p>
+    </div>
+
     <div id="dlgAddUser" title="Nouveau compte d'utilisateur">
         <form role="form" id="frmAddUser">
             <div class="row">

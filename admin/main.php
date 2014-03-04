@@ -60,7 +60,8 @@
                         <li class="active"><a href="index.php"><span class="glyphicon glyphicon-refresh"></span> Actualiser</a></li>
 
                     </ul>-->
-                    <button id="btnRefresh "type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>
+                    <!--<button id="btnRefr "type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>-->
+                    <button id="btnRefresh" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>
                     <button id="btnAdd" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</button>
                     <button id="btnEdit" type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-pencil"></span> Modifier</button>
                     <button id="btnDelete" type="button" class="btn btn-danger navbar-btn navbar-right"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
