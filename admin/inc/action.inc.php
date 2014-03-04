@@ -13,4 +13,10 @@ switch ($action) {
         echo $userMgr->addUserToDB(filter_input(INPUT_POST, "json"));
 
         break;
+
+    case "getUsers" :
+        $userMgr = new UserMgr();
+        echo $userMgr->getUsersFromDB(false, true);
+
+        break;
 }

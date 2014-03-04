@@ -76,7 +76,47 @@ echo <<< PAGE
         <h1>Utilisateurs <small>TECORESY Admin</small></h1>
     </div>
 
-    <table class="table striped">
+    <table id="dataUsers">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="checkAll"></th>
+                <th>Nom d'utilisateur</th>
+                <th>E-Mail</th>
+                <th>Nom</th>
+                <th>Pr&eacute;nom</th>
+                <th>Type</td>
+                <th>Date de naissance</th>
+                <th>Licence</th>
+                <th>Active</th>
+                <th>ACT</th>
+                <th>EDT</th>
+                <th>DEL</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+PAGE;
+
+    /*
+     *
+     * "aoColumns": [
+            {"sTitle": "<input type=\"checkbox\" id=\"checkall\">"},
+            {"sTitle": "Nom d'utilisateur"},
+            {"sTitle": "E-Mail"},
+            {"sTitle": "Nom"},
+            {"sTitle": "Pr&eacute;nom"},
+            {"sTitle": "Type"},
+            {"sTitle": "Date de naissance"},
+            {"sTitle": "Licence"},
+            {"sTitle": "Active"},
+            {"sTitle": "ACT"},
+            {"sTitle": "EDT"},
+            {"sTitle": "DEL"}
+        ]
+     *
+     *
+     * <table class="table striped">
         <thead>
             <tr>
                 <th><input type="checkbox"></th>
@@ -129,17 +169,8 @@ foreach ($userMgr->getUsersFromDB(true) as $userrow) {
 
 echo <<< PAGE
         </tbody>
-    </table>
-
-    <ul class="pagination pagination-sm">
-        <li><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">...</a></li>
-        <li><a href="#">14</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-    </ul>
+    </table>*/
+echo <<< PAGE
 
     <script src="js/dialogs/dlgAddUser.js"></script>
     <script>
