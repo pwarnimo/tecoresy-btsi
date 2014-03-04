@@ -6,17 +6,37 @@ $(document).ready(function() {
         modal: true,
         buttons: {
             Add: function() {
-                var user = {
-                    "username"  : $("#edtUsername").val(),
-                    "password"  : $("#edtPassword").val(),
-                    "email"     : $("#edtEmail").val(),
-                    "firstname" : $("#edtFirstname").val(),
-                    "lastname"  : $("#edtLastname").val(),
-                    "type"      : $("#cmbType").val(),
-                    "license"   : $("#edtLicense").val()
-                }
+                var userJson = "{\"username\":\"" + $("#edtUsername").val() + "\"," +
+                    "\"password\":\"" + $("#edtPassword").val()  + "\"," +
+                    "\"email\":\"" + $("#edtEmail").val() + "\"," +
+                    "\"firstname\":\"" + $("#edtFirstname").val() + "\"," +
+                    "\"lastname\":\"" + $("#edtLastname").val() + "\"," +
+                    "\"type\":\"" + $("#cmbType").val() + "\"," +
+                    "\"license\":\"" + $("#edtLicense").val() + "\"," +
+                    "\"birthdate\":\"" + $("#dtpBirthdate").val() + "\"," +
+                    "\"address\":\"" + $("#edtAddress").val() + "\"," +
+                    "\"postalcode\":\"" + $("#edtPostalCode").val() + "\"," +
+                    "\"location\":\"" + $("#edtLocality").val() + "\"," +
+                    "\"country\":\"" + $("#edtCountry").val() + "\"}";
 
-                console.log(user);
+                console.log(userJson);
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/action.inc.php?action=addUser",
+                    data       : {
+                        json : userJson
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        console.log("OK!");
+                        console.log("Returned data: " + data);
+                    }
+                });
             },
             Cancel: function() {
                 $( this ).dialog( "close" );

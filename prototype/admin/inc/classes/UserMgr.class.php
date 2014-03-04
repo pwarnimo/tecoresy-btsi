@@ -85,7 +85,67 @@ class UserMgr {
         }
     }
 
-    public function addUserToDB($userdata) {
+    public function addUserToDB($userJson) {
+        $user = json_decode($userJson, true);
 
+        $usercred = $this->getHashAndSalt($user["password"]);
+
+        unset($user["password"]);
+
+        $user["state"] = 0;
+        $user["abo"] = 1;
+        $user["hash"] = $usercred["hash"];
+        $user["salt"] = $usercred["salt"];
+
+        /*$debugStr = "";
+        foreach ($user as $key => $property) {
+            $debugStr .= $key . " -> " . $property . "\n";
+        }
+
+        return $debugStr;*/
+
+        $qry = "INSERT INTO tblUser (dtUsername, dtHash, dtFirstname, dtLastname, dtEmail, fiAbo, fiType, dtSalt,
+            dtLicence, dtBirthdate, dtState, dtStreet, dtLocation, dtPostalCode, dtCountry) VALUES (:username, :hash,
+            :firstname, :lastname, :email, :abo, :type, :salt, :license, :birthdate, :state, :address, :location,
+            :postalcode, :country)";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            foreach ($user as $key => $property) {
+                $stmt->bindValue(":" . $key, $property);
+            }
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function deleteUserFromDB($username) {
+
+    }
+
+    public function editUserInDB($username) {
+
+    }
+
+    public function getHashAndSalt($password) {
+        $salt = uniqid(mt_rand(), true);
+        $hash = hash_hmac("sha512", $password, $salt);
+
+        $arr_return = array(
+            "salt" => $salt,
+            "hash" => $hash
+        );
+
+        return $arr_return;
     }
 }

@@ -30,8 +30,8 @@ echo "</select>";
 echo <<< PAGE
                     </div>
                     <div class="form-group">
-                        <label for="edtLicence">License</label>
-                        <input type="text" class="form-control" id="edtLicence" placeholder="Votre nom license ici...">
+                        <label for="edtLicense">License</label>
+                        <input type="text" class="form-control" id="edtLicense" placeholder="Votre nom license ici...">
                     </div>
                     <div class="form-group">
                         <label for="edtPostalCode">Code postale</label>
