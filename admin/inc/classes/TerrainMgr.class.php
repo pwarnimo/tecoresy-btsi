@@ -129,6 +129,28 @@ class TerrainMgr {
             }
         }
         catch(PDOException $e) {
+            return "PDO FAIL";
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function deleteTerrainFromDB($id) {
+        $qry = "DELETE FROM tblTerrain WHERE idTerrain = :id";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":id", $id);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
             echo "PDO has encountered an error: " + $e->getMessage();
             die();
         }

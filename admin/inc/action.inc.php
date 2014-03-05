@@ -43,4 +43,16 @@ switch ($action) {
         echo $terrainMgr->getTerrainsFromDB(true, true);
 
         break;
+
+    case "changeTerrainState" :
+        $terrainMgr = new TerrainMgr();
+        echo $terrainMgr->changeTerrainState(filter_input(INPUT_POST, "tid"), filter_input(INPUT_POST, "state"));
+
+        break;
+
+    case "deleteTerrains" :
+        $terrainMgr = new TerrainMgr();
+        echo $terrainMgr->deleteTerrainFromDB(filter_input(INPUT_POST, "tid"));
+
+        break;
 }

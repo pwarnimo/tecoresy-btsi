@@ -3,6 +3,14 @@
 $terrainMgr = new TerrainMgr();
 
 echo <<< PAGE
+    <div id="dlgChangeState" title="Activer/Deactiver le terrain?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Voulez-vous vraiment changer le statut du terrain?</p>
+    </div>
+
+    <div id="dlgDeleteTerrain" title="Supprimer le terrain?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Voulez-vous vraiment supprimer cet terrain?</p>
+    </div>
+
     <div id="dlgAddTerrain" title="Nouveau terrain...">
         <form role="form" id="frmAddTerrain">
             <div class="form-group">

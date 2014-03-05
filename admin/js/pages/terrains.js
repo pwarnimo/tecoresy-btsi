@@ -7,6 +7,8 @@ $(document).ready(function() {
     $("#terrains").addClass("linkact");
 
     $("#dlgAddTerrain").hide();
+    $("#dlgChangeState").hide();
+    $("#dlgDeleteTerrain").hide();
 
     $("#dlgAddTerrain").dialog({
         resizable: false,
@@ -115,7 +117,95 @@ function populateTerrainDataTable() {
             $("#dataTerrains tbody").html(thtml);
 
             //return data;
-            oTable = $("#dataTerrains").dataTable({});
+            oTable = $("#dataTerrains").dataTable({
+                "oLanguage": {
+                    "sLengthMenu": "Afficher _MENU_ terrains par page",
+                    "sZeroRecords": "Rien trouvé!",
+                    "sInfo": "Page _START_ de _END_ et _TOTAL_ terrain(s) en totale",
+                    "sInfoEmpty": "Le tableau est vide",
+                    "sInfoFiltered": "(filtrée à partir de _MAX_ terrains au total)",
+                    "sSearch": "Chercher: ",
+                    "oPaginate": {
+                        "sNext": "Suivant",
+                        "sPrevious": "Précédent"
+                    }
+                }
+            });
+
+            $(".state").click(function() {
+                var currentState = $(this).attr("id")[0];
+                var tid = $(this).attr("id").substring(1);
+
+                console.log("CSTATE = " + currentState);
+
+                if (currentState == "A") {
+                    console.log("TID" + tid + " is activated...");
+                    var newState = "0";
+                }
+                else {
+                    console.log("TID" + tid + " is deactivated...");
+                    var newState = "1";
+                }
+
+                $("#dlgChangeState").dialog({
+                    resizable: false,
+                    height:200,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        Change: function() {
+                            console.log("Changing TID" + Tid + " to " + newState);
+                            changeTerrainState(tid, newState);
+
+                            $(this).dialog("close");
+                        },
+                        Annuler: function() {
+                            $(this).dialog("close");
+                        }
+                    },
+                    //autoOpen: false,
+                    show: {
+                        effect: "blind",
+                        duration: 200
+                    },
+                    hide: {
+                        effect: "blind",
+                        duration: 200
+                    }
+                });
+            });
+
+            $(".delete").click(function() {
+                var tid = $(this).attr("id").substring(1);
+
+                console.log("Deleting terrain with ID = " + tid);
+
+                $("#dlgDeleteTerrain").dialog({
+                    resizable: false,
+                    height:200,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        Supprimer: function() {
+                            deleteTerrain(tid);
+
+                            $(this).dialog("close");
+                        },
+                        Annuler: function() {
+                            $(this).dialog("close");
+                        }
+                    },
+                    //autoOpen: false,
+                    show: {
+                        effect: "blind",
+                        duration: 200
+                    },
+                    hide: {
+                        effect: "blind",
+                        duration: 200
+                    }
+                });
+            });
         }
     });
 }
@@ -125,4 +215,43 @@ function refreshTable() {
     oTable.fnDestroy();
     //oTable.find("tbody").empty();
     populateTerrainDataTable();
+}
+
+function changeTerrainState(tid, state) {
+    $.ajax({
+        type    : "POST",
+        url     : "inc/action.inc.php?action=changeTerrainState",
+        data    : {
+            tid   : tid,
+            state : state
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+            console.log("AJAX>" + data);
+
+            refreshTable();
+        }
+    });
+};
+
+function deleteTerrain(tid) {
+    $.ajax({
+        type       : "POST",
+        url        : "inc/action.inc.php?action=deleteTerrains",
+        data       : {
+            tid : tid
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+            refreshTable();
+        }
+    });
 }
