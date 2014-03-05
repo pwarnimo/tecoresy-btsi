@@ -17,6 +17,8 @@ class UserMgr {
     }
 
     public function getUsersFromDB($convertFI, $enableOptions) {
+        $returnArr = array();
+
         $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiType, fiAbo, dtBirthdate, dtLicence, dtState FROM tblUser";
 
         try {
@@ -25,23 +27,33 @@ class UserMgr {
             if ($stmt->execute()) {
                 $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                /*if ($convertFI === true) {
+                if ($convertFI === true) {
                     $tmpuser = new User();
 
                     //$res["fiAbo"] = $tmpuser->TypeAboToDescription($res["fiAbo"]);
                     //$res["fiType"] = $tmpuser->TypeIDToDescription($res["fiType"]);
 
-                    return json_encode($res);
+                    //return json_encode($res);
+
+                    foreach ($res as $row) {
+                        $row["fiType"] = $tmpuser->TypeIDToDescription($row["fiType"]);
+                        $row["fiAbo"] = $tmpuser->TypeAboToDescription($row["fiAbo"]);
+
+                        array_push($returnArr, $row);
+                    }
                 }
-                else {
-                    return json_encode($res);
+                /*else {
+                    //return json_encode($res);
                 }*/
 
                 if ($enableOptions === true) {
-                    $arrWithOptions = array();
+                    //$arrWithOptions = array();
 
-                    foreach ($res as $row) {
-                        $row["checkbox"] = "<input type=\"checkbox\" id=\"C" . $row["idUser"] . "\">";
+                    $tmpArr = $returnArr;
+                    $returnArr = array();
+
+                    foreach ($tmpArr as $row) {
+                        $row["checkbox"] = "<input class=\"ckbRow\" type=\"checkbox\" id=\"C" . $row["idUser"] . "\">";
                         $row["funcedit"] = "<span id=\"E" . $row["idUser"] . "\" class=\"glyphicon glyphicon-pencil edit\"></span>";
                         $row["funcdel"] = "<span id=\"D" . $row["idUser"] . "\" class=\"glyphicon glyphicon-trash delete\"></span>";
 
@@ -52,10 +64,17 @@ class UserMgr {
                             $row["funcstate"] = "<span title=\"Cliquez ici pour activer l'utilisateur.\" style=\"color: #a00;\" id=\"D" . $row["idUser"] . "\" class=\"glyphicon glyphicon-ban-circle state\"></span>";
                         }
 
-                        array_push($arrWithOptions, $row);
+                        if ($row["dtState"] == 1) {
+                            $row["dtState"] = "Oui";
+                        }
+                        else {
+                            $row["dtState"] = "Non";
+                        }
+
+                        array_push($returnArr, $row);
                     }
 
-                    return json_encode($arrWithOptions);
+                    return json_encode($returnArr);
                 }
                 else {
                     return json_encode($res);

@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="2170-WEBSRV">
+  <component name="PublishConfigData" autoUpload="Always" serverName="T61 LOCAL">
     <serverData>
-      <paths name="2170-WEBSRV">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="EX10-SERV-1">
+      <paths name="T61 LOCAL">
         <serverdata>
           <mappings>
             <mapping deploy="/" local="$PROJECT_DIR$" web="/" />

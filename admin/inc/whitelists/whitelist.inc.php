@@ -4,5 +4,8 @@ $whitelist = array(
     "home",
     "terrains",
     "users",
-    "error"
+    "error",
+    "settings",
+    "reservations",
+    "invoices"
 );

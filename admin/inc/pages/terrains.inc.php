@@ -3,11 +3,47 @@
 $terrainMgr = new TerrainMgr();
 
 echo <<< PAGE
+    <div id="dlgAddTerrain" title="Nouveau terrain...">
+        <form role="form" id="frmAddTerrain">
+            <div class="form-group">
+                <label for="edtTerrainNo">Numèro du terrain</label>
+                <input type="text" class="form-control" id="edtTerrainNo" placeholder="Numéro du terrain">
+            </div>
+            <div class="form-group">
+                <label for="edtDescription">Description</label>
+                <textarea class="form-control" rows="3" id="edtDescription" placeholder="Description du terrain"></textarea>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input id="ckbState" type="checkbox"> Disponible
+                </label>
+            </div>
+        </form>
+    </div>
+
     <div class="page-header">
         <h1>Terrains <small>TECORESY Admin</small></h1>
     </div>
 
-    <table class="table striped">
+    <table id="dataTerrains" width="100%">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="checkAll"></th>
+                <th>Terrain N°</th>
+                <th>Liste de joueurs (1 semaine)</th>
+                <th>Disponible</th>
+                <th>ACT</th>
+                <th>EDT</th>
+                <th>DEL</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+PAGE;
+
+/*    <table class="table striped">
         <thead>
             <tr>
                 <th width="16px"><input type="checkbox"></th>
@@ -44,12 +80,7 @@ foreach ($terrains as $terrain) {
 
 echo <<< PAGE
         </tbody>
-    </table>
-
-    <script>
-        $(document).ready(function() {
-            $(".sidebar-nav li").removeClass("linkact");
-            $("#terrains").addClass("linkact");
-        });
-    </script>
+    </table>*/
+echo <<< PAGE
+    <script src="js/pages/terrains.js"></script>
 PAGE;

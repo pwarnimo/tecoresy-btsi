@@ -16,7 +16,7 @@ switch ($action) {
 
     case "getUsers" :
         $userMgr = new UserMgr();
-        echo $userMgr->getUsersFromDB(false, true);
+        echo $userMgr->getUsersFromDB(true, true);
 
         break;
 
@@ -29,7 +29,18 @@ switch ($action) {
     case "changeUserState" :
         $userMgr = new UserMgr();
         echo $userMgr->setUserState(filter_input(INPUT_POST, "uid"), filter_input(INPUT_POST, "state"));
-        //echo filter_input(INPUT_POST, "uid") . "  " . filter_input(INPUT_POST, "state");
+
+        break;
+
+    case "addTerrain" :
+        $terrainMgr = new TerrainMgr();
+        echo $terrainMgr->addTerrainToDB(filter_input(INPUT_POST, "json"));
+
+        break;
+
+    case "getTerrains" :
+        $terrainMgr = new TerrainMgr();
+        echo $terrainMgr->getTerrainsFromDB(true, true);
 
         break;
 }

@@ -1,6 +1,10 @@
 var oTable;
 
+console.log("Loaded.");
+
 $(document).ready(function() {
+    console.log("jquery");
+
     $("#dlgAddUser").dialog({
         resizable: false,
         height: 585,
@@ -205,6 +209,11 @@ function populateUserDataTable() {
                 //$("#dlg")
             });
         }
+    });
+
+    $("#checkAll").click(function() {
+        console.log("Check All");
+        $(".ckbRow").prop('checked', $(this).prop('checked'));
     });
 }
 

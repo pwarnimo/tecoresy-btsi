@@ -127,9 +127,9 @@ body {
     margin-top: 50px;
 }
 
-.delete:hover {
+/*.delete:hover {
     background-image: url("../images/nav-arr-red.png");
-}
+}*/
 
 footer {
     z-index: 1000;

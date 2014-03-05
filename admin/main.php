@@ -34,7 +34,9 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/jquery.dataTables.css">
-        <link rel="stylesheet" href="js/vendor/jquery-ui-1.10.4/themes/base/jquery-ui.css">
+        <!--<link rel="stylesheet" href="js/vendor/jquery-ui-1.10.4/themes/base/jquery-ui.css">-->
+        <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.4.custom.min.css">
+        <!--<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.10.4.custom.min.css">-->
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -109,13 +111,14 @@
             </div>
         </div>
 
-        <footer id="colophon">
+        <!--<footer id="colophon">
             <p>Tennis Court Reservation System Admin Panel <strong>PROTOTYPE</strong>, Copyright &copy; 2014 Warnimont Pol</p>
-        </footer>
+        </footer>-->
 
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/jquery.dataTables.min.js"></script>
-        <script src="js/vendor/jquery-ui-1.10.4/ui/jquery-ui.js"></script>
+        <!--<script src="js/vendor/jquery-ui-1.10.4/ui/jquery-ui.js"></script>-->
+        <script src="js/vendor/jquery-ui-1.10.4.custom.min.js"></script>
 
         <script src="js/main.js"></script>
 
