@@ -30,7 +30,7 @@ echo <<< PAGE
     </div>
 
     <div class="page-header">
-        <h1>Terrains <small>TECORESY Admin</small></h1>
+        <h1>Terrains <small>TECORESY Admin // <a href="main.php?page=terrainsv2">View Version 2</a></small></h1>
     </div>
 
     <table id="dataTerrains" width="100%">

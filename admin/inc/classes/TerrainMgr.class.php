@@ -1,5 +1,9 @@
 <?php
 
+/*
+ * @param $n1 INT blbala
+ */
+
 class TerrainMgr {
     private $dbh;
 
@@ -154,5 +158,9 @@ class TerrainMgr {
             echo "PDO has encountered an error: " + $e->getMessage();
             die();
         }
+    }
+
+    public function getPlayersForReservedTerrains($timespan) {
+        $qry = "SELECT dtFirstname, dtLastname, idDateHeure, fiTerrain FROM tblUser, tblReservation WHERE idUser = fiPlayer1 OR idUser = fiPlayer2";
     }
 }

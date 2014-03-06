@@ -166,3 +166,33 @@ table tbody tr:hover {
 table tbody td,tr {
     text-align: center;
 }
+
+table .glyphicon {
+    margin-left: 5px;
+}
+
+/*-------------TESTING-----------*/
+
+.testtable tbody tr td:first-of-type {
+    transform-origin:50% 50%;
+    transform: rotate(90deg);
+}
+
+.testtable tbody td {
+    border : 1px solid #000;
+    font-size: 0.9em;
+}
+
+.testtable thead th {
+    border: 1px solid #000;
+    font-size: 0.9em;
+}
+
+.testtable thead tr {
+    background: linear-gradient(to bottom,  #4f85bb 0%,#4f85bb 100%);
+    color: #fff;
+}
+
+.testtable tbody tr:nth-child(even) {
+    background: #c4c4ff;
+}
