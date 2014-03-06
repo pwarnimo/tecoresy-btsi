@@ -60,9 +60,9 @@ echo <<< PAGE
                         4, rue de l'Ernz<br>
                         L-9391 Reisdorf<br>
                         Luxembourg<br><br>
-                        <abbr title="Téléphone">T:</abbr> (+352) 691 664 293<br>
-                        <abbr title="E-Mail">E:</abbr> pwarnimo@gmail.com<br>
-                        <abbr title="Page de web">H:</abbr> http://dev.warnimont.de
+                        <abbr title="Téléphone"><span class="glyphicon glyphicon glyphicon-earphone"></span>:</abbr> (+352) 691 664 293<br>
+                        <abbr title="E-Mail"><span class="glyphicon glyphicon glyphicon glyphicon-envelope"></span>:</abbr> <a href="mailto:pwarnimo@gmail.com">pwarnimo@gmail.com</a><br>
+                        <abbr title="Page de web"><span class="glyphicon glyphicon glyphicon-globe"></span>:</abbr> <a href="http://dev.warnimont.de">dev.warnimont.de</a>
                     </address>
                 </div>
             </div>
