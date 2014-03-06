@@ -7,4 +7,6 @@ echo "<h1>TECORESY Admin <small>Bienvenue " . $_SESSION["lname"] . " " . $_SESSI
 
 echo <<< PAGE
     </div>
+
+    <script src="js/pages/home.js"></script>
 PAGE;
