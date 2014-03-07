@@ -52,7 +52,26 @@ echo <<< PAGE
                     <h4>TECORESY Admin</h4>
 PAGE;
 
-echo "<p>Panel: v" . $settingsMgr->getSetting("pnlversion") . "<br>Database: v" . $settingsMgr->getSetting("dbversion") . "</p>";
+$data = json_decode(file_get_contents("http://tecoresy.warnimont.de/updates/version.php"), true);
+
+$dbversion = floatval($data["database"]);
+$pnlversion = floatval($data["panel"]);
+
+if ($dbversion > floatval($settingsMgr->getSetting("dbversion"))) {
+    $curdbversion = "<span style=\"color: #a00;\">v" . $settingsMgr->getSetting("dbversion") . " OUTDATED (Current v" . $data["database"] . ")</span>";
+}
+else {
+    $curdbversion = "<span style=\"color: #0a0;\">v" . $settingsMgr->getSetting("dbversion") . " OK</span>";
+}
+
+if ($pnlversion > floatval($settingsMgr->getSetting("pnlversion"))) {
+    $curpnlversion = "<span style=\"color: #a00\"> v" . $settingsMgr->getSetting("pnlversion") . " OUTDATED (Current v" . $data["panel"] . ")</span>";
+}
+else {
+    $curpnlversion = "<span style=\"color: #0a0;\">v" . $settingsMgr->getSetting("pnlversion") . " OK</span>";
+}
+
+echo "<p>Panel: " . $curpnlversion . "<br>Database: " . $curdbversion . "</p>";
 
 echo <<< PAGE
                     <address>
