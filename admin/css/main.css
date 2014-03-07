@@ -153,11 +153,11 @@ footer p {
     background-color: #dfdfdf;
 }
 
-table tbody tr:hover {
+/*table tbody tr:hover {
     background: linear-gradient(to bottom,  #4f85bb 0%,#4f85bb 100%);
     color: #fff;
     cursor: zoom-in;
-}
+}*/
 
 .linkact {
     background-image: url("../images/nav-arr-blu.png");
@@ -173,10 +173,25 @@ table .glyphicon {
 
 /*-------------TESTING-----------*/
 
-.testtable tbody tr td:first-of-type {
+/*.testtable tbody tr td:first-of-type {
     transform-origin:50% 50%;
     transform: rotate(90deg);
+}*/
+
+.testtable tr:hover {
+    background: linear-gradient(to bottom,  #4f85bb 0%,#4f85bb 100%);
+    color: #fff;
 }
+
+.testtable td:hover {
+    background: linear-gradient(to bottom,  #af85bb 0%,#af85bb 100%);
+    color: #fff;
+}
+
+/*.testtable td:hover:after {
+    content: "TEST";
+}*/
+
 
 .testtable tbody td {
     border : 1px solid #000;
@@ -193,6 +208,15 @@ table .glyphicon {
     color: #fff;
 }
 
-.testtable tbody tr:nth-child(even) {
+/*.testtable tbody tr:nth-child(even) {
     background: #c4c4ff;
+}*/
+
+.day {
+    transform-origin:50% 50%;
+    transform: rotate(90deg);
+}
+
+.terrainOpts {
+    float: right;
 }

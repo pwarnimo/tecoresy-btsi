@@ -33,7 +33,19 @@ echo <<< PAGE
         <h1>Terrainsv2 <small>TECORESY Admin // <a href="main.php?page=terrains">View Version 1</a></small></h1>
     </div>
 
+    <p>Dynamic version</p>
+
     <table id="dataTerrain" class="testtable" width="100%">
+        <thead>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+
+    <p>Static version</p>
+
+    <table id="dataTerrain2" class="testtable" width="100%">
         <thead>
             <tr>
                 <th colspan="2"></th>

@@ -44,6 +44,12 @@ switch ($action) {
 
         break;
 
+    case "getTerrainsv2" :
+        $terrainMgr = new TerrainMgr();
+        echo $terrainMgr->getTerrainsFromDB(false, false);
+
+        break;
+
     case "changeTerrainState" :
         $terrainMgr = new TerrainMgr();
         echo $terrainMgr->changeTerrainState(filter_input(INPUT_POST, "tid"), filter_input(INPUT_POST, "state"));
