@@ -183,10 +183,10 @@ table .glyphicon {
     color: #fff;
 }
 
-.testtable td:hover {
+/*.testtable td:hover {
     background: linear-gradient(to bottom,  #af85bb 0%,#af85bb 100%);
     color: #fff;
-}
+}*/
 
 /*.testtable td:hover:after {
     content: "TEST";
@@ -219,4 +219,12 @@ table .glyphicon {
 
 .terrainOpts {
     float: right;
+}
+
+.playerControls {
+    float: right;
+}
+
+.playerHighlighted {
+    background-color: #eea236;
 }

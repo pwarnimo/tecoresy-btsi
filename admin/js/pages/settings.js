@@ -10,3 +10,18 @@ $(document).ready(function() {
 
     console.log("PAGE LOADED!");
 });
+
+function checkForUpdates() {
+    $.ajax({
+        type       : "POST",
+        url        : "inc/action.inc.php?action=checkUpdate",
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+
+        }
+    });
+};

@@ -38,4 +38,30 @@ class SettingsMgr {
             die();
         }
     }
+
+    public function checkForDBUpdate() {
+        $data = json_decode(file_get_contents("http://tecoresy.warnimont.de/updates/version.php"), true);
+
+        $remoteVersion = floatval($data["database"]);
+
+        if ($remoteVersion > floatval($this->getSetting("dbversion"))) {
+            return "<span style=\"color: #a00;\">v" . $this->getSetting("dbversion") . " VIEUX! (Actuelle v" . $remoteVersion . ")</span>";
+        }
+        else {
+            return "<span style=\"color: #0a0;\">v" . $this->getSetting("dbversion") . " OK!</span>";
+        }
+    }
+
+    public function checkForPanelUpdate() {
+        $data = json_decode(file_get_contents("http://tecoresy.warnimont.de/updates/version.php"), true);
+
+        $remoteVersion = floatval($data["panel"]);
+
+        if ($remoteVersion > floatval($this->getSetting("pnlversion"))) {
+            return "<span style=\"color: #a00;\">v" . $this->getSetting("pnlversion") . " VIEUX! (Actuelle v" . $remoteVersion . ")</span>";
+        }
+        else {
+            return "<span style=\"color: #0a0;\">v" . $this->getSetting("pnlversion") . " OK!</span>";
+        }
+    }
 }

@@ -8,5 +8,31 @@ $(document).ready(function() {
     $("#btnEdit").attr("disabled", "disabled");
     $("#btnDelete").attr("disabled", "disabled");
 
+    $("#messagebox").hide();
+
+    $("#btnShowMsgBox").click(function() {
+        $("#messagebox").slideToggle("fast", function() {
+            // Animation complete.
+        });
+    });
+
     console.log("PAGE LOADED!");
 });
+
+function postMessage(message) {
+    $.ajax({
+        type       : "POST",
+        url        : "inc/action.inc.php?action=postMessage",
+        data       : {
+            message : message
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+
+        }
+    });
+};

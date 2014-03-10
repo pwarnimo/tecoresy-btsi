@@ -54,50 +54,42 @@ function buildDataTable() {
                     console.log("CALC> " + i % 10);
                     htmlBody += "<td rowspan=\"10\">" + arrDays[i % 9] + "</td><td>" + arrHours[i % 10] + "</td>";
                     for (var j = 0; j <= dataHead.length -1; j++) {
-                        htmlBody += "<td>o</td>";
+                        htmlBody += "<td class=\"players\">o<span class=\"playerControls\"><span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span><span class=\"lyphicon glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon glyphicon-trash\"></span></span></td>";
                     }
                 }
                 else {
                     htmlBody += "<td>" + arrHours[i % 10] + "</td>";
                     for (var j = 0; j <= dataHead.length -1; j++) {
-                        htmlBody += "<td>o</td>";
+                        htmlBody += "<td class=\"players\">o<span class=\"playerControls\"><span class=\"glyphicon glyphicon glyphicon-ok-circle\"></span><span class=\"lyphicon glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon glyphicon-trash\"></span></span></td>";
                     }
                 }
 
                 htmlBody += "</tr>";
             }
 
-            /*for (var i = 0; i <= arrDays.length -1; i++) {
-                htmlBody += "<tr><td><table><td rowspan=\"11\" class=\"day\">" + arrDays[i] + "</td>";
-
-                for (var j = 0; j <= arrHours.length -1; j++) {
-                    htmlBody += "<tr><td>" + arrHours[j] + "</td></tr>"
-                }
-
-
-
-                htmlBody += "</table></td>";
-
-                for (var l = 0; l <= dataHead.length -1; l++) {
-                    htmlBody += "<td><table class=\"nested\">";
-
-                    for (var k = 0; k <= arrHours.length -1; k++) {
-                        htmlBody += "<tr><td>o</td></tr>";
-                    }
-
-                    htmlBody += "</table></td>";
-                }
-
-                htmlBody += "</tr>"
-
-                //htmlBody += "<td>Test</td></tr>"
-            }
-
-            //htmlBody = "";*/
-
             $("#dataTerrain tbody").html(htmlBody);
 
-            //oTable = $("#dataTerrain").dataTable({});
+            $(".playerControls").hide();
+
+            $(".players").hover(function() {
+                $(this).find(".playerControls").show();
+                $(this).addClass("playerHighlighted");
+            },
+            function() {
+                $(this).find(".playerControls").hide();
+                $(this).removeClass("playerHighlighted");
+            });
+
+            $(".terrainOpts").hide();
+
+            $("thead td").hover(function() {
+                $(this).find(".terrainOpts").show();
+                    alert("test");
+            },
+            function() {
+                $(this).find(".terrainOpts").hide();
+                alert("test");
+            });
         }
     });
 }
