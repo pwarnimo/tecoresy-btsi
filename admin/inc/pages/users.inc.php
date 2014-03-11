@@ -86,8 +86,8 @@ echo <<< PAGE
 
     <table id="dataUsers">
         <thead>
-            <tr>
-                <th><input type="checkbox" id="checkAll"></th>
+            <!--<tr>
+                <th width="10px"><input type="checkbox" id="checkAll"></th>
                 <th>Nom d'utilisateur</th>
                 <th>E-Mail</th>
                 <th>Nom</th>
@@ -96,10 +96,10 @@ echo <<< PAGE
                 <th>Date de naissance</th>
                 <th>Licence</th>
                 <th>Active</th>
-                <th>ACT</th>
-                <th>EDT</th>
-                <th>DEL</th>
-            </tr>
+                <th width="10px"></th>
+                <th width="10px"></th>
+                <th width="10px"></th>
+            </tr>-->
         </thead>
         <tbody>
         </tbody>

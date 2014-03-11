@@ -164,7 +164,7 @@ footer p {
 }
 
 table tbody td,tr {
-    text-align: center;
+    /*text-align: center;*/
 }
 
 table .glyphicon {

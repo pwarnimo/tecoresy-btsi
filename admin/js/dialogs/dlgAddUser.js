@@ -112,16 +112,19 @@ function populateUserDataTable() {
             for (var i = 0; i < result.length; i++) {
                 thtml += "<tr><td>" + result[i]["checkbox"] + "</td>" +
                     "<td>" + result[i]["dtUsername"] + "</td>" +
-                    "<td>" + result[i]["dtEmail"] + "</td>" +
+                    //"<td>" + result[i]["dtEmail"] + "</td>" +
                     "<td>" + result[i]["dtLastname"] + "</td>" +
                     "<td>" + result[i]["dtFirstname"] + "</td>" +
-                    "<td>" + result[i]["fiType"] + "</td>" +
+                    //"<td>" + result[i]["fiType"] + "</td>" +
                     "<td>" + result[i]["dtBirthdate"] + "</td>td>" +
                     "<td>" + result[i]["dtLicence"] + "</td>" +
-                    "<td>" + result[i]["dtState"] + "</td>" +
-                    "<td>" + result[i]["funcstate"] + "</td>" +
-                    "<td>" + result[i]["funcedit"] + "</td>" +
-                    "<td>" + result[i]["funcdel"] + "</td></tr>"
+                    //"<td>" + result[i]["dtState"] + "</td>" +
+                    //"<td>" + result[i]["funcstate"] + "</td>" +
+                    //"<td>" + result[i]["funcedit"] + "</td>" +
+                    "<td>" + result[i]["dtStreet"] + " " + result[i]["dtPostalCode"] +"</td>" +
+                    "<td>" + result[i]["dtLocation"] + "</td>" +
+                    "<td>" + result[i]["dtCountry"] + "</td>" +
+                    "<td>" + result[i]["funcstate"] + "&nbsp;" + result[i]["funcedit"] + "&nbsp;" + result[i]["funcdel"] + "</td></tr>"
                 //curRow = result[i];
                 //console.log(i);
                 //console.log(result[i]["checkbox"]);
@@ -130,7 +133,48 @@ function populateUserDataTable() {
             $("#dataUsers tbody").html(thtml);
 
             //return data;
-            oTable = $("#dataUsers").dataTable({});
+            oTable = $("#dataUsers").dataTable({
+                "bAutoWidth": false, // Disable the auto width calculation
+                "aoColumns": [
+                    {
+                        "sTitle" : "<input type=\"checkbox\">",
+                        "sWidth":"10px"
+                    },
+                    {
+                        "sTitle": "Utilistateur"
+                    },
+                    {
+                        "sTitle": "Nom"
+                    },
+                    {
+                        "sTitle": "Prénom"
+                    },
+                    {
+                        "sTitle": "Date de naissance"
+                    },
+                    {
+                        "sTitle": "License"
+                    },
+                    {
+                        "sTitle": "Addresse"
+                    },
+                    {
+                        "sTitle": "Localité"
+                    },
+                    {
+                        "sTitle": "Pays"
+                    },
+                    {
+                        "sWidth":"85px"
+                    }
+                ],
+                "aoColumnDefs": [
+                    {
+                        bSortable: false,
+                        aTargets: [ 0, 1, 2, 6, 7 ]
+                    }
+                ]
+            });
 
             $(".state").click(function() {
                 var currentState = $(this).attr("id")[0];

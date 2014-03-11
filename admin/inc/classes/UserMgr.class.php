@@ -19,7 +19,7 @@ class UserMgr {
     public function getUsersFromDB($convertFI, $enableOptions) {
         $returnArr = array();
 
-        $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiType, fiAbo, dtBirthdate, dtLicence, dtState FROM tblUser";
+        $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiAbo, dtBirthdate, dtLicence, dtState, dtStreet, dtLocation, dtPostalCode, dtCountry FROM tblUser";
 
         try {
             $stmt = $this->dbh->prepare($qry);
@@ -36,7 +36,7 @@ class UserMgr {
                     //return json_encode($res);
 
                     foreach ($res as $row) {
-                        $row["fiType"] = $tmpuser->TypeIDToDescription($row["fiType"]);
+                        //$row["fiType"] = $tmpuser->TypeIDToDescription($row["fiType"]);
                         $row["fiAbo"] = $tmpuser->TypeAboToDescription($row["fiAbo"]);
 
                         array_push($returnArr, $row);
