@@ -6,6 +6,41 @@ var oTable;
     $(".sidebar-nav li").removeClass("linkact");
     $("#invoices").addClass("linkact");
 
+    $("#dlgChangePaymentStatus").hide();
+    $("#factureOverview").hide();
+
+    populateInvoiceDataTable();
+
+    $("#btnRefresh").click(function() {
+        refreshTable();
+    });
+
+    $("#btnReturn").click(function() {
+        $("#factureOverview").fadeOut("fast", function() {
+            $("#tblOverview").fadeIn("fast");
+        });
+    });
+
+    var helpHtml = "<ul><li><span class=\"glyphicon glyphicon-refresh\"></span> Actualiser les données sur les factures.</li>" +
+        "<li><span class=\"glyphicon glyphicon glyphicon-plus-sign\"></span> Ajouter une nouvelle facture.</li>" +
+        "<li><span class=\"glyphicon glyphicon glyphicon-pencil\"></span> Modifier une facture selectioné.</li>" +
+        "<li><span class=\"glyphicon glyphicon glyphicon-trash\"></span> Supprimer une ou plusieures factures. Fonctionne aussi avec \"glisser-déposer\"</li>" +
+        "<li><span class=\"glyphicon glyphicon-euro\"></span> Marquer une facture comme payé / non-payé.</li></ul>" +
+        "<p>Pour plusieurs informations ou questions, veuillez envoyer un E-Mail á <a href=\"mailto:pwarnimo@gmail.com\">pwarnimo@gmail.com</a>.</p>";
+
+    $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
+
+    console.log("PAGE LOADED!");
+});
+
+function refreshTable() {
+    console.log("refreshing...");
+    oTable.fnDestroy();
+    oTable.find("tbody").empty();
+    populateInvoiceDataTable();
+}
+
+function populateInvoiceDataTable() {
     $.ajax({
         type : "POST",
         url : "inc/action.inc.php?action=getInvoices",
@@ -26,15 +61,17 @@ var oTable;
                 if (result[i]["dtPayed"] == true) {
                     var contPayed = "<span style=\"color: #0a0;\" class=\"glyphicon glyphicon glyphicon-euro payed\"></span>";
                     var infPayed = "<span style=\"color: #0a0;\">Oui</span>";
+                    var iid = "PI" + result[i]["idFacture"];
                 }
                 else {
                     var contPayed = "<span style=\"color: #a00;\" class=\"glyphicon glyphicon glyphicon-euro payed\"></span>";
                     var infPayed = "<span style=\"color: #a00;\">Non!</span>";
+                    var iid = "NI" + result[i]["idFacture"];
                 }
 
                 var contGeneral = "<span class=\"glyphicon glyphicon glyphicon-pencil edit\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
 
-                thtml += "<tr id=\"I" + result[i]["idFacture"] + "\"><td><input type=\"checkbox\" id=\"" + result[i]["idFacture"] + "\"></td>" +
+                thtml += "<tr id=\"" + iid + "\"><td><input type=\"checkbox\" id=\"" + result[i]["idFacture"] + "\"></td>" +
                     "<td>" + result[i]["idFacture"] + "</td>" +
                     "<td>" + result[i]["dtCreateTS"] + "</td>" +
                     "<td>" + result[i]["fiDateHeure"] + "</td>" +
@@ -66,10 +103,10 @@ var oTable;
                         "sTitle": "Terrain"
                     },
                     {
-                        "sTitle": "Joueur 1"
+                        "sTitle": "Joueur"
                     },
                     {
-                        "sTitle": "Joueur 2"
+                        "sTitle": "Opposant"
                     },
                     {
                         "sTitle": "Payé"
@@ -98,8 +135,102 @@ var oTable;
                     }
                 }
             });
+
+            $(".payed").click(function() {
+                var iid = $(this).parent().parent().attr("id").substring(2);
+                var currentState = $(this).parent().parent().attr("id")[0];
+
+                if (currentState == "P") {
+                    console.log("IID" + iid + " : Payed");
+                    var newState = "0";
+                }
+                else {
+                    console.log("IID" + iid + " : Not payed");
+                    var newState = "1";
+                }
+
+                $("#dlgChangePaymentStatus").dialog({
+                    resizable: false,
+                    height:200,
+                    width: 350,
+                    modal: true,
+                    buttons: {
+                        Change: function() {
+                            console.log("Setting IID" + iid + " as " + newState);
+
+                            setPaymentStatus(iid, newState);
+
+                            $(this).dialog("close");
+                        },
+                        Annuler: function() {
+                            $(this).dialog("close");
+                        }
+                    },
+                    //autoOpen: false,
+                    show: {
+                        effect: "blind",
+                        duration: 200
+                    },
+                    hide: {
+                        effect: "blind",
+                        duration: 200
+                    }
+                });
+            });
+
+            $("tbody tr").click(function() {
+                console.log("Loading detail view of invoice IID " + $(this).attr("id").substring(2));
+
+                showInvoice($(this).attr("id").substring(2));
+            });
         }
     });
+}
 
-    console.log("PAGE LOADED!");
-});
+function setPaymentStatus(iid, state) {
+    $.ajax({
+        type       : "POST",
+        url        : "inc/action.inc.php?action=changePaymentStatus",
+        data       : {
+            iid   : iid,
+            state : state
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+            console.log("AJAX>" + data);
+
+            refreshTable();
+        }
+    });
+}
+
+function showInvoice(iid) {
+    $("#tblOverview").fadeOut("fast", function() {
+        $("#factureOverview").fadeIn("fast");
+    });
+
+    $.ajax({
+        type       : "POST",
+        url        : "inc/action.inc.php?action=getSingleInvoice",
+        data       : {
+            iid   : iid
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+            console.log("AJAX>" + data);
+
+            result = JSON.parse(data);
+
+            $("#fNoInvoice").html("Facture N°" + result[0]["idFacture"]);
+            $("#fTimestamp").html("Date: " + result[0]["dtCreateTS"]);
+        }
+    });
+}

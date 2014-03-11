@@ -67,4 +67,17 @@ switch ($action) {
         echo $invoiceMgr->getInvoicesFromDB(true);
 
         break;
+
+    case "changePaymentStatus" :
+        $invoiceMgr = new InvoiceMgr();
+        echo $invoiceMgr->changePaymentStatus(filter_input(INPUT_POST, "iid"), filter_input(INPUT_POST, "state"));
+        //echo "STATE = " . filter_input(INPUT_POST, "state") . " ID = " . filter_input(INPUT_POST, "iid");
+
+        break;
+
+    case "getSingleInvoice" :
+        $invoiceMgr = new InvoiceMgr();
+        echo $invoiceMgr->getSingleInvoice(filter_input(INPUT_POST, "iid"), true);
+
+        break;
 }

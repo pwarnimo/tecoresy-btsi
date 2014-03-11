@@ -60,6 +60,7 @@ body {
 #wrapper {
     padding-left: 170px;
     transition: all 0.4s ease 0s;
+    /*margin-top: -10px;*/
 }
 
 #sidebar-wrapper {
@@ -227,4 +228,14 @@ table .glyphicon {
 
 .playerHighlighted {
     background-color: #eea236;
+}
+
+#help-wrapper {
+    /*background-image: linear-gradient(to bottom, #3C3C3C 0px, #222 100%);*/
+    color: #fff;
+    padding-left: 40px;
+}
+
+#help-wrapper ul {
+    list-style-type: none;
 }
