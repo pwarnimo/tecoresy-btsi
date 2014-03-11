@@ -61,4 +61,10 @@ switch ($action) {
         echo $terrainMgr->deleteTerrainFromDB(filter_input(INPUT_POST, "tid"));
 
         break;
+
+    case "getInvoices" :
+        $invoiceMgr = new InvoiceMgr();
+        echo $invoiceMgr->getInvoicesFromDB(true);
+
+        break;
 }
