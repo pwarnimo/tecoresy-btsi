@@ -6,6 +6,34 @@ $(document).ready(function() {
     $(".sidebar-nav li").removeClass("linkact");
     $("#users").addClass("linkact");
 
+    $("#dlgAddUser").hide();
+
+    $("#btnAdd").click(function() {
+        $("#dlgAddUser").dialog({
+            resizable: false,
+            height: 585,
+            width: 640,
+            modal: true,
+            buttons: {
+                Ajouter: function() {
+
+                    $(this).dialog("close");
+                },
+                Annuler: function() {
+                    $(this).dialog("close");
+                }
+            },
+            show: {
+                effect: "blind",
+                duration: 200
+            },
+            hide: {
+                effect: "blind",
+                duration: 200
+            }
+        });
+    });
+
     populateUserTable();
 
     var helpHtml = "<ul><li><span class=\"glyphicon glyphicon-refresh\"></span> Actualiser les données sur les utilisateurs.</li>" +
@@ -13,7 +41,6 @@ $(document).ready(function() {
         "<li><span class=\"glyphicon glyphicon-pencil\"></span> Modifier l'utilisateur selectioné.</li>" +
         "<li><span class=\"glyphicon glyphicon-trash\"></span> Supprimer un ou plusieurs utilisateurs. Fonctionne aussi avec \"glisser-déposer\"</li>" +
         "<li><span class=\"glyphicon glyphicon-ok-circle\"></span>/<span class=\"glyphicon glyphicon-remove-circle\"></span> Activer / Deactiver l'utilisateur.</li></ul>" +
-        "<hr>" +
         "<p>Types d'utlisateurs</p>" +
         "<ul><li><span style=\"color: #f0ad4e;\" class=\"glyphicon glyphicon-user\"></span> Visiteur</li>" +
         "<li><span style=\"color: #5bc0de;\" class=\"glyphicon glyphicon-user\"></span> Parent</li>" +
