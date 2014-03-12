@@ -16,7 +16,7 @@ class UserMgr {
         }
     }
 
-    public function getUsersFromDB($convertFI, $enableOptions) {
+    public function getUsersFromDB($convertFI) {
         $returnArr = array();
 
         $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiAbo, dtBirthdate, dtLicence, dtState, dtStreet, dtLocation, dtPostalCode, dtCountry FROM tblUser";
@@ -27,7 +27,15 @@ class UserMgr {
             if ($stmt->execute()) {
                 $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                if ($convertFI === true) {
+                foreach ($res as $row) {
+                    $usertypes = $this->getUserTypesOfUser($row["idUser"]);
+
+                    $row["usertypes"] = $usertypes;
+
+                    array_push($returnArr, $row);
+                }
+
+                /*if ($convertFI === true) {
                     $tmpuser = new User();
 
                     //$res["fiAbo"] = $tmpuser->TypeAboToDescription($res["fiAbo"]);
@@ -41,44 +49,14 @@ class UserMgr {
 
                         array_push($returnArr, $row);
                     }
-                }
-                /*else {
-                    //return json_encode($res);
-                }*/
-
-                if ($enableOptions === true) {
-                    //$arrWithOptions = array();
-
-                    $tmpArr = $returnArr;
-                    $returnArr = array();
-
-                    foreach ($tmpArr as $row) {
-                        $row["checkbox"] = "<input class=\"ckbRow\" type=\"checkbox\" id=\"C" . $row["idUser"] . "\">";
-                        $row["funcedit"] = "<span id=\"E" . $row["idUser"] . "\" class=\"glyphicon glyphicon-pencil edit\"></span>";
-                        $row["funcdel"] = "<span id=\"D" . $row["idUser"] . "\" class=\"glyphicon glyphicon-trash delete\"></span>";
-
-                        if ($row["dtState"] == 1) {
-                            $row["funcstate"] = "<span title=\"Cliquez ici pour deactiver l'utilisateur.\" style=\"color: #0a0;\" id=\"A" . $row["idUser"] . "\" class=\"glyphicon glyphicon-ok-circle state\"></span>";
-                        }
-                        else {
-                            $row["funcstate"] = "<span title=\"Cliquez ici pour activer l'utilisateur.\" style=\"color: #a00;\" id=\"D" . $row["idUser"] . "\" class=\"glyphicon glyphicon-ban-circle state\"></span>";
-                        }
-
-                        if ($row["dtState"] == 1) {
-                            $row["dtState"] = "Oui";
-                        }
-                        else {
-                            $row["dtState"] = "Non";
-                        }
-
-                        array_push($returnArr, $row);
-                    }
 
                     return json_encode($returnArr);
                 }
                 else {
                     return json_encode($res);
-                }
+                }*/
+
+                return json_encode($returnArr);
             }
             else {
                 return false;
@@ -231,5 +209,26 @@ class UserMgr {
         );
 
         return $arr_return;
+    }
+
+    public function getUserTypesOfUser($id) {
+        $qry = "SELECT idTypeUser, dtDescription FROM tblTypeUser, tblUserTypeUser WHERE fiUser = :id AND fiTypeUser = idTypeUser";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":id", $id);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
     }
 }

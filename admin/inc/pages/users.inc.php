@@ -81,7 +81,7 @@ echo <<< PAGE
     </div>
 
     <div class="page-header">
-        <h1>Utilisateurs <small>TECORESY Admin</small></h1>
+        <h1>Utilisateurs <small>TECORESY Admin // <a href="main.php?page=usersv2">Show Version 2</a></small></h1>
     </div>
 
     <table id="dataUsers">
