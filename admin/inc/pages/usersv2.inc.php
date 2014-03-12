@@ -83,6 +83,11 @@ echo <<< PAGE
                         <label for="edtCountry">Pays</label>
                         <input type="text" class="form-control" id="edtPays" placeholder="Ex. Luxembourg">
                     </div>
+
+                    <div class="form-group">
+                        <label for="dtpBirthdate">Date de naissance</label>
+                        <input type="text" class="form-control" id="dtpBirthdate" placeholder="">
+                    </div>
                 </div>
             </div>
         </form>

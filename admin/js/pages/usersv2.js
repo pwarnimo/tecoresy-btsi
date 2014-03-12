@@ -8,6 +8,8 @@ $(document).ready(function() {
 
     $("#dlgAddUser").hide();
 
+    $("#dtpBirthdate").datepicker({ yearRange: "1900:2014" });
+
     $("#btnAdd").click(function() {
         $("#dlgAddUser").dialog({
             resizable: false,
