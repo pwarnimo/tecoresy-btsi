@@ -1,6 +1,10 @@
 var oTable;
 
 $(document).ready(function() {
+    $("#progressbar").progressbar({
+        value: false
+    });
+
     console.log("PAGE INIT...");
 
     $(".sidebar-nav li").removeClass("linkact");
@@ -9,6 +13,8 @@ $(document).ready(function() {
     $("#dlgAddUser").hide();
 
     $("#dtpBirthdate").datepicker({ yearRange: "1900:2014" });
+
+    $("#userview").hide();
 
     $("#btnAdd").click(function() {
         $("#dlgAddUser").dialog({
@@ -36,6 +42,12 @@ $(document).ready(function() {
         });
     });
 
+    $("#btnBack").click(function() {
+        $("#userview").fadeOut("fast", function() {
+            $("#tableview").fadeIn("fast");
+        });
+    });
+
     populateUserTable();
 
     var helpHtml = "<ul><li><span class=\"glyphicon glyphicon-refresh\"></span> Actualiser les données sur les utilisateurs.</li>" +
@@ -53,6 +65,8 @@ $(document).ready(function() {
     $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
 
     console.log("PAGE LOADED!");
+
+    $("#progressbar").hide();
 });
 
 function populateUserTable() {
@@ -79,25 +93,25 @@ function populateUserTable() {
                     console.log(usertypes[j]["dtDescription"]);
 
                     switch (usertypes[j]["idTypeUser"]) {
-                        case "1" :
+                        case "2" :
                             console.log("T1-VISITOR");
                             userindicator += "<span style=\"color: #f0ad4e;\" class=\"glyphicon glyphicon-user\" title=\"Visiteur\"></span>"
 
                             break;
 
-                        case "2" :
+                        case "3" :
                             console.log("T2-PARENT");
                             userindicator += "<span style=\"color: #5bc0de;\" class=\"glyphicon glyphicon-user\" title=\"Parent\"></span>"
 
                             break;
 
-                        case "3" :
+                        case "1" :
                             console.log("T3-MEMBER");
                             userindicator += "<span style=\"color: #ac2925;\" class=\"glyphicon glyphicon-user\" title=\"Membre\"></span>"
 
                             break;
 
-                        case "4" :
+                        case "0" :
                             console.log("T4-ADMIN");
                             userindicator += "<span style=\"color: #0e4;\" class=\"glyphicon glyphicon-user\" title=\"Administrateur\"></span>"
 
@@ -107,7 +121,7 @@ function populateUserTable() {
 
                 var contGeneral = "<span class=\"glyphicon glyphicon glyphicon-pencil edit\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
 
-                if (result[i]["dtState"] == true) {
+                if (result[i]["dtIsActive"] == true) {
                     var contState = "<span style=\"color: #0a0;\" class=\"glyphicon glyphicon-ok-circle\"></span>"
                     var uid = "A" + result[i]["idUser"];
                 }
@@ -134,7 +148,8 @@ function populateUserTable() {
                 "bAutoWidth": false,
                 "aoColumns": [
                     {
-                        "sTitle": "<input type=\"checkbox\" id=\"checkAll\">"
+                        "sTitle": "<input type=\"checkbox\" id=\"checkAll\">",
+                        "sWidth": "16px"
                     },
                     {
                         "sTitle": "E-Mail"
@@ -184,6 +199,18 @@ function populateUserTable() {
                     }
                 }
             });
+
+            $("#dataUsers tbody tr").click(function() {
+                $("#tableview").fadeOut("fast", function() {
+                    $("#userview").fadeIn("fast");
+                });
+            });
+        },
+        beforeSend : function() {
+            $("#progressbar").show();
+        },
+        complete : function() {
+            $("#progressbar").hide()
         }
     });
 }

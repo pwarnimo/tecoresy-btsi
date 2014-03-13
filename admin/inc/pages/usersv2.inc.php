@@ -3,6 +3,8 @@
 $userMgr = new UserMgr();
 
 echo <<< PAGE
+    <div id="progressbar" style="margin-top: 15px;"><div class="progress-label">Chargement en cours...</div></div>
+
     <div id="dlgAddUser" title="Nouveau compte d'utilisateur">
         <form role="form" id="frmAddUser">
             <div class="row">
@@ -97,13 +99,28 @@ echo <<< PAGE
         <h1>Utilisateurs <small>TECORESY Admin // <a href="main.php?page=users">Show Version 1</a></small></h1>
     </div>
 
-    <table id="dataUsers" class="testtable" width="100%">
-        <thead>
-        </thead>
+    <div id="tableview">
+        <table id="dataUsers" class="testtable" width="100%">
+            <thead>
+            </thead>
 
-        <tbody>
-        </tbody>
-    </table>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="userview">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">D&eacute;tails sur l'utilisateur </h3>
+            </div>
+            <div class="panel-body">
+                <p>test</p>
+            </div>
+        </div>
+
+        <button type="button" id="btnBack" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Retour</button>
+    </div>
 PAGE;
 
 echo <<< PAGE

@@ -19,7 +19,9 @@ class UserMgr {
     public function getUsersFromDB($convertFI) {
         $returnArr = array();
 
-        $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiAbo, dtBirthdate, dtLicence, dtState, dtStreet, dtLocation, dtPostalCode, dtCountry FROM tblUser";
+        //$qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, fiAbo, dtBirthdate, dtLicence, dtIsActive, dtStreet, dtLocation, dtPostalCode, dtCountry FROM tblUser";
+
+        $qry = "SELECT idUser, dtUsername, dtFirstname, dtLastname, dtEmail, dtPhone, dtLicence, dtBirthdate, dtIsActive, dtStreet, dtLocation, dtPostalCode, dtCountry, fiAbo FROM tblUser";
 
         try {
             $stmt = $this->dbh->prepare($qry);
@@ -35,28 +37,9 @@ class UserMgr {
                     array_push($returnArr, $row);
                 }
 
-                /*if ($convertFI === true) {
-                    $tmpuser = new User();
-
-                    //$res["fiAbo"] = $tmpuser->TypeAboToDescription($res["fiAbo"]);
-                    //$res["fiType"] = $tmpuser->TypeIDToDescription($res["fiType"]);
-
-                    //return json_encode($res);
-
-                    foreach ($res as $row) {
-                        //$row["fiType"] = $tmpuser->TypeIDToDescription($row["fiType"]);
-                        $row["fiAbo"] = $tmpuser->TypeAboToDescription($row["fiAbo"]);
-
-                        array_push($returnArr, $row);
-                    }
-
-                    return json_encode($returnArr);
-                }
-                else {
-                    return json_encode($res);
-                }*/
-
                 return json_encode($returnArr);
+
+                return json_encode($res);
             }
             else {
                 return false;
@@ -212,7 +195,7 @@ class UserMgr {
     }
 
     public function getUserTypesOfUser($id) {
-        $qry = "SELECT idTypeUser, dtDescription FROM tblTypeUser, tblUserTypeUser WHERE fiUser = :id AND fiTypeUser = idTypeUser";
+        $qry = "SELECT idTypeUser, dtDescription FROM tblTypeUser, tblUser_TypeUser WHERE fiUser = :id AND fiTypeUser = idTypeUser";
 
         try {
             $stmt = $this->dbh->prepare($qry);
