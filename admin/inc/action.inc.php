@@ -80,4 +80,10 @@ switch ($action) {
         echo $invoiceMgr->getSingleInvoice(filter_input(INPUT_POST, "iid"), true);
 
         break;
+
+    case "getReservations" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->getPossibleReservationsForTerrain();
+
+        break;
 }

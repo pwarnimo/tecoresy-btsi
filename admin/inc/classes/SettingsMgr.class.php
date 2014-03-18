@@ -53,7 +53,7 @@ class SettingsMgr {
     }
 
     public function checkForPanelUpdate() {
-        $data = json_decode(file_get_contents("http://tecoresy.warnimont.de/updates/version.php"), true);
+        $data = json_decode(file_get_contents("http://updates.warnimont.de/tecoresy/version.php"), true);
 
         $remoteVersion = floatval($data["panel"]);
 

@@ -2,7 +2,7 @@
 
 $terrainMgr = new TerrainMgr();
 
-echo <<< PAGE
+/*echo <<< PAGE
     <div id="dlgChangeState" title="Activer/Deactiver le terrain?">
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Voulez-vous vraiment changer le statut du terrain?</p>
     </div>
@@ -139,8 +139,24 @@ echo <<< PAGE
             </tr>
         </tbody>
     </table>
-PAGE;
+PAGE;*/
 
 echo <<< PAGE
-    <script src="js/pages/terrainsv2.js"></script>
+    <div class="page-header">
+        <h1>Terrainsv2 <small>TECORESY Admin // <a href="main.php?page=terrains">View Version 1</a></small></h1>
+    </div>
+PAGE;
+
+$mgrTerrains2 = new TerrainMgr2();
+
+$testRes = $mgrTerrains2->getPossibleReservationsForTerrain(1);
+
+//print_r($testRes);
+
+/*foreach ($testRes as $im1) {
+    echo "<p>" . $im1["fiDate"] . " -- " . $im1["dtWeekDay"] . " -- " . $im1["idHour"] . "</p>";
+}*/
+
+echo <<< PAGE
+    <script src="js/pages/terrainsv3.js"></script>
 PAGE;
