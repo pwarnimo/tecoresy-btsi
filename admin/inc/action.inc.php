@@ -86,4 +86,10 @@ switch ($action) {
         echo $terrainMgr->getPossibleReservationsForTerrain();
 
         break;
+
+    case "getDateSpan" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->getDateSpan();
+
+        break;
 }

@@ -145,11 +145,41 @@ echo <<< PAGE
     <div class="page-header">
         <h1>Terrainsv2 <small>TECORESY Admin // <a href="main.php?page=terrains">View Version 1</a></small></h1>
     </div>
+
+    <ul class="nav nav-tabs">
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                 <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Verrouiller</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Modifier</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau Terrain</a></li>
+            </ul>
+        </li>
+        <li class="active"><a href="#">Terrain 1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">6</a></li>
+        <li><a href="#">7</a></li>
+    </ul>
+
+
+    <table id="dataTerrains" class="testtable" width="100%">
+        <thead>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
 PAGE;
 
-$mgrTerrains2 = new TerrainMgr2();
+/*$mgrTerrains2 = new TerrainMgr2();
 
-$testRes = $mgrTerrains2->getPossibleReservationsForTerrain(1);
+$testRes = $mgrTerrains2->getPossibleReservationsForTerrain(1);*/
 
 //print_r($testRes);
 

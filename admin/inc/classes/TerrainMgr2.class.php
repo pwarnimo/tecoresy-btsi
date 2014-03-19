@@ -45,4 +45,23 @@ class TerrainMgr2 {
 
         //return "SELECTING FROM " . $today;
     }
+
+    public function getDateSpan() {
+        $qry = "SELECT idDate FROM tblDate WHERE idDate BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY) ORDER BY idDate";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }
