@@ -198,20 +198,31 @@ table .glyphicon {
 }
 
 .testtable tbody td {
-    /*border : 1px solid #000;*/
+    border : 1px solid #ccc;
     /*font-size: 0.9em;*/
-    border-top: 1px solid #000000;
+    /*border-top: 1px solid #000;
+    border-right: 1px solid #000;*/
+    text-align: center;
 }
 
+/*.testtable tbody tr:last-of-type {
+    border-bottom: 1px solid #000;
+}*/
+
+/*.testtable tbody tr:nth-of-type(odd) {
+    background-color: #D8D8D8;
+}*/
+
 .testtable tbody tr:hover {
-    background-color: #eee;
+    background-color: #FFFFCC;
 }
 
 .testtable thead th {
-    /*border: 1px solid #000;*/
+    border: 1px solid #ccc;
     /*font-size: 0.9em;*/
     padding-top: 15px;
     padding-bottom: 5px;
+    text-align: center;
 }
 
 .testtable thead tr {
@@ -267,11 +278,15 @@ table .glyphicon {
 }
 
 .reserved {
-    background-color: #d9534f;
+    background-color: #428bca;
     color: #fff;
 }
 
 .sup {
     vertical-align: super;
     font-size: 0.6em;
+}
+
+.times {
+    text-align: center;
 }

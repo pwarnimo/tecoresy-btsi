@@ -29,6 +29,8 @@ $(document).ready(function() {
     $("#terrainSwitcher li").click(function() {
         console.log("Switching to terrain " + $(this).attr("id"));
 
+        $(".icons").html("");
+
         $("#terrainSwitcher li").removeClass("active");
         $("#terrainSwitcher li a").removeClass("tabactive");
 
@@ -46,6 +48,19 @@ $(document).ready(function() {
 
         getReservationsForTerrain(tid);
     });
+
+    /*$(".cal").hover(function() {
+        $(this).find(".controls").show();
+    },
+    function() {
+        $(this).find(".controls").hide();
+    });*/
+
+    $(".cal").bind("contextmenu",function(e) {
+        alert("test");
+    });
+
+    $(".controls").hide();
 
     console.log("PAGE LOADED!");
 });
@@ -65,7 +80,7 @@ function buildTable() {
         success    : function(data) {
             var result = JSON.parse(data);
 
-            tHtml += "<tr><th width=\"85px\"></th>";
+            tHtml += "<tr><th width=\"85px\">Heures</th>";
 
             for (var i = 0; i < result.length; i++) {
                 var d = new Date(result[i]["idDate"]);
@@ -86,8 +101,8 @@ function buildTable() {
     tHtml = "";
 
     var times = [
-        "8<span class=\"sup\">00</span> - 9<span class=\"sup\">00</span>",
-        "9<span class=\"sup\">00</span> - 10<span class=\"sup\">00</span>",
+        "08<span class=\"sup\">00</span> - 09<span class=\"sup\">00</span>",
+        "09<span class=\"sup\">00</span> - 10<span class=\"sup\">00</span>",
         "10<span class=\"sup\">00</span> - 11<span class=\"sup\">00</span>",
         "11<span class=\"sup\">00</span> - 12<span class=\"sup\">00</span>",
         "12<span class=\"sup\">00</span> - 13<span class=\"sup\">00</span>",
@@ -106,10 +121,10 @@ function buildTable() {
         tHtml += "<tr style=\"height: 40px;\">";
         for (var j = 0; j < 8; j++) {
             if (j == 0) {
-                tHtml += "<td>" + times[i] + "</td>";
+                tHtml += "<td class=\"times\">" + times[i] + "</td>";
             }
             else {
-                tHtml += "<td id=\"" + dates[j-1] + "-" + (i+8) + "\">D" + dates[j-1] + ", H" + (i+8) + "</td>";
+                tHtml += "<td class=\"cal\" id=\"" + dates[j-1] + "-" + (i+8) + "\"><span class=\"icons\"></span><span class=\"pull-right controls\"><span style=\"color: #d9534f;\" class=\"glyphicon glyphicon-remove-circle\"></span><span class=\"glyphicon glyphicon-plus\"></span><span class=\"glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon-trash\"></span></span></td>";
             }
         }
         tHtml += "</tr>";
@@ -145,6 +160,7 @@ function getReservationsForTerrain(tid) {
                 console.log("RES" + i + " CellID = " + cellid);
 
                 $("#" + cellid).addClass("reserved");
+                $("#" + cellid).find(".icons").html("<span class=\"glyphicon glyphicon-user\"></span>&nbsp;<span class=\"glyphicon glyphicon-user\"></span>");
 
                 console.log(">Done!");
             }

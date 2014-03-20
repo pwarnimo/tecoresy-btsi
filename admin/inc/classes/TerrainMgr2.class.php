@@ -48,6 +48,7 @@ class TerrainMgr2 {
 
     public function getDateSpan() {
         $qry = "SELECT idDate FROM tblDate WHERE idDate BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY) ORDER BY idDate";
+        //$qry = "SELECT idDate FROM tblDate WHERE idDate BETWEEN \"2014-03-19\" AND DATE_ADD(\"2014-03-19\", INTERVAL 7 DAY) ORDER BY idDate";
 
         try {
             $stmt = $this->dbh->prepare($qry);

@@ -36,3 +36,7 @@ function postMessage(message) {
         }
     });
 };
+
+function loadMessages() {
+
+};
