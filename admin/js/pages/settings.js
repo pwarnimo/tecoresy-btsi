@@ -14,7 +14,7 @@ $(document).ready(function() {
 function checkForUpdates() {
     $.ajax({
         type       : "POST",
-        url        : "inc/action.inc.php?action=checkUpdate",
+        url        : "inc/actionswitcher.inc.php?action=checkUpdate",
         statusCode : {
             404: function() {
                 console.log("action.inc.php not found!");

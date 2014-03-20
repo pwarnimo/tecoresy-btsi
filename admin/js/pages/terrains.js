@@ -32,7 +32,7 @@ $(document).ready(function() {
 
                 $.ajax({
                     type       : "POST",
-                    url        : "inc/action.inc.php?action=addTerrain",
+                    url        : "inc/actionswitcher.inc.php?action=addTerrain",
                     data       : {
                         json : userJson
                     },
@@ -81,7 +81,7 @@ $(document).ready(function() {
 function populateTerrainDataTable() {
     $.ajax({
         type : "POST",
-        url : "inc/action.inc.php?action=getTerrains",
+        url : "inc/actionswitcher.inc.php?action=getTerrains",
         statusCode : {
             404: function() {
                 console.log("action.inc.php not found!");
@@ -220,7 +220,7 @@ function refreshTable() {
 function changeTerrainState(tid, state) {
     $.ajax({
         type    : "POST",
-        url     : "inc/action.inc.php?action=changeTerrainState",
+        url     : "inc/actionswitcher.inc.php?action=changeTerrainState",
         data    : {
             tid   : tid,
             state : state
@@ -241,7 +241,7 @@ function changeTerrainState(tid, state) {
 function deleteTerrain(tid) {
     $.ajax({
         type       : "POST",
-        url        : "inc/action.inc.php?action=deleteTerrains",
+        url        : "inc/actionswitcher.inc.php?action=deleteTerrains",
         data       : {
             tid : tid
         },

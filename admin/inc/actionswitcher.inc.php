@@ -92,4 +92,16 @@ switch ($action) {
         echo $terrainMgr->getDateSpan();
 
         break;
+
+    case "getReservationsForTerrain" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->getReservationsForTerrain(filter_input(INPUT_POST, "tid"));
+
+        break;
+
+    case "getReservationCounts" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->getReservationCounts();
+
+        break;
 }

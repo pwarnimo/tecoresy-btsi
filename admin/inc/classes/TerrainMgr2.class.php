@@ -64,4 +64,44 @@ class TerrainMgr2 {
             die();
         }
     }
+
+    public function getReservationsForTerrain($id) {
+        $qry = "SELECT fiDate, fiTerrain, fiHour, fiPlayer1, fiPlayer2 FROM tblReservation, tblHourWeekDay WHERE fiTerrain = :id AND fiHourWeek = idHourWeekDay";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":id", $id);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function getReservationCounts() {
+        $qry = "SELECT fiTerrain, COUNT(*) AS qcfCount FROM tblReservation GROUP BY fiTerrain";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }

@@ -72,7 +72,7 @@ $(document).ready(function() {
 function populateUserTable() {
     $.ajax({
         type : "POST",
-        url : "inc/action.inc.php?action=getUsers",
+        url : "inc/actionswitcher.inc.php?action=getUsers",
         statusCode : {
             404: function() {
                 console.log("action.inc.php not found!");

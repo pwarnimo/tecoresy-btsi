@@ -179,10 +179,10 @@ table .glyphicon {
     transform: rotate(90deg);
 }*/
 
-.testtable tr:hover {
+/*.testtable tr:hover {
     background: linear-gradient(to bottom,  #4f85bb 0%,#4f85bb 100%);
     color: #fff;
-}
+}*/
 
 /*.testtable td:hover {
     background: linear-gradient(to bottom,  #af85bb 0%,#af85bb 100%);
@@ -193,20 +193,31 @@ table .glyphicon {
     content: "TEST";
 }*/
 
+.testtable {
+
+}
 
 .testtable tbody td {
-    border : 1px solid #000;
-    font-size: 0.9em;
+    /*border : 1px solid #000;*/
+    /*font-size: 0.9em;*/
+    border-top: 1px solid #000000;
+}
+
+.testtable tbody tr:hover {
+    background-color: #eee;
 }
 
 .testtable thead th {
-    border: 1px solid #000;
-    font-size: 0.9em;
+    /*border: 1px solid #000;*/
+    /*font-size: 0.9em;*/
+    padding-top: 15px;
+    padding-bottom: 5px;
 }
 
 .testtable thead tr {
-    background: linear-gradient(to bottom,  #4f85bb 0%,#4f85bb 100%);
+    /*background: linear-gradient(to bottom,  #4f85bb 0%,#4f85bb 100%);
     color: #fff;
+    border-radius: 3px;*/
 }
 
 /*.testtable tbody tr:nth-child(even) {
@@ -249,4 +260,18 @@ table .glyphicon {
     top: 4px;
     font-weight: bold;
     text-shadow: 1px 1px 0 #fff;
+}
+
+.tabactive:before {
+    content: "Terrain ";
+}
+
+.reserved {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.sup {
+    vertical-align: super;
+    font-size: 0.6em;
 }

@@ -29,7 +29,7 @@ $(document).ready(function() {
 
                 $.ajax({
                     type       : "POST",
-                    url        : "inc/action.inc.php?action=addUser",
+                    url        : "inc/actionswitcher.inc.php?action=addUser",
                     data       : {
                         json : userJson
                     },
@@ -91,7 +91,7 @@ $(document).ready(function() {
 function populateUserDataTable() {
     $.ajax({
         type : "POST",
-        url : "inc/action.inc.php?action=getUsers",
+        url : "inc/actionswitcher.inc.php?action=getUsers",
         statusCode : {
             404: function() {
                 console.log("action.inc.php not found!");
@@ -271,7 +271,7 @@ function refreshTable() {
 function deleteUser(uid) {
     $.ajax({
         type       : "POST",
-        url        : "inc/action.inc.php?action=deleteUsers",
+        url        : "inc/actionswitcher.inc.php?action=deleteUsers",
         data       : {
             uid : uid
         },
@@ -291,7 +291,7 @@ function changeUserState(uid, state) {
 
     $.ajax({
         type    : "POST",
-        url     : "inc/action.inc.php?action=changeUserState",
+        url     : "inc/actionswitcher.inc.php?action=changeUserState",
         data    : {
             uid   : uid,
             state : state

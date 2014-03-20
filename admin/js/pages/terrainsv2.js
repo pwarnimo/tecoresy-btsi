@@ -18,7 +18,7 @@ $(document).ready(function() {
 function buildDataTable() {
     $.ajax({
         type       : "POST",
-        url        : "inc/action.inc.php?action=getTerrainsv2",
+        url        : "inc/actionswitcher.inc.php?action=getTerrainsv2",
         statusCode : {
             404: function() {
                 console.log("action.inc.php not found!");

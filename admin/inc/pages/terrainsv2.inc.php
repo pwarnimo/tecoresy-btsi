@@ -146,7 +146,7 @@ echo <<< PAGE
         <h1>Terrainsv2 <small>TECORESY Admin // <a href="main.php?page=terrains">View Version 1</a></small></h1>
     </div>
 
-    <ul class="nav nav-tabs">
+    <ul id="terrainSwitcher" class="nav nav-tabs">
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                  <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
@@ -158,13 +158,13 @@ echo <<< PAGE
                 <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau Terrain</a></li>
             </ul>
         </li>
-        <li class="active"><a href="#">Terrain 1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li><a href="#">7</a></li>
+        <li id="T1" class="active"><a class="tabactive" href="#">1</a></li>
+        <li id="T2"><a href="#">2</a></li>
+        <li id="T3"><a href="#">3</a></li>
+        <li id="T4"><a href="#">4</a></li>
+        <li id="T5"><a href="#">5</a></li>
+        <li id="T6"><a href="#">6</a></li>
+        <li id="T7"><a href="#">7</a></li>
     </ul>
 
 

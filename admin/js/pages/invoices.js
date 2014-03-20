@@ -43,7 +43,7 @@ function refreshTable() {
 function populateInvoiceDataTable() {
     $.ajax({
         type : "POST",
-        url : "inc/action.inc.php?action=getInvoices",
+        url : "inc/actionswitcher.inc.php?action=getInvoices",
         statusCode : {
             404: function() {
                 console.log("action.inc.php not found!");
@@ -190,7 +190,7 @@ function populateInvoiceDataTable() {
 function setPaymentStatus(iid, state) {
     $.ajax({
         type       : "POST",
-        url        : "inc/action.inc.php?action=changePaymentStatus",
+        url        : "inc/actionswitcher.inc.php?action=changePaymentStatus",
         data       : {
             iid   : iid,
             state : state
@@ -215,7 +215,7 @@ function showInvoice(iid) {
 
     $.ajax({
         type       : "POST",
-        url        : "inc/action.inc.php?action=getSingleInvoice",
+        url        : "inc/actionswitcher.inc.php?action=getSingleInvoice",
         data       : {
             iid   : iid
         },

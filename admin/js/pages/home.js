@@ -22,7 +22,7 @@ $(document).ready(function() {
 function postMessage(message) {
     $.ajax({
         type       : "POST",
-        url        : "inc/action.inc.php?action=postMessage",
+        url        : "inc/actionswitcher.inc.php?action=postMessage",
         data       : {
             message : message
         },
