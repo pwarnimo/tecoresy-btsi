@@ -96,7 +96,7 @@ echo <<< PAGE
     </div>
 
     <div class="page-header">
-        <h1>Utilisateurs <small>TECORESY Admin // <a href="main.php?page=users">Show Version 1</a></small></h1>
+        <h1>Utilisateurs <small>TECORESY Admin</a></small></h1>
     </div>
 
     <div id="tableview">

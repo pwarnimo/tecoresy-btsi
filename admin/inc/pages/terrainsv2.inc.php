@@ -151,7 +151,7 @@ echo <<< PAGE
     </div>
 
     <div class="page-header">
-        <h1>Terrainsv2 <small>TECORESY Admin // <a href="main.php?page=terrains">View Version 1</a></small></h1>
+        <h1>Terrains <small>TECORESY Admin</a></small></h1>
     </div>
 
     <ul id="terrainSwitcher" class="nav nav-tabs">
