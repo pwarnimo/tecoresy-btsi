@@ -142,6 +142,14 @@ $terrainMgr = new TerrainMgr();
 PAGE;*/
 
 echo <<< PAGE
+    <div id="cntnr">
+        <ul id="items">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Action</a></li>
+        </ul>
+    </div>
+
     <div class="page-header">
         <h1>Terrainsv2 <small>TECORESY Admin // <a href="main.php?page=terrains">View Version 1</a></small></h1>
     </div>

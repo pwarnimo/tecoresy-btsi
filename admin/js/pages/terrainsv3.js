@@ -49,16 +49,100 @@ $(document).ready(function() {
         getReservationsForTerrain(tid);
     });
 
-    /*$(".cal").hover(function() {
+    $(".cal").hover(function() {
         $(this).find(".controls").show();
     },
     function() {
         $(this).find(".controls").hide();
+    });
+
+    /*context.init({
+        fadeSpeed: 100,
+        filter: function ($obj){},
+        above: 'auto',
+        preventDoubleContext: true,
+        compress: false
+    });
+
+    context.attach(".cal",
+        [{
+            header: $(this).attr("id")
+        },
+        {
+            text: "Modify",
+            action: function(e){
+                e.preventDefault();
+                alert('Do Something');
+            }
+        },
+        {
+            text: "Add",
+            action: function(e){
+                e.preventDefault();
+                alert('Do Something');
+            }
+        }]
+    );*/
+
+    /*$(".cal").click(function() {
+        //$( this ).parent().parent().append("<tr><td colspan=\"9\">TEST</td></tr>");
+        $(".cal").removeClass("selected");
+        $("#controls").remove();
+
+        $(this).addClass("selected");
+        $(this).closest('TR').after("<tr class=\"selected\" id=\"controls\"><td colspan=\"9\">TEST</td></tr>");
     });*/
 
-    $(".cal").bind("contextmenu",function(e) {
-        alert("test");
+    /* NEW CONTEXT */
+
+    /*$(".cal").bind("contextmenu", function (e) {
+        e.preventDefault();
+        $("#cntnr").css("left", e.pageX);
+        $("#cntnr").css("top", e.pageY);
+        $("#cntnr").slideDown(200, startFocusOut());
     });
+    function startFocusOut() {
+        $(document).on("click", function () {
+            $("#cntnr").slideUp(200);
+            $(document).off("click");
+        });
+    }
+    $("#items > li").click(function () {
+        $("#op").text("You have selected " + $(this).text());
+    });*/
+
+    /*$(".cal").contextPopup({
+        title: 'Réservation',
+        items: [
+            {
+                label:'Verrouiler',
+                action:function() {
+
+                }
+            },
+            {
+                label:'Ajouter',
+                action:function() {
+
+                }
+            },
+            {
+                label:'Modifier',
+                action:function() {
+
+                }
+            },
+            null,
+            {
+                label:'Supprimer',
+                action:function() {
+
+                }
+            }
+        ]
+    });*/
+
+    /* NEW CONTEXT */
 
     $(".controls").hide();
 
@@ -119,12 +203,12 @@ function buildTable() {
 
     for (var i = 0; i < 14; i++) {
         tHtml += "<tr style=\"height: 40px;\">";
-        for (var j = 0; j < 8; j++) {
+        for (var j = 0; j < 9; j++) {
             if (j == 0) {
                 tHtml += "<td class=\"times\">" + times[i] + "</td>";
             }
             else {
-                tHtml += "<td class=\"cal\" id=\"" + dates[j-1] + "-" + (i+8) + "\"><span class=\"icons\"></span><span class=\"pull-right controls\"><span style=\"color: #d9534f;\" class=\"glyphicon glyphicon-remove-circle\"></span><span class=\"glyphicon glyphicon-plus\"></span><span class=\"glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon-trash\"></span></span></td>";
+                tHtml += "<td class=\"cal\" id=\"" + dates[j-1] + "-" + (i+8) + "\"><span class=\"icons\"></span><span class=\"controls\"><span style=\"color: #d9534f;\" class=\"glyphicon glyphicon-remove-circle\"></span><span class=\"glyphicon glyphicon-plus\"></span><span class=\"glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon-trash\"></span></span></td>";
             }
         }
         tHtml += "</tr>";
@@ -160,7 +244,7 @@ function getReservationsForTerrain(tid) {
                 console.log("RES" + i + " CellID = " + cellid);
 
                 $("#" + cellid).addClass("reserved");
-                $("#" + cellid).find(".icons").html("<span class=\"glyphicon glyphicon-user\"></span>&nbsp;<span class=\"glyphicon glyphicon-user\"></span>");
+                /*$("#" + cellid).find(".icons").html("<span class=\"glyphicon glyphicon-user\"></span>&nbsp;<span class=\"glyphicon glyphicon-user\"></span>");*/
 
                 console.log(">Done!");
             }

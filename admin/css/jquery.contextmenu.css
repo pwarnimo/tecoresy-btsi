@@ -1,0 +1,78 @@
+.contextMenuPlugin {
+    -webkit-user-select: none;
+    display: none;
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    min-width: 100px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.contextMenuPlugin > li {
+    margin: 0 0 0 0;
+    background-repeat: no-repeat;
+}
+
+.contextMenuPlugin > li:last-of-type {
+    margin-bottom: 8px;
+}
+
+.contextMenuPlugin > li:first-of-type {
+    margin-bottom: 8px;
+}
+
+.contextMenuPlugin > li > a {
+    position: relative;
+    display: block;
+    padding: 3px 3px 3px 3px;
+    color: ButtonText;
+    text-decoration: none;
+}
+
+.contextMenuPlugin > li > a img {
+    position: absolute;
+    left: 3px;
+    margin-top: -2px;
+    width: 16px;
+    height: 16px;
+}
+.contextMenuPlugin > li > a:hover {
+    background-color: #428bca;
+    cursor: default;
+    color: #fff;
+}
+
+.contextMenuPlugin > li.disabled {
+    pointer-events: none;
+}
+
+.contextMenuPlugin > li.disabled a {
+    color: grey;
+}
+
+.contextMenuPlugin > li.disabled > a:hover {
+    border: none;
+    outline: none;
+}
+
+.contextMenuPlugin > li.divider {
+    border-top: 1px solid #e7e3e7;
+    border-bottom: 1px solid #ffffff;
+    height: 0;
+    padding: 0;
+    margin: 5px 0 5px 0px;
+}
+
+.contextMenuPlugin > .header {
+    background-image: linear-gradient(to bottom, #3C3C3C 0px, #222 100%);
+    position: relative;
+    cursor: default;
+    padding: 3px 3px 3px 3px;
+    color: #ffffff;
+    border-radius: 3px 3px 0 0;
+}

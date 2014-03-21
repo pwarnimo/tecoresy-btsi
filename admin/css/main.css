@@ -218,11 +218,22 @@ table .glyphicon {
 }
 
 .testtable thead th {
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
+    border-bottom: 2px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     /*font-size: 0.9em;*/
     padding-top: 15px;
     padding-bottom: 5px;
     text-align: center;
+    /*background-color: #428bca;
+    color: #fff;*/
+    font-weight: normal;
+    font-style: italic;
+}
+
+.active {
+    border-bottom: 1px solid #ccc;
 }
 
 .testtable thead tr {
@@ -289,4 +300,37 @@ table .glyphicon {
 
 .times {
     text-align: center;
+}
+
+.selected {
+    background-color: #f0ad4e;
+}
+
+/* ---------------------------------------------------------------------------- */
+
+#items {
+    list-style: none;
+    padding: 0px;
+    /*margin: 5px 0 0 5px;*/
+}
+
+#cntnr {
+    display: none;
+    position: fixed;
+    /*border: 1px solid grey;*/
+    width: 150px;
+    /*box-shadow: 2px 2px 1px grey;*/
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+#items li {
+    /*border-bottom: 1px solid grey;*/
+    /*border-bottom-style: dotted;*/
+}
+
+#items :hover {
+    background: grey;
+    color: white;
 }
