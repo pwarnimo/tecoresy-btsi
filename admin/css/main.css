@@ -333,3 +333,11 @@ table .glyphicon {
     background: grey;
     color: white;
 }
+
+.deactivated {
+    background-color: #999;
+}
+
+.blocked {
+    background-color: #f0ad4e;
+}

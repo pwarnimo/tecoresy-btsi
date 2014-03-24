@@ -104,4 +104,10 @@ switch ($action) {
         echo $terrainMgr->getReservationCounts();
 
         break;
+
+    case "getBlockedReservationsForTerrain" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->getBlockedReservationsForTerrain(filter_input(INPUT_POST, "tid"));
+
+        break;
 }

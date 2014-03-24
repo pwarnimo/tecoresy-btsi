@@ -105,4 +105,25 @@ class TerrainMgr2 {
             die();
         }
     }
+
+    public function getBlockedReservationsForTerrain($id) {
+        $qry = "SELECT fiDate, fiTerrain, fiHour FROM tblPossibleReservation, tblHourWeekDay WHERE fiTerrain = :id AND fiHourWeekDay = idHourWeekDay AND dtIsBlocked = \"Yes\" AND fiDate BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), INTERVAL 7 DAY)";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":id", $id);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }
