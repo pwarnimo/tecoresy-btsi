@@ -16,15 +16,39 @@ $(document).ready(function() {
         });
     });
 
+    $("#btnRefresh").click(function() {
+        loadNewestMessage("0");
+    });
+
+    $("#btnPost").click(function() {
+        var values = new Array();
+        $.each($("input[name='utypes[]']:checked"), function() {
+            values.push($(this).val());
+        });
+
+        console.log(values);
+        console.log("POSTING>" + $("#lsbState").val() + " : " + $("#edtMessageText").val());
+
+        postMessage($("#edtMessageText").val(), $("#lsbState").val(), JSON.stringify(values));
+
+        $("#edtMessageText").val("");
+
+        loadNewestMessage("0")
+    });
+
+    loadNewestMessage("0");
+
     console.log("PAGE LOADED!");
 });
 
-function postMessage(message) {
+function postMessage(message, state, usertypes) {
     $.ajax({
         type       : "POST",
         url        : "inc/actionswitcher.inc.php?action=postMessage",
         data       : {
-            message : message
+            message : message,
+            state   : state,
+            utypes  : usertypes
         },
         statusCode : {
             404: function() {
@@ -32,11 +56,53 @@ function postMessage(message) {
             }
         },
         success    : function(data) {
-
+            console.log(data);
         }
     });
 };
 
-function loadMessages() {
+function loadNewestMessage(usertype) {
+    $.ajax({
+        type       : "POST",
+        url        : "inc/actionswitcher.inc.php?action=getLatestMessage",
+        data       : {
+            tuser : usertype
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+            console.log("DATA>" + data);
 
+            var result = JSON.parse(data)
+
+            console.log("NEWEST_MSG>" + result[0]["dtMessageText"]);
+
+            var msgIcon = "";
+
+            switch (result[0]["fiMessageState"]) {
+                case "1" :
+                    msgIcon = "<span class=\"glyphicon glyphicon-info-sign\"></span>";
+                    $("#message-text").addClass("text-info");
+
+                    break;
+
+                case "2" :
+                    msgIcon = "<span class=\"glyphicon glyphicon-warning-sign\"></span>";
+                    $("#message-text").addClass("text-warning");
+
+                    break;
+
+                case "3" :
+                    msgIcon = "<span class=\"glyphicon glyphicon-exclamation-sign\"></span>";
+                    $("#message-text").addClass("text-danger");
+
+                    break;
+            }
+
+            $("#message-text").html(msgIcon + " " + result[0]["dtCreateTS"] + "> " + result[0]["dtMessageText"]);
+        }
+    });
 };

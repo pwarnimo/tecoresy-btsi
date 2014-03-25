@@ -110,4 +110,16 @@ switch ($action) {
         echo $terrainMgr->getBlockedReservationsForTerrain(filter_input(INPUT_POST, "tid"));
 
         break;
+
+    case "getLatestMessage" :
+        $messageMgr = new MessageMgr();
+        echo $messageMgr->getNewestMessage(filter_input(INPUT_POST, "tuser"));
+
+        break;
+
+    case "postMessage" :
+        $messageMgr = new MessageMgr();
+        echo $messageMgr->addMessage(filter_input(INPUT_POST, "message"), filter_input(INPUT_POST, "state"), filter_input(INPUT_POST, "utypes"));
+
+        break;
 }
