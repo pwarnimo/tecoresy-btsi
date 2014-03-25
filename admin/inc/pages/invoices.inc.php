@@ -1,10 +1,18 @@
 <?php
 
-echo <<< PAGE
-    <div id="dlgChangePaymentStatus" title="Payé / Non payé">
+/* --- OVERLAYS ----------------------------------------------------------------------------------------------------- */
+
+// -- New reservation --
+
+echo <<< DLGINVOICESTATUS
+    <div id="dlgInvoiceStatus" title="Payé / Non payé">
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Voulez-vous vraiment marquez la facture payé / non-payé?</p>
     </div>
+DLGINVOICESTATUS;
 
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+echo <<< PAGE
     <div class="page-header">
         <h1>Factures <small>TECORESY Admin</small></h1>
     </div>

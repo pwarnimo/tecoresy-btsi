@@ -17,7 +17,24 @@ class InvoiceMgr {
     }
 
     public function getInvoicesFromDB($convertFi) {
-        if ($convertFi === true) {
+        $qry = "SELECT idFacture, dtFirstname, dtLastname, fiDate, fiHour, fiTerrain, dtPayed, dtCreateTS FROM tblFacture";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+
+        /*if ($convertFi === true) {
             $qry = "SELECT F.idFacture, F.fiTerrain, F.fiDateHeure, F.fiPlayer1, F.fiPlayer2, U1.dtFirstname AS dtPlayer1Firstname, U2.dtFirstname AS dtPlayer2Firstname, U1.dtLastname AS dtPlayer1Lastname, U2.dtLastname AS dtPlayer2Lastname, F.dtPrix, F.dtPayed, F.dtCreateTS FROM tblFacture F LEFT JOIN tblUser U1 ON U1.idUser = fiPlayer1 LEFT JOIN tblUser U2 ON U2.idUser = fiPlayer2";
         }
         else {
@@ -37,7 +54,7 @@ class InvoiceMgr {
         catch(PDOException $e) {
             echo "PDO has encountered an error: " + $e->getMessage();
             die();
-        }
+        }*/
     }
 
     public function changePaymentStatus($id, $state) {
@@ -50,10 +67,10 @@ class InvoiceMgr {
             $stmt->bindValue(":state", $state);
 
             if ($stmt->execute()) {
-                return true;
+                return json_encode(true);
             }
             else {
-                return false;
+                return json_encode(false);
             }
         }
         catch(PDOException $e) {

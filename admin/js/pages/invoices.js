@@ -1,6 +1,81 @@
 var oTable;
 
-    $(document).ready(function() {
+/* --- OVERLAYS ----------------------------------------------------------------------------------------------------- */
+
+// -- Change payment status --
+
+$("#dlgInvoiceStatus").hide();
+
+function DlgInvoiceStatus(iid) {
+    this.iid = iid;
+};
+
+DlgInvoiceStatus.prototype.showDialog = function() {
+    var currId = this.iid;
+
+    $("#dlgInvoiceStatus").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                console.log(">>>>" + currId[0]);
+
+                var iid = currId.substring(1);
+
+                console.log(">>" + iid);
+
+                if (currId[0] == "P") {
+                    console.log("NOT PAYED");
+
+                    var state = 0;
+                }
+                else {
+                    console.log("PAYED");
+
+                    var state = 1;
+                }
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=changePaymentStatus",
+                    data       : {
+                        iid   : iid,
+                        state : state
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        console.log(data);
+
+                        refreshTable();
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+$(document).ready(function() {
     console.log("PAGE INIT...");
 
     $(".sidebar-nav li").removeClass("linkact");
@@ -55,6 +130,32 @@ function populateInvoiceDataTable() {
             var result = JSON.parse(data);
 
             var thtml = "";
+
+            for (var i = 0; i < result.length; i++) {
+                if (result[i]["dtPayed"] == true) {
+                    var contPayed = "<span style=\"color: #0a0;\" class=\"glyphicon glyphicon glyphicon-euro payed\"></span>";
+                    var infPayed = "<span style=\"color: #0a0;\">Oui</span>";
+                    var iid = "P" + result[i]["idFacture"];
+                }
+                else {
+                    var contPayed = "<span style=\"color: #a00;\" class=\"glyphicon glyphicon glyphicon-euro payed\"></span>";
+                    var infPayed = "<span style=\"color: #a00;\">Non!</span>";
+                    var iid = "N" + result[i]["idFacture"];
+                }
+
+                var contGeneral = "<span class=\"glyphicon glyphicon glyphicon-pencil edit\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
+
+                thtml += "<tr id=\"" + iid + "\"><td><input type=\"checkbox\" id=\"" + result[i]["idFacture"] + "\"></td>" +
+                    "<td>" + result[i]["idFacture"] + "</td>" +
+                    "<td>" + result[i]["dtLastname"] + " " + result[i]["dtFirstname"] + "</td>" +
+                    "<td>" + result[i]["dtCreateTS"] + "</td>" +
+                    "<td>" + result[i]["fiDate"] + " " + result[i]["fiHour"] + ":00" + "</td>" +
+                    "<td>" + result[i]["fiTerrain"] + "</td>" +
+                    "<td>" + contPayed + "</td>" +
+                    "<td>" + contGeneral + "</td></tr>";
+            }
+
+            /*var thtml = "";
             var curRow = null;
 
             for (var i = 0; i < result.length; i++) {
@@ -80,7 +181,7 @@ function populateInvoiceDataTable() {
                     "<td>" + result[i]["dtPlayer2Firstname"] + "&nbsp;" + result[i]["dtPlayer2Lastname"] + "</td>" +
                     "<td>" + infPayed + "</td>" +
                     "<td>" + contPayed + "&nbsp;" + contGeneral + "</td></tr>";
-            }
+            }*/
 
             $("#dataInvoices tbody").html(thtml);
 
@@ -94,6 +195,9 @@ function populateInvoiceDataTable() {
                         "sTitle": "ID"
                     },
                     {
+                        "sTitle": "Destinaire"
+                    },
+                    {
                         "sTitle": "Date"
                     },
                     {
@@ -101,12 +205,6 @@ function populateInvoiceDataTable() {
                     },
                     {
                         "sTitle": "Terrain"
-                    },
-                    {
-                        "sTitle": "Joueur"
-                    },
-                    {
-                        "sTitle": "Opposant"
                     },
                     {
                         "sTitle": "Payé"
@@ -137,7 +235,11 @@ function populateInvoiceDataTable() {
             });
 
             $(".payed").click(function() {
-                var iid = $(this).parent().parent().attr("id").substring(2);
+                var dlg0 = new DlgInvoiceStatus($(this).parent().parent().attr("id"));
+
+                dlg0.showDialog();
+
+                /*var iid = $(this).parent().parent().attr("id").substring(2);
                 var currentState = $(this).parent().parent().attr("id")[0];
 
                 if (currentState == "P") {
@@ -175,14 +277,14 @@ function populateInvoiceDataTable() {
                         effect: "blind",
                         duration: 200
                     }
-                });
+                });*/
             });
 
-            $("tbody tr").click(function() {
+            /*$("tbody tr").click(function() {
                 console.log("Loading detail view of invoice IID " + $(this).attr("id").substring(2));
 
                 showInvoice($(this).attr("id").substring(2));
-            });
+            });*/
         }
     });
 }

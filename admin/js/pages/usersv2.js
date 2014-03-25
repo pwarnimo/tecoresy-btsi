@@ -72,6 +72,8 @@ DlgUserDel.prototype.showDialog = function() {
                     },
                     success    : function(data) {
                         console.log(data);
+
+                        refreshTable();
                     }
                 });
 
@@ -141,6 +143,8 @@ DlgUserStatus.prototype.showDialog = function() {
                     },
                     success    : function(data) {
                         console.log(data);
+
+                        refreshTable();
                     }
                 });
 
@@ -279,6 +283,12 @@ function populateUserTable() {
 
             $("#dataUsers tbody").html(thtml);
 
+            $("#dataUsers tbody td").each(function () {
+                if ($(this).html().trim().length == 0) {
+                    $(this).html("/");
+                }
+            });
+
             oTable = $("#dataUsers").dataTable({
                 "bAutoWidth": false,
                 "aoColumns": [
@@ -409,10 +419,19 @@ function addUser() {
         statusCode : {
             404: function() {
                 console.log("action.inc.php not found!");
+
+                refreshTable();
             }
         },
         success    : function(data) {
             console.log(data);
         }
     });
+};
+
+function refreshTable() {
+    console.log("refreshing...");
+    oTable.fnDestroy();
+    oTable.find("tbody").empty();
+    populateUserTable();
 };
