@@ -2,10 +2,20 @@
 
 $userMgr = new UserMgr();
 
-echo <<< PAGE
-    <div id="progressbar" style="margin-top: 15px;"><div class="progress-label">Chargement en cours...</div></div>
+echo <<< DLGUSERSTATUS
+    <div id="dlgUserStatus" title="Bloquer">
+        <p>Voulez vous vraiment blocker ou debloquer cet utilisateur?</p>
+    </div>
+DLGUSERSTATUS;
 
-    <div id="dlgAddUser" title="Nouveau compte d'utilisateur">
+echo <<< DLGUSERDEL
+    <div id="dlgUserDel" title="Supprimer">
+        <p>Voulez vous vraiment supprimer cet utilisateur?</p>
+    </div>
+DLGUSERDEL;
+
+echo <<< DLGUSERADD
+    <div id="dlgUserAdd" title="Nouveau compte d'utilisateur">
         <form role="form" id="frmAddUser">
             <div class="row">
                 <div class="col-md-6">
@@ -49,28 +59,28 @@ echo <<< PAGE
                     <label>Type d'utilisateur
                         <div class="checkbox">
                             <label>
-                                <input name="utypes[]" type="checkbox" value="1">
+                                <input name="utypes[]" type="checkbox" value="2">
                                 Visiteur
                             </label>
                         </div>
 
                         <div class="checkbox">
                             <label>
-                                <input name="utypes[]" type="checkbox" value="2">
+                                <input name="utypes[]" type="checkbox" value="3">
                                 Parent
                             </label>
                         </div>
 
                         <div class="checkbox">
                             <label>
-                                <input name="utypes[]" type="checkbox" value="3">
+                                <input name="utypes[]" type="checkbox" value="1">
                                 Membre
                             </label>
                         </div>
 
                         <div class="checkbox">
                             <label>
-                                <input name="utypes[]" type="checkbox" value="4">
+                                <input name="utypes[]" type="checkbox" value="0">
                                 Administrateur
                             </label>
                         </div>
@@ -88,7 +98,7 @@ echo <<< PAGE
 
                     <div class="form-group">
                         <label for="edtCountry">Pays</label>
-                        <input type="text" class="form-control" id="edtPays" placeholder="Ex. Luxembourg">
+                        <input type="text" class="form-control" id="edtCountry" placeholder="Ex. Luxembourg">
                     </div>
 
                     <div class="form-group">
@@ -100,7 +110,7 @@ echo <<< PAGE
                         <label for="lsbTuteur">Tuteur</label>
                         <select id="lsbTuteur">
                             <option value="">None</option>
-PAGE;
+DLGUSERADD;
 
 $tuteurs = $userMgr->getUserList();
 
@@ -108,14 +118,22 @@ foreach ($tuteurs as $tuteur) {
     echo "<option value=\"" . $tuteur["idUser"] . "\">" . $tuteur["dtFirstname"] . " " . $tuteur["dtLastname"] . "</option>";
 }
 
-echo <<< PAGE
+echo <<< DLGUSERADD
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edtPostalCode">Code postale</label>
+                        <input type="text" class="form-control" id="edtPostalCode" placeholder="L-9391">
                     </div>
                 </div>
             </div>
         </form>
     </div>
+DLGUSERADD;
 
+
+echo <<< PAGE
     <div class="page-header">
         <h1>Utilisateurs <small>TECORESY Admin</a></small></h1>
     </div>

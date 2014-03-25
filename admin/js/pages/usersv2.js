@@ -1,46 +1,182 @@
 var oTable;
 
-$(document).ready(function() {
-    $("#progressbar").progressbar({
-        value: false
-    });
+/* --- OVERLAYS ----------------------------------------------------------------------------------------------------- */
 
+// -- Add new user --
+
+$("#dlgUserAdd").hide();
+
+function DlgUserAdd() {}
+
+DlgUserAdd.prototype.showDialog = function() {
+    $("#dlgUserAdd").dialog({
+        resizable: false,
+        height: 585,
+        width: 640,
+        modal: true,
+        buttons: {
+            Ajouter: function() {
+                addUser();
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
+// -- Delete user --
+
+$("#dlgUserDel").hide();
+
+function DlgUserDel(uid) {
+    this.uid = uid;
+};
+
+DlgUserDel.prototype.showDialog = function() {
+    var currId = this.uid;
+
+    console.log(">> - " + currId);
+
+    $("#dlgUserDel").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                console.log(">>>>" + currId[0]);
+
+                var uid = currId.substring(1);
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=deleteSingleUser",
+                    data       : {
+                        uid   : uid,
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        console.log(data);
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
+// -- De/Activate user --
+
+$("#dlgUserStatus").hide();
+
+function DlgUserStatus(uid) {
+    this.uid = uid;
+};
+
+DlgUserStatus.prototype.showDialog = function() {
+    var currId = this.uid;
+
+    console.log(">> - " + currId);
+
+    $("#dlgUserStatus").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                console.log(">>>>" + currId[0]);
+
+                var uid = currId.substring(1);
+
+                if (currId[0] == "A") {
+                    console.log("BLOCKING");
+
+                    var state = "No";
+                }
+                else {
+                    console.log("UNBLOCKING");
+
+                    var state = "Yes";
+                }
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=changeUserState",
+                    data       : {
+                        uid   : uid,
+                        state : state
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        console.log(data);
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
+/* ------------------------------------------------------------------------------------------------------------------ */
+
+$(document).ready(function() {
     console.log("PAGE INIT...");
 
     $(".sidebar-nav li").removeClass("linkact");
     $("#users").addClass("linkact");
-
-    $("#dlgAddUser").hide();
 
     $("#dtpBirthdate").datepicker({ yearRange: "1900:2014" });
 
     $("#userview").hide();
 
     $("#btnAdd").click(function() {
-        $("#dlgAddUser").dialog({
-            resizable: false,
-            height: 585,
-            width: 640,
-            modal: true,
-            buttons: {
-                Ajouter: function() {
-                    addUser();
+        var dlg0 = new DlgUserAdd();
 
-                    $(this).dialog("close");
-                },
-                Annuler: function() {
-                    $(this).dialog("close");
-                }
-            },
-            show: {
-                effect: "blind",
-                duration: 200
-            },
-            hide: {
-                effect: "blind",
-                duration: 200
-            }
-        });
+        dlg0.showDialog();
     });
 
     $("#btnBack").click(function() {
@@ -66,8 +202,6 @@ $(document).ready(function() {
     $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
 
     console.log("PAGE LOADED!");
-
-    $("#progressbar").hide();
 });
 
 function populateUserTable() {
@@ -122,16 +256,16 @@ function populateUserTable() {
 
                 var contGeneral = "<span class=\"glyphicon glyphicon glyphicon-pencil edit\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
 
-                if (result[i]["dtIsActive"] == true) {
-                    var contState = "<span style=\"color: #0a0;\" class=\"glyphicon glyphicon-ok-circle\"></span>"
+                if (result[i]["dtIsActive"] == "Yes") {
+                    var contState = "<span style=\"color: #0a0;\" class=\"glyphicon glyphicon-ok-circle changestate\"></span>"
                     var uid = "A" + result[i]["idUser"];
                 }
                 else {
-                    var contState = "<span style=\"color: #a00;\" class=\"glyphicon glyphicon-remove-circle\"></span>"
+                    var contState = "<span style=\"color: #a00;\" class=\"glyphicon glyphicon-remove-circle changestate\"></span>"
                     var uid = "I" + result[i]["idUser"];
                 }
 
-                thtml += "<tr id=\"" + result[i]["idUser"] + "\"><td><input type=\"checkbox\" id=\"" + result[i]["idUser"] + "\"></td>" +
+                thtml += "<tr id=\"" + uid + "\"><td><input type=\"checkbox\" id=\"" + result[i]["idUser"] + "\"></td>" +
                     "<td>" + result[i]["dtEmail"] + "</td>" +
                     "<td>" + result[i]["dtLastname"] + "</td>" +
                     "<td>" + result[i]["dtFirstname"] + "</td>" +
@@ -201,10 +335,26 @@ function populateUserTable() {
                 }
             });
 
-            $("#dataUsers tbody tr").click(function() {
+            /*$("#dataUsers tbody tr").click(function() {
                 $("#tableview").fadeOut("fast", function() {
                     $("#userview").fadeIn("fast");
                 });
+            });*/
+
+            $(".changestate").click(function() {
+                console.log(">UID> " + $(this).parent().parent().attr("id"));
+
+                var dlg0 = new DlgUserStatus($(this).parent().parent().attr("id"));
+
+                dlg0.showDialog();
+            });
+
+            $(".delete").click(function() {
+                console.log(">UID> " + $(this).parent().parent().attr("id"));
+
+                var dlg0 = new DlgUserDel($(this).parent().parent().attr("id"));
+
+                dlg0.showDialog();
             });
         },
         beforeSend : function() {
@@ -248,4 +398,21 @@ function addUser() {
     var utypesJson = JSON.stringify(values);
 
     console.log(utypesJson);
+
+    $.ajax({
+        type       : "POST",
+        url        : "inc/actionswitcher.inc.php?action=addUser",
+        data       : {
+            userjson   : userJson,
+            utypesjson : utypesJson
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+            console.log(data);
+        }
+    });
 };

@@ -91,6 +91,7 @@ class UserMgr {
 
     public function addUserToDB($userJson, $utypesJson) {
         $user = json_decode($userJson, true);
+        $utypes = json_decode($utypesJson, true);
 
         $usercred = $this->getHashAndSalt($user["password"]);
 
@@ -101,22 +102,21 @@ class UserMgr {
         $user["hash"] = $usercred["hash"];
         $user["salt"] = $usercred["salt"];
 
-        /*$debugStr = "";
-        foreach ($user as $key => $property) {
-            $debugStr .= $key . " -> " . $property . "\n";
-        }
+        //return var_dump($user);
 
-        return $debugStr;*/
+        /*$debugStr = "";
+        foreach ($utypes as $key => $property) {
+            $debugStr .= $key . " -> " . $property . "\n";
+        }*/
+
+        //return $debugStr;
 
         /*$qry = "INSERT INTO tblUser (dtUsername, dtHash, dtFirstname, dtLastname, dtEmail, fiAbo, fiType, dtSalt,
             dtLicence, dtBirthdate, dtState, dtStreet, dtLocation, dtPostalCode, dtCountry) VALUES (:username, :hash,
             :firstname, :lastname, :email, :abo, :type, :salt, :license, :birthdate, :state, :address, :location,
             :postalcode, :country)";*/
 
-        $qry = "INSERT INTO tblUser (dtUsername, dtHash, dtFirstname, dtLastname, dtEmail, dtPhone, dtSalt, dtLicence,
-            dtBirthdate, dtIsActive, dtStreet, dtLocation, dtPostalCode, dtCountry, fiAbo, fiTuteur, dtCreateTS) VALUES
-            :username, :hash, :firstname, :lastname, :email, :phone, :salt, :licence, :birthdate, :state, :street,
-            :location, :postalcode, :country, :abo, :tuteur, NULL";
+        $qry = "INSERT INTO tblUser (dtUsername, dtHash, dtFirstname, dtLastname, dtEmail, dtPhone, dtSalt, dtLicence, dtBirthdate, dtIsActive, dtStreet, dtLocation, dtPostalCode, dtCountry, fiAbo, fiTuteur, dtCreateTS) VALUES (:username, :hash, :firstname, :lastname, :email, :phone, :salt, :licence, :birthdate, :state, :street, :location, :postalcode, :country, :abo, :tuteur, NULL)";
 
         try {
             $stmt = $this->dbh->prepare($qry);
@@ -126,10 +126,22 @@ class UserMgr {
             }
 
             if ($stmt->execute()) {
-                return true;
+                $lastID = $this->dbh->lastInsertId();
+
+                $qry = "INSERT INTO tblUser_TypeUser (fiTypeUser, fiUser, dtCreateTS) VALUES (:utype, $lastID, NULL)";
+
+                $stmt = $this->dbh->prepare($qry);
+
+                foreach ($utypes as $utype) {
+                    $stmt->bindValue(":utype", $utype);
+
+                    if (!$stmt->execute()) {
+                        return json_encode(false);
+                    }
+                }
             }
             else {
-                return false;
+                return json_encode(false);
             }
         }
         catch(PDOException $e) {
@@ -139,7 +151,7 @@ class UserMgr {
     }
 
     public function deleteUserFromDB($id) {
-        $qry = "DELETE FROM tblUser WHERE idUser = :id";
+        $qry = "DELETE FROM tblUser_TypeUser WHERE fiUser = :id";
 
         try {
             $stmt = $this->dbh->prepare($qry);
@@ -147,16 +159,46 @@ class UserMgr {
             $stmt->bindValue(":id", $id);
 
             if ($stmt->execute()) {
-                return true;
+                $qry = "DELETE FROM tblUser WHERE idUser = :id";
+
+                $stmt = $this->dbh->prepare($qry);
+
+                $stmt->bindValue(":id", $id);
+
+                if ($stmt->execute()) {
+                    return json_encode(true);
+                }
+                else {
+                    return json_encode(false);
+                }
             }
             else {
-                return false;
+                return json_encode(false);
             }
         }
         catch(PDOException $e) {
             echo "PDO has encountered an error: " + $e->getMessage();
             die();
         }
+
+        /*$qry = "DELETE FROM tblUser WHERE idUser = :id";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":id", $id);
+
+            if ($stmt->execute()) {
+                return json_encode(true);
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }*/
     }
 
     public function editUserInDB($username) {
@@ -164,21 +206,21 @@ class UserMgr {
     }
 
     public function setUserState($id, $state) {
-        $qry = "UPDATE tblUser SET dtState = :state WHERE idUser = :id";
+        $qry = "UPDATE tblUser SET dtIsActive = :state WHERE idUser = :id";
 
         try {
             $stmt = $this->dbh->prepare($qry);
 
-            $stmt->bindValue(":state", (int)$state);
+            $stmt->bindValue(":state", $state);
             $stmt->bindValue(":id", $id);
 
             if ($stmt->execute()) {
-                //return true;
-                return "T" . $state . " for " . $id;
+                return json_encode(true);
+                //return "T" . $state . " for " . $id;
             }
             else {
-                //return false;
-                return "F" . $state . " for " . $id;
+                return json_encode(false);
+                //return "F" . $state . " for " . $id;
             }
         }
         catch(PDOException $e) {

@@ -77,7 +77,7 @@ DLGREDEDIT;
 // -- De/Activate reservation --
 
 echo <<< DLGRESSTATUS
-    <div id="dlgResStatus" title="Bloquer">
+    <div id="dlgUserStatus" title="Bloquer">
         <p>Voulez vous vraiment blocker ou debloquer cet reservation?</p>
     </div>
 DLGRESSTATUS;

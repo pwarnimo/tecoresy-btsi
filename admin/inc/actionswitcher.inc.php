@@ -20,7 +20,7 @@ switch ($action) {
 
         break;
 
-    case "deleteUsers" :
+    case "deleteSingleUser" :
         $userMgr = new UserMgr();
         echo $userMgr->deleteUserFromDB(filter_input(INPUT_POST, "uid"));
 
