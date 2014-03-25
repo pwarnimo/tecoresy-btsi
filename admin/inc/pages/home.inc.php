@@ -13,7 +13,7 @@ echo <<< PAGE
             Messages importants <span class="pull-right"><button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-info-sign"></span></button>&nbsp;<button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-warning-sign"></span></button>&nbsp;<button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon glyphicon-exclamation-sign"></span></button>&nbsp;&nbsp;<button id="btnShowMsgBox" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus-sign"></span></button></span>
         </div>
         <div class="panel-body">
-            <p id="message-text">Pas de messages.</p>
+            <pre id="message-text">Pas de messages.</pre>
             <form id="messagebox">
                 <input id="edtMessageText" type="text" class="form-control"><br>
                 <button id="btnPost" type="button" class="btn btn-default"><span class="glyphicon glyphicon glyphicon-pencil"></span></button>
