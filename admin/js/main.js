@@ -22,6 +22,10 @@ $(document).ready(function() {
         });
     });
 
+    $("#btnLogout").click(function() {
+        window.location = "logout.php";
+    });
+
     /*$(".sidebar-nav li").click(function() {
         $(".sidebar-nav li").removeClass("linkact");
         $(this).addClass("linkact");

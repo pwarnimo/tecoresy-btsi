@@ -50,7 +50,7 @@ class MessageMgr {
         try {
             $stmt = $this->dbh->prepare($qry);
 
-            $stmt->bindValue(":message", $message);
+            $stmt->bindValue(":message", strip_tags($message));
             $stmt->bindValue(":state", $state);
 
             if ($stmt->execute()) {
