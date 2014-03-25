@@ -17,7 +17,7 @@ class User {
     }
 
     public function getUserDataArray($username) {
-        $qry = "SELECT dtUsername, dtFirstname, dtLastname, dtEmail, fiAbo, fiType FROM tblUser WHERE dtUsername = :username";
+        $qry = "SELECT dtUsername, dtFirstname, dtLastname, dtEmail FROM tblUser WHERE dtUsername = :username";
 
         try {
             $stmt = $this->dbh->prepare($qry);
@@ -31,9 +31,7 @@ class User {
                 "uname" => $res[0]["dtUsername"],
                 "fname" => $res[0]["dtFirstname"],
                 "lname" => $res[0]["dtLastname"],
-                "email" => $res[0]["dtEmail"],
-                "abo"   => $res[0]["fiAbo"],
-                "type"  => $res[0]["fiType"]
+                "email" => $res[0]["dtEmail"]
             );
 
             return $userdata;

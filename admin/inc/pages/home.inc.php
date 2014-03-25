@@ -40,7 +40,38 @@ echo <<< PAGE
 
     <h3>Informations générales</h3>
 
-    <p></p>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Reservations</h3>
+            </div>
+            <div class="panel-body">
+                <p>Pas de reservations ajourd hui.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Factures</h3>
+            </div>
+            <div class="panel-body">
+                <p>Pas de factures ajourd hui.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Utilisateurs</h3>
+            </div>
+            <div class="panel-body">
+                <p>NONE</p>
+            </div>
+        </div>
+    </div>
 
     <script src="js/pages/home.js"></script>
 PAGE;
