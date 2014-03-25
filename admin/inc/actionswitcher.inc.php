@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 include "dbconfig.inc.php";
 
 function __autoload($class_name) {

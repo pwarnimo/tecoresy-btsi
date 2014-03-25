@@ -63,7 +63,7 @@ DlgUserDel.prototype.showDialog = function() {
                     type       : "POST",
                     url        : "inc/actionswitcher.inc.php?action=deleteSingleUser",
                     data       : {
-                        uid   : uid,
+                        uid   : uid
                     },
                     statusCode : {
                         404: function() {
