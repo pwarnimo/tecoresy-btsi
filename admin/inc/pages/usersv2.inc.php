@@ -35,8 +35,13 @@ echo <<< PAGE
                     </div>
 
                     <div class="form-group">
-                        <label for="edtLicense">License</label>
-                        <input type="text" class="form-control" id="edtLicense" placeholder="Votre num&eacute;ro de license ici...">
+                        <label for="edtLicence">License</label>
+                        <input type="text" class="form-control" id="edtLicence" placeholder="Votre num&eacute;ro de license ici...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edtPhone">Téléphone</label>
+                        <input type="text" class="form-control" id="edtPhone" placeholder="Votre num&eacute;ro de téléphone ici...">
                     </div>
                 </div>
 
@@ -44,41 +49,41 @@ echo <<< PAGE
                     <label>Type d'utilisateur
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="1">
+                                <input name="utypes[]" type="checkbox" value="1">
                                 Visiteur
                             </label>
                         </div>
 
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="2">
+                                <input name="utypes[]" type="checkbox" value="2">
                                 Parent
                             </label>
                         </div>
 
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="3">
+                                <input name="utypes[]" type="checkbox" value="3">
                                 Membre
                             </label>
                         </div>
 
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" value="4">
+                                <input name="utypes[]" type="checkbox" value="4">
                                 Administrateur
                             </label>
                         </div>
                     </label>
 
                     <div class="form-group">
-                        <label for="edtAddresse">Addresse</label>
-                        <input type="text" class="form-control" id="edtAddresse" placeholder="Ex. 1, rue de la gare">
+                        <label for="edtStreet">Addresse</label>
+                        <input type="text" class="form-control" id="edtStreet" placeholder="Ex. 1, rue de la gare">
                     </div>
 
                     <div class="form-group">
-                        <label for="edtLocality">Localit&eacute;</label>
-                        <input type="text" class="form-control" id="edtLocality" placeholder="Ex. Diekirch">
+                        <label for="edtLocation">Localit&eacute;</label>
+                        <input type="text" class="form-control" id="edtLocation" placeholder="Ex. Diekirch">
                     </div>
 
                     <div class="form-group">
@@ -87,8 +92,24 @@ echo <<< PAGE
                     </div>
 
                     <div class="form-group">
-                        <label for="dtpBirthdate">Date de naissance</label>
-                        <input type="text" class="form-control" id="dtpBirthdate" placeholder="">
+                        <label for="edtBirthdate">Date de naissance</label>
+                        <input type="text" class="form-control" id="edtBirthdate" placeholder="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lsbTuteur">Tuteur</label>
+                        <select id="lsbTuteur">
+                            <option value="">None</option>
+PAGE;
+
+$tuteurs = $userMgr->getUserList();
+
+foreach ($tuteurs as $tuteur) {
+    echo "<option value=\"" . $tuteur["idUser"] . "\">" . $tuteur["dtFirstname"] . " " . $tuteur["dtLastname"] . "</option>";
+}
+
+echo <<< PAGE
+                        </select>
                     </div>
                 </div>
             </div>

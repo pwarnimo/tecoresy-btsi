@@ -53,6 +53,8 @@ DlgAddReservation.prototype.showDialog = function() {
 
 // -- Edit reservation --
 
+$("#dlgEditReservation").hide();
+
 // -- De/Activate reservation --
 
 $("#dlgResStatus").hide();

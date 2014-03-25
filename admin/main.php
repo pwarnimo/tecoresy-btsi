@@ -38,7 +38,7 @@
         <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.4.custom.min.css">
         <!--<link rel="stylesheet" href="css/context.bootstrap.css">-->
         <!--<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.10.4.custom.min.css">-->
-        <link rel="stylesheet" href="css/jquery.contextmenu.css">
+        <!--<link rel="stylesheet" href="css/jquery.contextmenu.css">-->
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -86,7 +86,7 @@
                     <li id="main" class="norm"><a href="main.php"><span class="glyphicon glyphicon-home"></span> Page d'acceuil</a></li>
                     <li></li>
                     <li id="terrains" class="norm"><a href="main.php?page=terrainsv2"><span class="glyphicon glyphicon-tags"></span> Terrains</a></li>
-                    <li id="reservations" class="norm"><a href="main.php?page=reservations"><span class="glyphicon glyphicon-book"></span> Reservations</a></li>
+                    <!--OBSOLETE<li id="reservations" class="norm"><a href="main.php?page=reservations"><span class="glyphicon glyphicon-book"></span> Reservations</a></li>-->
                     <li id="invoices" class="norm"><a href="main.php?page=invoices"><span class="glyphicon glyphicon-credit-card"></span> Factures</a></li>
                     <li id="users" class="norm"><a href="main.php?page=usersv2"><span class="glyphicon glyphicon-user"></span> Utilisateurs</a></li>
                     <li></li>

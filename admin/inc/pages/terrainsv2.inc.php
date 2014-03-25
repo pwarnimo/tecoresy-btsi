@@ -41,6 +41,39 @@ DLGNEW;
 
 // -- Edit reservation --
 
+echo <<< DLGREDEDIT
+    <div id="dlgEditReservation" title="Modifier une reservation...">
+        <form class="form-horizontal" role="form" id="frmEditReservation">
+            <div class="form-group">
+                <label for="edtTimestamp" class="col-sm-3 control-label">Date</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="edtTimestamp">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lbPlayer1" class="col-sm-3 control-label">Joueur 1</label>
+                <div class="col-sm-9">
+                    <select id="lbPlayer1" class="form-control">
+                        <option>Pol Warnimont</option>
+                        <option>Brant Bjork</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="lbPlayer2" class="col-sm-3 control-label">Joueur 2</label>
+                <div class="col-sm-9">
+                    <select id="lbPlayer2" class="form-control">
+                        <option>Pol Warnimont</option>
+                        <option>Brant Bjork</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+DLGREDEDIT;
+
 // -- De/Activate reservation --
 
 echo <<< DLGRESSTATUS

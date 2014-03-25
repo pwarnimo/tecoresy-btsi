@@ -10,7 +10,7 @@ $action = filter_input(INPUT_GET, "action");
 switch ($action) {
     case "addUser" :
         $userMgr = new UserMgr();
-        echo $userMgr->addUserToDB(filter_input(INPUT_POST, "json"));
+        echo $userMgr->addUserToDB(filter_input(INPUT_POST, "userjson"), filter_input(INPUT_POST, "utypesjson"));
 
         break;
 

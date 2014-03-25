@@ -24,6 +24,7 @@ $(document).ready(function() {
             modal: true,
             buttons: {
                 Ajouter: function() {
+                    addUser();
 
                     $(this).dialog("close");
                 },
@@ -213,4 +214,38 @@ function populateUserTable() {
             $("#progressbar").hide()
         }
     });
-}
+};
+
+function addUser() {
+    var arrUserData = {};
+
+    // :username, :hash, :firstname, :lastname, :email, :phone, :salt, :licence, :birthdate, :state, :street,
+    //:location, :postalcode, :country, :abo, :tuteur, NULL";
+
+    arrUserData["username"]   = $("#edtUsername").val();
+    arrUserData["password"]   = $("#edtPassword").val();
+    arrUserData["firstname"]  = $("#edtFirstname").val();
+    arrUserData["lastname"]   = $("#edtLastname").val();
+    arrUserData["email"]      = $("#edtEmail").val();
+    arrUserData["phone"]      = $("#edtPhone").val();
+    arrUserData["licence"]    = $("#edtLicence").val();
+    arrUserData["birthdate"]  = $("#edtBirthdate").val();
+    arrUserData["street"]     = $("#edtStreet").val();
+    arrUserData["location"]   = $("#edtLocation").val();
+    arrUserData["postalcode"] = $("#edtPostalCode").val();
+    arrUserData["country"]    = $("#edtCountry").val();
+    arrUserData["tuteur"]     = $("#lsbTuteur").val();
+
+    var userJson = JSON.stringify(arrUserData);
+
+    console.log(userJson);
+
+    var values = new Array();
+    $.each($("input[name='utypes[]']:checked"), function() {
+        values.push($(this).val());
+    });
+
+    var utypesJson = JSON.stringify(values);
+
+    console.log(utypesJson);
+};

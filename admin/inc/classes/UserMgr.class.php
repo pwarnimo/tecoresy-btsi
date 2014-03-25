@@ -39,7 +39,7 @@ class UserMgr {
 
                 return json_encode($returnArr);
 
-                return json_encode($res);
+                //return json_encode($res);
             }
             else {
                 return false;
@@ -89,7 +89,7 @@ class UserMgr {
         }
     }
 
-    public function addUserToDB($userJson) {
+    public function addUserToDB($userJson, $utypesJson) {
         $user = json_decode($userJson, true);
 
         $usercred = $this->getHashAndSalt($user["password"]);
@@ -108,10 +108,15 @@ class UserMgr {
 
         return $debugStr;*/
 
-        $qry = "INSERT INTO tblUser (dtUsername, dtHash, dtFirstname, dtLastname, dtEmail, fiAbo, fiType, dtSalt,
+        /*$qry = "INSERT INTO tblUser (dtUsername, dtHash, dtFirstname, dtLastname, dtEmail, fiAbo, fiType, dtSalt,
             dtLicence, dtBirthdate, dtState, dtStreet, dtLocation, dtPostalCode, dtCountry) VALUES (:username, :hash,
             :firstname, :lastname, :email, :abo, :type, :salt, :license, :birthdate, :state, :address, :location,
-            :postalcode, :country)";
+            :postalcode, :country)";*/
+
+        $qry = "INSERT INTO tblUser (dtUsername, dtHash, dtFirstname, dtLastname, dtEmail, dtPhone, dtSalt, dtLicence,
+            dtBirthdate, dtIsActive, dtStreet, dtLocation, dtPostalCode, dtCountry, fiAbo, fiTuteur, dtCreateTS) VALUES
+            :username, :hash, :firstname, :lastname, :email, :phone, :salt, :licence, :birthdate, :state, :street,
+            :location, :postalcode, :country, :abo, :tuteur, NULL";
 
         try {
             $stmt = $this->dbh->prepare($qry);
@@ -204,6 +209,25 @@ class UserMgr {
 
             if ($stmt->execute()) {
                 return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function getUserList() {
+        $qry = "SELECT idUser, dtFirstname, dtLastname FROM tblUser";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             else {
                 return false;
