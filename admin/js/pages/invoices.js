@@ -143,7 +143,7 @@ function populateInvoiceDataTable() {
                     var iid = "N" + result[i]["idFacture"];
                 }
 
-                var contGeneral = "<span class=\"glyphicon glyphicon glyphicon-pencil edit\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
+                var contGeneral = "<span class=\"glyphicon glyphicon-zoom-in pdf\"></span><span class=\"glyphicon glyphicon glyphicon-pencil edit\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
 
                 thtml += "<tr id=\"" + iid + "\"><td><input type=\"checkbox\" id=\"" + result[i]["idFacture"] + "\"></td>" +
                     "<td>" + result[i]["idFacture"] + "</td>" +
@@ -238,46 +238,15 @@ function populateInvoiceDataTable() {
                 var dlg0 = new DlgInvoiceStatus($(this).parent().parent().attr("id"));
 
                 dlg0.showDialog();
+            });
 
-                /*var iid = $(this).parent().parent().attr("id").substring(2);
-                var currentState = $(this).parent().parent().attr("id")[0];
+            $(".pdf").click(function() {
+                var currId = $(this).parent().parent().attr("id");
+                var iid = currId.substring(1);
 
-                if (currentState == "P") {
-                    console.log("IID" + iid + " : Payed");
-                    var newState = "0";
-                }
-                else {
-                    console.log("IID" + iid + " : Not payed");
-                    var newState = "1";
-                }
+                console.log(iid);
 
-                $("#dlgChangePaymentStatus").dialog({
-                    resizable: false,
-                    height:200,
-                    width: 350,
-                    modal: true,
-                    buttons: {
-                        Change: function() {
-                            console.log("Setting IID" + iid + " as " + newState);
-
-                            setPaymentStatus(iid, newState);
-
-                            $(this).dialog("close");
-                        },
-                        Annuler: function() {
-                            $(this).dialog("close");
-                        }
-                    },
-                    //autoOpen: false,
-                    show: {
-                        effect: "blind",
-                        duration: 200
-                    },
-                    hide: {
-                        effect: "blind",
-                        duration: 200
-                    }
-                });*/
+                window.location = "inc/pdfInvoice.inc.php?iid=" + iid;
             });
 
             /*$("tbody tr").click(function() {

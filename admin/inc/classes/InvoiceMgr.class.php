@@ -104,4 +104,25 @@ class InvoiceMgr {
             die();
         }
     }
+
+    public function getInvoice($id) {
+        $qry = "SELECT * FROM tblFacture WHERE idFacture = :id";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":id", $id);
+
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            else {
+                return false;
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }
