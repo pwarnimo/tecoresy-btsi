@@ -73,6 +73,65 @@ DlgInvoiceStatus.prototype.showDialog = function() {
     });
 };
 
+// -- Delete invoice --
+
+$("#dlgInvoiceDelete").hide();
+
+function DlgInvoiceDelete(iid) {
+    this.iid = iid;
+};
+
+DlgInvoiceDelete.prototype.showDialog = function() {
+    var currId = this.iid;
+
+    console.log(">> - " + currId);
+
+    $("#dlgInvoiceDelete").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                console.log(">>>>" + currId[0]);
+
+                var iid = currId.substring(1);
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=deleteSingleInvoice",
+                    data       : {
+                        iid   : iid
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        console.log(data);
+
+                        refreshTable();
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+}
+
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 $(document).ready(function() {
@@ -104,6 +163,10 @@ $(document).ready(function() {
         "<p>Pour plusieurs informations ou questions, veuillez envoyer un E-Mail á <a href=\"mailto:pwarnimo@gmail.com\">pwarnimo@gmail.com</a>.</p>";
 
     $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
+
+    $("#btnDelete").click(function() {
+        console.log("MULTIDELETE");
+    });
 
     console.log("PAGE LOADED!");
 });
@@ -143,7 +206,7 @@ function populateInvoiceDataTable() {
                     var iid = "N" + result[i]["idFacture"];
                 }
 
-                var contGeneral = "<span class=\"glyphicon glyphicon-zoom-in pdf\"></span><span class=\"glyphicon glyphicon glyphicon-pencil edit\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
+                var contGeneral = "<span class=\"glyphicon glyphicon-zoom-in pdf\"></span><span class=\"glyphicon glyphicon glyphicon glyphicon-trash delete\"></span>";
 
                 thtml += "<tr id=\"" + iid + "\"><td><input type=\"checkbox\" id=\"" + result[i]["idFacture"] + "\"></td>" +
                     "<td>" + result[i]["idFacture"] + "</td>" +
@@ -247,6 +310,12 @@ function populateInvoiceDataTable() {
                 console.log(iid);
 
                 window.location = "inc/pdfInvoice.inc.php?iid=" + iid;
+            });
+
+            $(".delete").click(function() {
+                dlg0 = new DlgInvoiceDelete($(this).parent().parent().attr("id"));
+
+                dlg0.showDialog();
             });
 
             /*$("tbody tr").click(function() {

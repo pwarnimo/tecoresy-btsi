@@ -137,4 +137,15 @@ switch ($action) {
         echo $terrainMgr->addReservation(filter_input(INPUT_POST, "date"), filter_input(INPUT_POST, "hour"), filter_input(INPUT_POST, "day"), filter_input(INPUT_POST, "player1"), filter_input(INPUT_POST, "player2"), filter_input(INPUT_POST, "terrain"));
 
         break;
+
+    case "deleteSingleInvoice" :
+        $invoiceMgr = new InvoiceMgr();
+        echo $invoiceMgr->deleteSingleInvoice(filter_input(INPUT_POST, "iid"));
+
+        break;
+
+    case "deleteUsers" :
+        $userMgr = new UserMgr();
+
+        break;
 }

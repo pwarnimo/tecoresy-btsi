@@ -125,4 +125,25 @@ class InvoiceMgr {
             die();
         }
     }
+
+    public function deleteSingleInvoice($id) {
+        $qry = "DELETE FROM tblFacture WHERE idFacture = :id";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":id", $id);
+
+            if ($stmt->execute()) {
+                return json_encode(true);
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }

@@ -218,4 +218,23 @@ class TerrainMgr2 {
             die();
         }*/
     }
+
+    public function getTerrainIds() {
+        $qry = "SELECT idTerrain FROM tblTerrain";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }

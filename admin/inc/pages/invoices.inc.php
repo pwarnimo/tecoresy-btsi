@@ -2,13 +2,21 @@
 
 /* --- OVERLAYS ----------------------------------------------------------------------------------------------------- */
 
-// -- New reservation --
+// -- Change payment status --
 
 echo <<< DLGINVOICESTATUS
     <div id="dlgInvoiceStatus" title="Payé / Non payé">
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Voulez-vous vraiment marquez la facture payé / non-payé?</p>
     </div>
 DLGINVOICESTATUS;
+
+// -- Delete invoice --
+
+echo <<< DLGINVOICEDELETE
+    <div id="dlgInvoiceDelete" title="Supprimer">
+        <p>Voulez vous vraiment supprimer cet facture?</p>
+    </div>
+DLGINVOICEDELETE;
 
 /* ------------------------------------------------------------------------------------------------------------------ */
 

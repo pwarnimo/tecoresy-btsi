@@ -46,7 +46,18 @@ echo <<< PAGE
                 <h3 class="panel-title">Reservations</h3>
             </div>
             <div class="panel-body">
-                <p>Pas de reservations ajourd hui.</p>
+PAGE;
+
+$terrainMgr = new TerrainMgr2();
+
+$terrains = $terrainMgr->getTerrainIds();
+
+foreach ($terrains as $terrain) {
+    print_r($terrain);
+    //echo "<p>Terrain " . $terrain["idTerrain"] . "</p>";
+}
+
+echo <<< PAGE
             </div>
         </div>
     </div>

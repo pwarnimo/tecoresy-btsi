@@ -94,6 +94,62 @@ DlgUserDel.prototype.showDialog = function() {
     });
 };
 
+// -- Multi delete --
+
+$("#dlgUserDelMulti").hide();
+
+function DlgUserDelMulti(uids) {
+    this.uids = uids;
+};
+
+DlgUserDelMulti.prototype.showDialog = function() {
+    var uids = this.uids;
+    var uidsJson = JSON.stringify(uids);
+
+    console.log(uidsJson);
+
+    $("#dlgUserDelMulti").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=deleteUsers",
+                    data       : {
+                        uids   : uidsJson
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        console.log(data);
+
+                        refreshTable();
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
 // -- De/Activate user --
 
 $("#dlgUserStatus").hide();
@@ -204,6 +260,23 @@ $(document).ready(function() {
         "<p>Pour plusieurs informations ou questions, veuillez envoyer un E-Mail á <a href=\"mailto:pwarnimo@gmail.com\">pwarnimo@gmail.com</a>.</p>";
 
     $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
+
+    $("#btnDelete").click(function() {
+        console.log("MULTIDELETE");
+
+        var cbs = new Array();
+
+        $("#dataUsers tbody input:checkbox:checked").each(function() {
+            cbs.push($(this).attr("id"));
+            console.log("checked");
+        });
+
+        console.log(cbs);
+
+        var dlg0 = new DlgUserDelMulti(cbs);
+
+        dlg0.showDialog();
+    })
 
     console.log("PAGE LOADED!");
 });

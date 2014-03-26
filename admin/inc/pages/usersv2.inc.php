@@ -14,6 +14,12 @@ echo <<< DLGUSERDEL
     </div>
 DLGUSERDEL;
 
+echo <<< DLGUSERDELMULTI
+    <div id="dlgUserDelMulti" title="Supprimer">
+        <p>Voulez vous vraiment supprimer les utilisateurs?</p>
+    </div>
+DLGUSERDELMULTI;
+
 echo <<< DLGUSERADD
     <div id="dlgUserAdd" title="Nouveau compte d'utilisateur">
         <form role="form" id="frmAddUser">
