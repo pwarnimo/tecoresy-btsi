@@ -17,21 +17,35 @@ echo <<< DLGNEW
             </div>
 
             <div class="form-group">
-                <label for="lbPlayer1" class="col-sm-3 control-label">Joueur 1</label>
+                <label for="lsbPlayer1" class="col-sm-3 control-label">Joueur 1</label>
                 <div class="col-sm-9">
-                    <select id="lbPlayer1" class="form-control">
-                        <option>Pol Warnimont</option>
-                        <option>Brant Bjork</option>
+                    <select id="lsbPlayer1" class="form-control">
+DLGNEW;
+
+$userMgr = new UserMgr();
+
+$users = $userMgr->getUserList();
+
+foreach ($users as $user) {
+    echo "<option value=\"" . $user["idUser"] . "\">" . $user["dtFirstname"] . " " . $user["dtLastname"] . "</option>";
+}
+
+echo <<< DLGNEW
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="lbPlayer2" class="col-sm-3 control-label">Joueur 2</label>
+                <label for="lsbPlayer2" class="col-sm-3 control-label">Joueur 2</label>
                 <div class="col-sm-9">
-                    <select id="lbPlayer2" class="form-control">
-                        <option>Pol Warnimont</option>
-                        <option>Brant Bjork</option>
+                    <select id="lsbPlayer2" class="form-control">
+DLGNEW;
+
+foreach ($users as $user) {
+    echo "<option value=\"" . $user["idUser"] . "\">" . $user["dtFirstname"] . " " . $user["dtLastname"] . "</option>";
+}
+
+echo <<< DLGNEW
                     </select>
                 </div>
             </div>

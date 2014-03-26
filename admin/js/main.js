@@ -23,7 +23,7 @@ $(document).ready(function() {
     });
 
     $("#btnLogout").click(function() {
-        window.location = "logout.php";
+        window.location = "../index.php";
     });
 
     /*$(".sidebar-nav li").click(function() {

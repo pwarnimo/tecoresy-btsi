@@ -4,13 +4,13 @@ var currentTerrain = 1;
 
 var weekday=new Array(7);
 
-weekday[0]="DIM";
-weekday[1]="LUN";
-weekday[2]="MAR";
-weekday[3]="MER";
-weekday[4]="JEU";
-weekday[5]="VEN";
-weekday[6]="SAM";
+weekday[0]="DIM-1";
+weekday[1]="LUN-2";
+weekday[2]="MAR-3";
+weekday[3]="MER-4";
+weekday[4]="JEU-5";
+weekday[5]="VEN-6";
+weekday[6]="SAM-7";
 
 /* --- OVERLAYS ----------------------------------------------------------------------------------------------------- */
 
@@ -18,14 +18,19 @@ weekday[6]="SAM";
 
 $("#dlgAddReservation").hide();
 
-function DlgAddReservation(date, time, player1, player2) {
-    this.date = date;
-    this.time = time;
-    this.player1 = player1;
-    this.player2 = player2;
+function DlgAddReservation(datetime) {
+    this.datetime = datetime;
 };
 
 DlgAddReservation.prototype.showDialog = function() {
+    var currId = this.datetime;
+    var dateID = currId.substr(0,10);
+
+    currId = currId.substring(11);
+
+    var hourID = currId.substring(0, currId.indexOf("-"));
+    var dayID = currId.substring(currId.indexOf("-") +1);
+
     $("#dlgAddReservation").dialog({
         resizable: false,
         height: 280,
@@ -33,6 +38,32 @@ DlgAddReservation.prototype.showDialog = function() {
         modal: true,
         buttons: {
             Ajouter: function() {
+                console.log("N-RES> Dt" + dateID + " He" + hourID + " De" + dayID + " P1" + this.player1 + " P2" + this.player2);
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=addReservation",
+                    data       : {
+                        date    : dateID,
+                        day     : dayID,
+                        hour    : hourID,
+                        terrain : currentTerrain,
+                        player1 : $("#lsbPlayer1").val(),
+                        player2 : $("#lsbPlayer2").val()
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        var result = JSON.parse(data);
+
+                        console.log(result);
+
+                        getReservationsForTerrain(currentTerrain);
+                    }
+                });
 
                 $(this).dialog("close");
             },
@@ -59,17 +90,20 @@ $("#dlgEditReservation").hide();
 
 $("#dlgResStatus").hide();
 
-function DlgResStatus(status) {
+function DlgResStatus(id, status) {
+    this.id = id;
     this.status = status;
 }
 
 DlgResStatus.prototype.showDialog = function() {
-    var currId = this.status;
-
-    console.log(">> - " + currId);
-
+    var status = this.status;
+    var currId = this.id;
     var dateID = currId.substr(0,10);
-    var hourID = "";
+
+    currId = currId.substring(11);
+
+    var hourID = currId.substring(0, currId.indexOf("-"));
+    var dayID = currId.substring(currId.indexOf("-") +1);
 
     $("#dlgResStatus").dialog({
         resizable: false,
@@ -78,7 +112,31 @@ DlgResStatus.prototype.showDialog = function() {
         modal: true,
         buttons: {
             Appliquer: function() {
-                console.log("BLOCK-->" + dateID);
+                console.log("BLOCK-->DA=" + dateID + " DY=" + dayID + " HO=" + hourID + " TR=" + currentTerrain + " ST=" + status);
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=blockReservation",
+                    data       : {
+                        date    : dateID,
+                        day     : dayID,
+                        hour    : hourID,
+                        terrain : currentTerrain,
+                        status  : status
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        var result = JSON.parse(data);
+
+                        console.log(result);
+
+                        getBlockedReservationsForTerrain(currentTerrain);
+                    }
+                });
 
                 $(this).dialog("close");
             },
@@ -234,6 +292,8 @@ function buildTable() {
 
                 var dateTS = new Date(tstamp);
 
+                var n = weekday[dateTS.getDay()];
+
                 dateTS.setHours(i+8);
                 var currentdate = new Date();
 
@@ -246,7 +306,7 @@ function buildTable() {
                 }
                 else {
                     console.log("xx");
-                    tHtml += "<td class=\"cal\" id=\"" + dates[j-1] + "-" + (i+8) + "\"><span class=\"icons\"></span><span class=\"controls\"><span style=\"color: #d9534f;\" class=\"glyphicon glyphicon-remove-circle btnContResStatus\"></span><span class=\"glyphicon glyphicon-plus btnContAdd\"></span><span class=\"glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon-trash\"></span></span></td>";
+                    tHtml += "<td class=\"cal\" id=\"" + dates[j-1] + "-" + (i+8) + "-" + n.substring(4) + "\"><span class=\"icons\"></span><span class=\"controls\"><span style=\"color: #d9534f;\" class=\"glyphicon glyphicon-remove-circle btnContResStatus\"></span><span class=\"glyphicon glyphicon-plus btnContAdd\"></span><span class=\"glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon-trash\"></span></span></td>";
                 }
             }
         }
@@ -259,12 +319,24 @@ function buildTable() {
     getBlockedReservationsForTerrain(currentTerrain);
 
     $(".btnContAdd").click(function() {
-        dlg0 = new DlgAddReservation("", "", "", "");
+        dlg0 = new DlgAddReservation($(this).parent().parent().attr("id"));
+
+        $("#edtTimestamp").val($(this).parent().parent().attr("id"));
+
         dlg0.showDialog();
     });
 
     $(".btnContResStatus").click(function() {
-        dlg0 = new DlgResStatus($(this).parent().parent().attr("id"));
+        if ($(this).parent().parent().hasClass("blocked")) {
+            var status = "No";
+        }
+        else {
+            var status = "Yes";
+        }
+
+        console.log("1>" + status);
+
+        dlg0 = new DlgResStatus($(this).parent().parent().attr("id"), status);
         dlg0.showDialog();
     });
 };
@@ -289,14 +361,22 @@ function getReservationsForTerrain(tid) {
             var result = JSON.parse(data);
 
             for (var i = 0; i < result.length; i++) {
-                var cellid = result[i]["fiDate"] + "-" + result[i]["fiHour"];
+                var dateTS = new Date(result[i]["fiDate"]);
+
+                var n = weekday[dateTS.getDay()];
+
+                var cellid = result[i]["fiDate"] + "-" + result[i]["fiHour"] + "-" + n.substring(4);
 
                 console.log("RES" + i + " CellID = " + cellid);
 
                 $("#" + cellid).addClass("reserved");
                 $("#" + cellid + " .btnContAdd").remove();
-                $("#" + cellid + " .controls span:first-child").after("<span class=\"glyphicon glyphicon-zoom-in\"></span>");
+                $("#" + cellid + " .controls span:first-child").after("<span class=\"glyphicon glyphicon-zoom-in details\"></span>");
                 /*$("#" + cellid).find(".icons").html("<span class=\"glyphicon glyphicon-user\"></span>&nbsp;<span class=\"glyphicon glyphicon-user\"></span>");*/
+
+                $(".details").click(function() {
+
+                });
 
                 console.log(">Done!");
             }
@@ -340,10 +420,16 @@ function getBlockedReservationsForTerrain(tid) {
         success    : function(data) {
             console.log("AREQ5>" + data);
 
+            $("#dataTerrains tbody td").removeClass("blocked");
+
             var result = JSON.parse(data);
 
             for (var i = 0; i < result.length; i++) {
-                var cellid = "#" + result[i]["fiDate"] + "-" + result[i]["fiHour"];
+                var dateTS = new Date(result[i]["fiDate"]);
+
+                var n = weekday[dateTS.getDay()];
+
+                var cellid = "#" + result[i]["fiDate"] + "-" + result[i]["fiHour"] + "-" + n.substring(4);
 
                 $(cellid).addClass("blocked");
                 $(cellid + " .btnContResStatus").removeClass("glyphicon-remove-circle");

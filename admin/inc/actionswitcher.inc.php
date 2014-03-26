@@ -124,4 +124,17 @@ switch ($action) {
         echo $messageMgr->addMessage(filter_input(INPUT_POST, "message"), filter_input(INPUT_POST, "state"), filter_input(INPUT_POST, "utypes"));
 
         break;
+
+    case "blockReservation" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->blockReservation(filter_input(INPUT_POST, "terrain"), filter_input(INPUT_POST, "date"), filter_input(INPUT_POST, "hour"), filter_input(INPUT_POST, "day"), filter_input(INPUT_POST, "status"));
+
+        break;
+
+    case "addReservation" :
+        $terrainMgr = new TerrainMgr2();
+        //date, hour, day, player1, player2, terrain
+        echo $terrainMgr->addReservation(filter_input(INPUT_POST, "date"), filter_input(INPUT_POST, "hour"), filter_input(INPUT_POST, "day"), filter_input(INPUT_POST, "player1"), filter_input(INPUT_POST, "player2"), filter_input(INPUT_POST, "terrain"));
+
+        break;
 }

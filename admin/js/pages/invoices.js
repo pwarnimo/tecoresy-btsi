@@ -29,12 +29,12 @@ DlgInvoiceStatus.prototype.showDialog = function() {
                 if (currId[0] == "P") {
                     console.log("NOT PAYED");
 
-                    var state = 0;
+                    var state = "No";
                 }
                 else {
                     console.log("PAYED");
 
-                    var state = 1;
+                    var state = "Yes";
                 }
 
                 $.ajax({
@@ -132,7 +132,7 @@ function populateInvoiceDataTable() {
             var thtml = "";
 
             for (var i = 0; i < result.length; i++) {
-                if (result[i]["dtPayed"] == true) {
+                if (result[i]["dtPayed"] == "Yes") {
                     var contPayed = "<span style=\"color: #0a0;\" class=\"glyphicon glyphicon glyphicon-euro payed\"></span>";
                     var infPayed = "<span style=\"color: #0a0;\">Oui</span>";
                     var iid = "P" + result[i]["idFacture"];

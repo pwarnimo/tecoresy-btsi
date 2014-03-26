@@ -126,4 +126,96 @@ class TerrainMgr2 {
             die();
         }
     }
+
+    public function blockReservation($terrain, $date, $hour, $weekday, $state) {
+        $qry = "UPDATE tblPossibleReservation SET dtIsBlocked = :state WHERE fiDate = :date AND fiTerrain = :terrain AND fiHourWeekDay = (SELECT idHourWeekDay FROM tblHourWeekDay WHERE fiHour = :hour AND fiWeekDay = :weekday)";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":terrain", $terrain);
+            $stmt->bindValue(":date", $date);
+            $stmt->bindValue(":hour", $hour);
+            $stmt->bindValue(":weekday", $weekday);
+            $stmt->bindValue(":state", $state);
+
+            if ($stmt->execute()) {
+                //return json_encode(true);
+
+                return json_encode("H>" . $hour. " D>" . $weekday . " S>" . $state);
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function addReservation($date, $hour, $day, $player1, $player2, $terrain) {
+        $qry = "SELECT idHourWeekDay FROM tblHourWeekDay WHERE fiHour = :hour AND fiWeekDay = :day";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":hour", $hour);
+            $stmt->bindValue(":day", $day);
+
+            if ($stmt->execute()) {
+                $wid = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                $qry = "INSERT INTO tblReservation (fiDate, fiTerrain, fiHourWeek, fiPlayer1, fiPlayer2) VALUES (:date, :terrain, :hourweekday, :player1, :player2)";
+
+                $stmt = $this->dbh->prepare($qry);
+
+                $stmt->bindValue(":date", $date);
+                $stmt->bindValue(":terrain", $terrain);
+                $stmt->bindValue(":hourweekday", $wid[0]["idHourWeekDay"]);
+                $stmt->bindValue(":player1", $player1);
+                $stmt->bindValue(":player2", $player2);
+
+                if ($stmt->execute()) {
+                    return json_encode(true);
+                }
+                else {
+
+                    return "F2>" . $date . " " . $terrain . " " . $wid[0]["idHourWeekDay"] . " " . $player1 . " " . $player2;
+                    return json_encode(false);
+                }
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+
+        /*$qry = "INSERT INTO tblReservation (fiDate, fiTerrain, fiHourWeek, fiPlayer1, fiPlayer2, dtCreateTS) VALUES (:date, :terrain, SELECT idHourWeekDay FROM tblHourWeekDay WHERE fiHour = :hour AND fiWeekDay = :day, :player1, :player2)";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":date", $date);
+            $stmt->bindValue(":day", $day);
+            $stmt->bindValue(":hour", $hour);
+            $stmt->bindValue(":player1", $player1);
+            $stmt->bindValue(":player2", $player2);
+            $stmt->bindValue(":terrain", $terrain);
+
+            if ($stmt->execute()) {
+                return json_encode(true);
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }*/
+    }
 }

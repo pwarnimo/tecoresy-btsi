@@ -109,7 +109,7 @@ echo <<< DLGUSERADD
                     <div class="form-group">
                         <label for="lsbTuteur">Tuteur</label>
                         <select id="lsbTuteur">
-                            <option value="">None</option>
+                            <option value="NULL">None</option>
 DLGUSERADD;
 
 $tuteurs = $userMgr->getUserList();
