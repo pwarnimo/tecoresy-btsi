@@ -226,7 +226,28 @@ class TerrainMgr2 {
             $stmt = $this->dbh->prepare($qry);
 
             if ($stmt->execute()) {
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function getReservationCountForTerrain($id) {
+        $qry = "SELECT COUNT(*) AS qcfCount FROM tblReservation WHERE fiTerrain = :id";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue("id", $id);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
             }
             else {
                 return json_encode(false);

@@ -46,18 +46,34 @@ echo <<< PAGE
                 <h3 class="panel-title">Reservations</h3>
             </div>
             <div class="panel-body">
+                <ul class="list-group">
 PAGE;
 
 $terrainMgr = new TerrainMgr2();
 
-$terrains = $terrainMgr->getTerrainIds();
+$terrains = json_decode($terrainMgr->getTerrainIds());
 
 foreach ($terrains as $terrain) {
-    print_r($terrain);
-    //echo "<p>Terrain " . $terrain["idTerrain"] . "</p>";
+    /*var_dump($terrain);
+    //echo "<p>Terrain " . $terrain["idTerrain"] . "</p>";*/
+    foreach ($terrain as $val) {
+        //$rescount = $terrainMgr->getReservationCounts();
+        $rescount = json_decode($terrainMgr->getReservationCountForTerrain($val));
+
+        $dataObj = (object) $rescount[0];
+
+        //echo "<p>Terrain " . $val . ": " . $dataObj->{"qcfCount"} . " Reservations</p>";
+        if ($dataObj->{"qcfCount"} > 0) {
+            echo "<li class=\"list-group-item text-success\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> <strong>Terrain " . $val . "</strong></li>";
+        }
+        else {
+            echo "<li class=\"list-group-item\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> Terrain " . $val . "</li>";
+        }
+    }
 }
 
 echo <<< PAGE
+                </ul>
             </div>
         </div>
     </div>
@@ -68,7 +84,37 @@ echo <<< PAGE
                 <h3 class="panel-title">Factures</h3>
             </div>
             <div class="panel-body">
-                <p>Pas de factures ajourd hui.</p>
+                <ul class="list-group">
+PAGE;
+
+$invoiceMgr = new InvoiceMgr();
+
+$payedinvoices = json_decode($invoiceMgr->getPayedInvoicesCount());
+$unpayedinvoices = json_decode($invoiceMgr->getUnpayedInvoicesCount());
+
+$dataObj = (object) $payedinvoices[0];
+
+//echo "<p>" . $dataObj->{"qcfCount"} . "</p>";
+if ($dataObj->{"qcfCount"} > 0) {
+    echo "<li class=\"list-group-item text-success\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> <strong>Factures payées</strong></li>";
+}
+else {
+    echo "<li class=\"list-group-item text-success\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> Factures payées</li>";
+}
+
+$dataObj = (object) $unpayedinvoices[0];
+
+//echo "<p>" . $dataObj->{"qcfCount"} . "</p>";
+
+if ($dataObj->{"qcfCount"} > 0) {
+    echo "<li class=\"list-group-item text-danger\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> <strong>Factures non payées</strong></li>";
+}
+else {
+    echo "<li class=\"list-group-item text-danger\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> Factures non payées</li>";
+}
+
+echo <<< PAGE
+                </ul>
             </div>
         </div>
     </div>
