@@ -36,6 +36,23 @@ $(document).ready(function() {
         loadNewestMessage("0")
     });
 
+    $("#btnPgTerrains").click(function() {
+        window.location = "main.php?page=terrainsv2";
+    });
+
+    $("#btnPgInvoices").click(function() {
+        window.location = "main.php?page=invoices";
+    });
+
+    $("#btnPgUsers").click(function() {
+        window.location = "main.php?page=usersv2";
+    });
+
+    var helpHtml = "<ul><li><span class=\"glyphicon glyphicon-refresh\"></span> Actualiser les données.</li></ul>" +
+        "<p>Pour plusieurs informations ou questions, veuillez envoyer un E-Mail á <a href=\"mailto:pwarnimo@gmail.com\">pwarnimo@gmail.com</a>.</p>";
+
+    $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
+
     loadNewestMessage("0");
 
     console.log("PAGE LOADED!");

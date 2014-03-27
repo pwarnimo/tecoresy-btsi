@@ -108,7 +108,7 @@ DLGRESSTATUS;
 
 echo <<< PAGE
     <div class="page-header">
-        <h1>Terrains <small>TECORESY Admin</a></small></h1>
+        <h1>Terrains et r&eacute;servations <small>TECORESY Admin</a></small></h1>
     </div>
 
     <ul id="terrainSwitcher" class="nav nav-tabs">
@@ -123,13 +123,13 @@ echo <<< PAGE
                 <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau Terrain</a></li>
             </ul>
         </li>
-        <li id="T1" class="active"><a class="tabactive" href="#">1</a></li>
-        <li id="T2"><a href="#">2</a></li>
-        <li id="T3"><a href="#">3</a></li>
-        <li id="T4"><a href="#">4</a></li>
-        <li id="T5"><a href="#">5</a></li>
-        <li id="T6"><a href="#">6</a></li>
-        <li id="T7"><a href="#">7</a></li>
+        <li id="T1" class="active terrains"><a class="tabactive" href="#">1</a></li>
+        <li id="T2" class="terrains"><a href="#">2</a></li>
+        <li id="T3" class="terrains"><a href="#">3</a></li>
+        <li id="T4" class="terrains"><a href="#">4</a></li>
+        <li id="T5" class="terrains"><a href="#">5</a></li>
+        <li id="T6" class="terrains"><a href="#">6</a></li>
+        <li id="T7" class="terrains"><a href="#">7</a></li>
     </ul>
 
 

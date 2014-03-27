@@ -280,4 +280,42 @@ class UserMgr {
             die();
         }
     }
+
+    public function getUnblockedUserCount() {
+        $qry = "SELECT COUNT(*) AS qcfCount FROM tblUser WHERE dtIsActive = 'Yes'";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function getBlockedUserCount() {
+        $qry = "SELECT COUNT(*) AS qcfCount FROM tblUser WHERE dtIsActive = 'No'";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }

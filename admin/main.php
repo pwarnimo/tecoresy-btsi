@@ -67,7 +67,7 @@
                     <!--<button id="btnRefr "type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>-->
                     <button id="btnRefresh" type="button" class="btn btn-default navbar-btn btn-sm"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>
                     <button id="btnAdd" type="button" class="btn btn-default navbar-btn btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</button>
-                    <button id="btnEdit" type="button" class="btn btn-default navbar-btn btn-sm"><span class="glyphicon glyphicon-pencil"></span> Modifier</button>
+                    <!--<button id="btnEdit" type="button" class="btn btn-default navbar-btn btn-sm"><span class="glyphicon glyphicon-pencil"></span> Modifier</button>-->
                     <button id="btnHelp" type="button" class="btn btn-default navbar-btn btn-sm"><span class="glyphicon glyphicon-question-sign"></span> Aide</button>
                     <button id="btnDelete" type="button" class="btn btn-danger navbar-btn btn-sm"><span class="glyphicon glyphicon-trash"></span> Supprimer</button>
                     <button id="btnLogout" type="button" class="btn btn-default navbar-btn btn-sm navbar-right"><span class="glyphicon glyphicon-log-out"></span> D&eacute;connexion</button>

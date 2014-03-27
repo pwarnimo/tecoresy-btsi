@@ -182,26 +182,30 @@ $(document).ready(function() {
     $("#terrainSwitcher li").click(function() {
         console.log("Switching to terrain " + $(this).attr("id"));
 
-        $(".icons").html("");
+        if ($(this).hasClass("terrains")) {
+            $(".icons").html("");
 
-        $("#terrainSwitcher li").removeClass("active");
-        $("#terrainSwitcher li a").removeClass("tabactive");
+            $("#terrainSwitcher li").removeClass("active");
+            $("#terrainSwitcher li a").removeClass("tabactive");
 
-        //var tabstring = "Terrain " + $(this).find("a").html();
+            //var tabstring = "Terrain " + $(this).find("a").html();
 
-        //$(this).find("a").html(tabstring);
-        $(this).addClass("active");
-        $(this).find("a").addClass("tabactive");
+            //$(this).find("a").html(tabstring);
 
-        $("#dataTerrains tbody td").removeClass("reserved");
-        $("#dataTerrains tbody td").removeClass("blocked");
 
-        var tid = $(this).attr("id").substring(1);
+            $(this).addClass("active");
+            $(this).find("a").addClass("tabactive");
 
-        currentTerrain = tid;
+            $("#dataTerrains tbody td").removeClass("reserved");
+            $("#dataTerrains tbody td").removeClass("blocked");
 
-        getReservationsForTerrain(tid);
-        getBlockedReservationsForTerrain(tid)
+            var tid = $(this).attr("id").substring(1);
+
+            currentTerrain = tid;
+
+            getReservationsForTerrain(tid);
+            getBlockedReservationsForTerrain(tid)
+        }
     });
 
     $(".cal").hover(function() {
@@ -221,7 +225,8 @@ $(document).ready(function() {
         "<p>Status des reservations</p>" +
         "<ul><li><img src=\"images/reserved.jpg\"> Le terrain est reservé pour l'heure indiqué.</li>" +
         "<li><img src=\"images/blocked.jpg\"> Les utilisateurs ne peut pas fait une reservation pour l'heure indiqué sur le terrain.</li>" +
-        "<li><img src=\"images/expired.jpg\"> La reservation est expiré.</li></ul>" +
+        "<li><img src=\"images/expired.jpg\"> La reservation est expiré.</li>" +
+        "<li><span class=\"badge\">42</span> Indique le numéro des reservations sur le terrain.</li></ul>" +
         "<p>Pour plusieurs informations ou questions, veuillez envoyer un E-Mail á <a href=\"mailto:pwarnimo@gmail.com\">pwarnimo@gmail.com</a>.</p>";
 
     $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
@@ -251,7 +256,9 @@ function buildTable() {
 
                 dates.push(result[i]["idDate"]);
 
-                tHtml += "<th>" + weekday[d.getDay()] + " (" + result[i]["idDate"] + ")</th>";
+                var currDay = weekday[d.getDay()];
+
+                tHtml += "<th>" + currDay.substring(0,3) + " (" + result[i]["idDate"] + ")</th>";
                 console.log("AREQ2>" + result[i]["idDate"]);
             }
 

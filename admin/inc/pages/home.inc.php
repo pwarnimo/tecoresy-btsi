@@ -40,7 +40,7 @@ echo <<< PAGE
 
     <h3>Informations générales</h3>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Reservations</h3>
@@ -74,11 +74,13 @@ foreach ($terrains as $terrain) {
 
 echo <<< PAGE
                 </ul>
+
+                <button id="btnPgTerrains" type="button" class="btn btn-default">Gestion</button>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Factures</h3>
@@ -115,17 +117,48 @@ else {
 
 echo <<< PAGE
                 </ul>
+
+                <button id="btnPgInvoices" type="button" class="btn btn-default">Gestion</button>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Utilisateurs</h3>
             </div>
             <div class="panel-body">
-                <p>NONE</p>
+                <ul class="list-group">
+PAGE;
+$userMgr = new UserMgr();
+
+$activeusercount = json_decode($userMgr->getUnblockedUserCount());
+$blockedusercount = json_decode($userMgr->getBlockedUserCount());
+
+$dataObj = (object) $activeusercount[0];
+
+//echo "<p>" . $dataObj->{"qcfCount"} . "</p>";
+if ($dataObj->{"qcfCount"} > 0) {
+    echo "<li class=\"list-group-item text-success\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> <strong>Utilisateurs actives</strong></li>";
+}
+else {
+    echo "<li class=\"list-group-item text-success\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> Utilisateurs actives</li>";
+}
+
+$dataObj = (object) $blockedusercount[0];
+
+//echo "<p>" . $dataObj->{"qcfCount"} . "</p>";
+
+if ($dataObj->{"qcfCount"} > 0) {
+    echo "<li class=\"list-group-item text-danger\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> <strong>Utilisateurs bloqués</strong></li>";
+}
+else {
+    echo "<li class=\"list-group-item text-danger\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> Utilisateurs bloqués</li>";
+}
+
+echo <<< PAGE
+                </ul>
+
+                <button id="btnPgUsers" type="button" class="btn btn-default">Gestion</button>
             </div>
         </div>
     </div>
