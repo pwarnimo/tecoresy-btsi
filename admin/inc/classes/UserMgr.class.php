@@ -342,6 +342,7 @@ class UserMgr {
                 echo "PDO has encountered an error: " + $e->getMessage();
                 die();
             }
+
         }
     }
 
