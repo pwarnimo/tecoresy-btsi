@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : users.inc.php
+ * Description :
+ *   This file is obsolete and replaced by usersv2.inc.php.
+ */
+
 $userMgr = new UserMgr();
 
 echo <<< PAGE

@@ -477,6 +477,28 @@ function populateUserTable() {
                             $("#edtSCountry").val(result[0]["dtCountry"]);
                         }
                     });
+
+                    $.ajax({
+                        type       : "POST",
+                        url        : "inc/actionswitcher.inc.php?action=getTypesForUser",
+                        data       : {
+                            uid   : uid
+                        },
+                        statusCode : {
+                            404: function() {
+                                console.log("action.inc.php not found!");
+                            }
+                        },
+                        success    : function(data) {
+                            console.log(data);
+
+                            var result = JSON.parse(data);
+
+                            for (var i = 0; i < result.length; i++) {
+
+                            }
+                        }
+                    });
                 });
             });
         },

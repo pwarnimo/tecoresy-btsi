@@ -1,13 +1,32 @@
 <?php
+/*
+ * TECORESY Admin panel 1.0
+ *
+ * File : main.php
+ * Description :
+ *   This is page contains the main container for the single pages. Every page will be loaded inside the div with the
+ *   id container.
+ *   The single pages (Ex. invoices or users) are located in the inc/pages folder. Also, if you add a new page, you have
+ *   to add the filename into the whitelist which is located in the inc/whitelist.inc.php file.
+ *   This page also includes the javascript and css files for bootstrap, datatables and the layout for the page.
+ */
+
+    /* We are starting the session. We need this in order to check if the user is an administrator. We also store the
+     * username, firstname as well the lastname inside the session.
+     */
     session_start();
 
     include "inc/whitelists/whitelist.inc.php";
     include "inc/dbconfig.inc.php";
 
+    // The autoload function is used in order to automatically load a class when we create an object.
     function __autoload($class_name) {
         require_once "inc/classes/" . $class_name . ".class.php";
     }
 
+    /* We are creating a new user object here. Now we can check if the user is an administrator and if the login was
+     * successful.
+     */
     $user = new User();
     $user->checkLogin();
 ?>
@@ -34,11 +53,7 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/jquery.dataTables.css">
-        <!--<link rel="stylesheet" href="js/vendor/jquery-ui-1.10.4/themes/base/jquery-ui.css">-->
         <link rel="stylesheet" href="css/smoothness/jquery-ui-1.10.4.custom.min.css">
-        <!--<link rel="stylesheet" href="css/context.bootstrap.css">-->
-        <!--<link rel="stylesheet" href="css/custom-theme/jquery-ui-1.10.4.custom.min.css">-->
-        <!--<link rel="stylesheet" href="css/jquery.contextmenu.css">-->
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
@@ -59,11 +74,8 @@
                     </button>
                     <a class="navbar-brand" href="main.php">TECORESY</a>
                 </div>
+                <!-- This div defines the topbar of the site (The buttons for refreshing, adding, etc... are created here.). -->
                 <div class="navbar-collapse collapse">
-                    <!--<ul class="nav navbar-nav">
-                        <li class="active"><a href="index.php"><span class="glyphicon glyphicon-refresh"></span> Actualiser</a></li>
-
-                    </ul>-->
                     <!--<button id="btnRefr "type="button" class="btn btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>-->
                     <button id="btnRefresh" type="button" class="btn btn-default navbar-btn btn-sm"><span class="glyphicon glyphicon-refresh"></span> Actualiser</button>
                     <button id="btnAdd" type="button" class="btn btn-default navbar-btn btn-sm"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter</button>
@@ -74,13 +86,13 @@
                 </div><!--/.navbar-collapse -->
             </div>
 
+            <!-- This div is used for the display of the help -->
             <div id="help-wrapper">
                 <p>Aide sur les fonctions</p>
             </div>
         </div>
 
-        <!---->
-
+        <!-- This div is used for the sidebar from where we can access the pages (invoices, users, etc...). -->
         <div id="wrapper">
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
@@ -94,19 +106,26 @@
                     <li id="settings" class="norm"><a href="main.php?page=settings"><span class="glyphicon glyphicon-cog"></span> Configuration</a></li>
                 </ul>
             </div>
+
+            <!-- This section of divs is the heart of the page. The content of the pages will be loaded inside this divs -->
             <div id="page-content-wrapper">
                 <div class="page-content">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
                                 <?php
+                                    // This variable is used to determine which page we are going to load.
                                     $page = filter_input(INPUT_GET, "page");
 
+                                    // If the page variable is not empty, then...
                                     if ($page != false) {
+                                        // ... proceed to check if the whitelist contains the page.
                                         if (in_array($page, $whitelist)) {
+                                            // If the page is in the whitelist, then load the contents.
                                             include("inc/pages/" . $page . ".inc.php");
                                         }
                                         else {
+                                            // If the page is not in the whitelist, then show an error.
                                             include("inc/pages/error.inc.php");
                                         }
                                     }
@@ -121,15 +140,10 @@
             </div>
         </div>
 
-        <!--<footer id="colophon">
-            <p>Tennis Court Reservation System Admin Panel <strong>PROTOTYPE</strong>, Copyright &copy; 2014 Warnimont Pol</p>
-        </footer>-->
-
+        <!-- This section is used for loading the jquery and bootstrap plugins. -->
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/vendor/jquery.dataTables.min.js"></script>
-        <!--<script src="js/vendor/jquery-ui-1.10.4/ui/jquery-ui.js"></script>-->
         <script src="js/vendor/jquery-ui-1.10.4.custom.min.js"></script>
-        <!--<script src="js/vendor/context.js"></script>-->
         <script src="js/vendor/jquery.contextmenu.js"></script>
 
         <script src="js/main.js"></script>

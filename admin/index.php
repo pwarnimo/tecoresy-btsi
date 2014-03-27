@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * TECORESY Admin panel 1.0
+ *
+ * File : index.php
+ * Description :
+ *   This file is used for testing purposes. With this page, the login is performed.
+ *   This file is deprecated and will be deleted soon.
+ */
+
 echo "<h1>TESTING -- LOGIN</h1>";
 
 echo <<< FRM

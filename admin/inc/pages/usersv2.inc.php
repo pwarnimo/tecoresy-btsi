@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : usersv2.inc.php
+ * Description :
+ *   This file contains the page for the management of the users in the database. Here, we can add, edit and delete
+ *   users in the database.
+ */
+
 $userMgr = new UserMgr();
 
 echo <<< DLGUSERSTATUS
@@ -118,6 +127,7 @@ echo <<< DLGUSERADD
                             <option value="NULL">None</option>
 DLGUSERADD;
 
+// Here we're loading a list of users in order to set a tutor for a users. This is relevant when a user is a child.
 $tuteurs = $userMgr->getUserList();
 
 foreach ($tuteurs as $tuteur) {
@@ -218,6 +228,21 @@ echo <<< PAGE
                             <label for="edtSCountry">Pays</label>
                             <input type="text" class="form-control" id="edtSCountry">
                         </div>
+
+                        <div id="utypes" class="form-group">
+PAGE;
+
+/* Here we're loading the available usertypes from the database. With this, we are then creating checkboxes which are
+ * used to set the usertypes for a new user.
+ */
+$usertypes = $userMgr->getUserTypesFromDB();
+
+foreach ($usertypes as $type) {
+    echo "<label><input type=\"checkbox\" val=\"" . $type["idTypeUser"] . "\"> " . $type["dtDescription"] . "</label><br>";
+}
+
+echo <<< PAGE
+                        </div>
                     </div>
                     <div class="col-md-6">
 
@@ -230,8 +255,6 @@ echo <<< PAGE
 
         <button type="button" id="btnBack" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Retour</button>
     </div>
-PAGE;
 
-echo <<< PAGE
     <script src="js/pages/usersv2.js"></script>
 PAGE;

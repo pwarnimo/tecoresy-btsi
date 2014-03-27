@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : home.inc.php
+ * Description :
+ *   This file contains the homepage. On this page, we are going to display general informations.
+ */
+
 echo <<< PAGE
     <div class="page-header">
 PAGE;
@@ -8,6 +17,7 @@ echo "<h1>TECORESY Admin <small>Bienvenue " . $_SESSION["lname"] . " " . $_SESSI
 echo <<< PAGE
     </div>
 
+    <!-- This section contains the message system. Here we can add new messages to the database -->
     <div class="panel panel-default">
         <div class="panel-heading">
             Messages importants <span class="pull-right"><button type="button" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-info-sign"></span></button>&nbsp;<button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-warning-sign"></span></button>&nbsp;<button type="button" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon glyphicon-exclamation-sign"></span></button>&nbsp;&nbsp;<button id="btnShowMsgBox" type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus-sign"></span></button></span>
@@ -23,6 +33,10 @@ echo <<< PAGE
                     <option value="3">Important</option>
                 </select>
 PAGE;
+
+/* In this section, we are loading the usertypes from the database. We're then going to generate the checkboxes for
+ * selecting a usertype for the message.
+ */
 
 $userMgr = new UserMgr();
 
@@ -49,20 +63,18 @@ echo <<< PAGE
                 <ul class="list-group">
 PAGE;
 
+// Here, we are loading the counts of reservations for every terrain.
+
 $terrainMgr = new TerrainMgr2();
 
 $terrains = json_decode($terrainMgr->getTerrainIds());
 
 foreach ($terrains as $terrain) {
-    /*var_dump($terrain);
-    //echo "<p>Terrain " . $terrain["idTerrain"] . "</p>";*/
     foreach ($terrain as $val) {
-        //$rescount = $terrainMgr->getReservationCounts();
         $rescount = json_decode($terrainMgr->getReservationCountForTerrain($val));
 
         $dataObj = (object) $rescount[0];
 
-        //echo "<p>Terrain " . $val . ": " . $dataObj->{"qcfCount"} . " Reservations</p>";
         if ($dataObj->{"qcfCount"} > 0) {
             echo "<li class=\"list-group-item text-success\"><span class=\"badge\">" . $dataObj->{"qcfCount"} . "</span> <strong>Terrain " . $val . "</strong></li>";
         }
@@ -88,6 +100,8 @@ echo <<< PAGE
             <div class="panel-body">
                 <ul class="list-group">
 PAGE;
+
+// Here, we are loading the counts of the payed and non payed reservations.
 
 $invoiceMgr = new InvoiceMgr();
 
@@ -129,6 +143,9 @@ echo <<< PAGE
             <div class="panel-body">
                 <ul class="list-group">
 PAGE;
+
+// Here we are going to load the counts of active and blocked users.
+
 $userMgr = new UserMgr();
 
 $activeusercount = json_decode($userMgr->getUnblockedUserCount());

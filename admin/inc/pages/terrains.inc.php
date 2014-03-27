@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : terrain.inc.php
+ * Description :
+ *   This file is obsolete and replaced by the terrainsv2.inc.php.
+ */
+
 $terrainMgr = new TerrainMgr();
 
 echo <<< PAGE

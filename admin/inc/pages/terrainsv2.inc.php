@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : terrainsv2.inc.php
+ * Description :
+ *   This file contains the page for displaying the terrains and reservations for every terrain. Here, we can create new
+ *   reservations or edit and delete existing reservations. Also, we can block specific time slots or block a whole
+ *   terrain.
+ */
+
 $terrainMgr = new TerrainMgr();
 
 /* --- OVERLAYS ----------------------------------------------------------------------------------------------------- */
@@ -22,6 +32,9 @@ echo <<< DLGNEW
                     <select id="lsbPlayer1" class="form-control">
 DLGNEW;
 
+/* Here, we're going to load the user details for every user in the database. We need this to select a player for a new
+ * reservation.
+ */
 $userMgr = new UserMgr();
 
 $users = $userMgr->getUserList();
@@ -40,6 +53,10 @@ echo <<< DLGNEW
                 <div class="col-sm-9">
                     <select id="lsbPlayer2" class="form-control">
 DLGNEW;
+
+/* Here, we're going to load the user details for every user in the database. We need this to select an oponent for a
+ * new reservation.
+ */
 
 foreach ($users as $user) {
     echo "<option value=\"" . $user["idUser"] . "\">" . $user["dtFirstname"] . " " . $user["dtLastname"] . "</option>";
@@ -117,18 +134,8 @@ echo <<< PAGE
         <tbody>
         </tbody>
     </table>
-PAGE;
 
-/*$mgrTerrains2 = new TerrainMgr2();
+    <button id="btnBackwards" type="button" class="btn btn-default">Précédent</button>&nbsp;<button id="btnForward" type="button" class="btn btn-default">Avancer</button>
 
-$testRes = $mgrTerrains2->getPossibleReservationsForTerrain(1);*/
-
-//print_r($testRes);
-
-/*foreach ($testRes as $im1) {
-    echo "<p>" . $im1["fiDate"] . " -- " . $im1["dtWeekDay"] . " -- " . $im1["idHour"] . "</p>";
-}*/
-
-echo <<< PAGE
     <script src="js/pages/terrainsv3.js"></script>
 PAGE;

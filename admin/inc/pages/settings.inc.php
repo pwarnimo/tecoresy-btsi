@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : settings.inc.php
+ * Description :
+ *   This file contains the page for changing and displaying the settings of the admin panel. We're also displaying if
+ *   there is an update available for the database and panel.
+ */
+
 $settingsMgr = new SettingsMgr();
 
 echo <<< PAGE
@@ -43,6 +52,7 @@ echo <<< PAGE
                     <h4>TECORESY Admin</h4>
 PAGE;
 
+// In this section, we're checking if there is an update available for the database or panel.
 echo "<p>Panel: " . $settingsMgr->checkForPanelUpdate() . "<br>Database: " . $settingsMgr->checkForDBUpdate() . "</p>";
 
 echo <<< PAGE

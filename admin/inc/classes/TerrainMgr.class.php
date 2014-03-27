@@ -1,7 +1,13 @@
 <?php
 
-/*
- * @param $n1 INT blbala
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : TerrainMgr.class.php
+ * Description :
+ *   OBSOLETE
+ *   This file contains the class for the terrain manager.
+ *   With this class, we can manage the single terrains as well as the reservations for each terrain.
  */
 
 class TerrainMgr {

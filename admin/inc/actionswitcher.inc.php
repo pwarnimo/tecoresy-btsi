@@ -1,4 +1,14 @@
 <?php
+
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : actionswitcher.inc.php
+ * Description :
+ *   This file is used for the ajax request in order to determine which action should be performed. Ex: Add a new user
+ *   or delete a reservation.
+ */
+
 session_start();
 
 include "dbconfig.inc.php";
@@ -177,6 +187,12 @@ switch ($action) {
     case "getUserData" :
         $userMgr = new UserMgr();
         echo $userMgr->getUserData(filter_input(INPUT_POST, "uid"));
+
+        break;
+
+    case "getTypesForUser" :
+        $userMgr = new UserMgr();
+        echo $userMgr->getUserTypesOfUser(filter_input(INPUT_POST, "uid"));
 
         break;
 }

@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * TECORESY Admin panel 1.0
+ *
+ * File : User.class.php
+ * Description :
+ *   This file contains the class for a user.
+ *   This class defines the properties of a user and is also used to check the login and type of the user.
+ */
+
 class User {
     private $dbh;
 
+    /**
+     * The constructor creates the database handle.
+     */
     public function __construct() {
         $dsn = dbtype . ":dbname=" . database . ";host=" . hostname;
 
@@ -16,6 +28,14 @@ class User {
         }
     }
 
+    /**
+     * This functions loads the details of user into the session.
+     *
+     * @param string $username This param contains the username which is needed to get the details of a user from the
+     * database.
+     *
+     * @return array Returns the details of a user in an array.
+     */
     public function getUserDataArray($username) {
         $qry = "SELECT dtUsername, dtFirstname, dtLastname, dtEmail FROM tblUser WHERE dtUsername = :username";
 
@@ -42,7 +62,7 @@ class User {
         }
     }
 
-    public function TypeIDToDescription($tID) {
+    /*public function TypeIDToDescription($tID) {
         $qry = "SELECT dtDescription FROM tblTypeUser WHERE idTypeUser = :tid";
 
         try {
@@ -86,8 +106,12 @@ class User {
             echo "PDO has encountered an error: " + $e->getMessage();
             die();
         }
-    }
+    }*/
 
+    /**
+     * This function checks if the user has successfully logged in and is of the type administrator. If not, return to
+     * the index site of the public interface by Philippe.
+     */
     public function checkLogin() {
         if (isset($_SESSION["login"])) {
             if ($_SESSION["login"] === false) {
