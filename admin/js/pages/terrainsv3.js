@@ -159,6 +159,64 @@ DlgResStatus.prototype.showDialog = function() {
 
 // -- De/Block terrain --
 
+$("#dlgTerrainStatus").hide();
+
+function DlgTerrainStatus(id, status) {
+    this.id = id;
+    this.status = status;
+}
+
+DlgTerrainStatus.prototype.showDialog = function() {
+    var status = this.status;
+    var id = this.id;
+
+    console.log("Changing status of " + id + " to " + status);
+
+    $("#dlgResStatus").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=blockTerrain",
+                    data       : {
+                        id     : id,
+                        status : status
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        var result = JSON.parse(data);
+
+                        console.log(result);
+
+                        getBlockedReservationsForTerrain(currentTerrain);
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
 // -- New terrain --
 
 // -- Remove terrain --
@@ -180,9 +238,10 @@ $(document).ready(function() {
     });
 
     $("#terrainSwitcher li").click(function() {
+        if ($(this).hasClass("terrains")) {
         console.log("Switching to terrain " + $(this).attr("id"));
 
-        if ($(this).hasClass("terrains")) {
+
             $(".icons").html("");
 
             $("#terrainSwitcher li").removeClass("active");
@@ -230,6 +289,37 @@ $(document).ready(function() {
         "<p>Pour plusieurs informations ou questions, veuillez envoyer un E-Mail á <a href=\"mailto:pwarnimo@gmail.com\">pwarnimo@gmail.com</a>.</p>";
 
     $("#help-wrapper").html($("#help-wrapper").html() + helpHtml);
+
+    $("#blockterrain").click(function() {
+        console.log("Blocking terrain " + currentTerrain);
+
+        $.ajax({
+            type       : "POST",
+            url        : "inc/actionswitcher.inc.php?action=getTerrainStatus",
+            async      : false,
+            data       : {
+                id : currentTerrain
+            },
+            statusCode : {
+                404: function() {
+                    console.log("action.inc.php not found!");
+                }
+            },
+            success    : function(data) {
+                var result = JSON.parse(data);
+
+                console.log(result[0].dtIsActive);
+
+                var dlg0 = new DlgTerrainStatus(currentTerrain, result[0].dtIsActive);
+
+                dlg0.showDialog();
+            }
+        });
+
+        var dlg0 = new DlgTerrainStatus();
+
+        dlg0.showDialog();
+    });
 
     console.log("PAGE LOADED!");
 });

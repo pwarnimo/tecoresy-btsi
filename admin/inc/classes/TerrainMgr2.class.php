@@ -258,4 +258,29 @@ class TerrainMgr2 {
             die();
         }
     }
+
+    public function getTerrainStatus($id) {
+        $qry = "SELECT dtIsActive FROM tblTerrain WHERE idTerrain = :id";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue("id", $id);
+
+            if ($stmt->execute()) {
+                return json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function blockTerrain($id, $state) {
+
+    }
 }

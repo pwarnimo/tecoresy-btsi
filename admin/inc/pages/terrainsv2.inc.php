@@ -100,6 +100,12 @@ DLGRESSTATUS;
 
 // -- De/Block terrain --
 
+echo <<< DLGTERRAINSTATUS
+    <div id="dlgTerrainStatus" title="Bloquer">
+        <p>Voulez vous vraiment blocker ou debloquer ce terrain?</p>
+    </div>
+DLGTERRAINSTATUS;
+
 // -- New terrain --
 
 // -- Delete terrain --
@@ -117,7 +123,7 @@ echo <<< PAGE
                  <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="#"><span class="glyphicon glyphicon-lock"></span> Verrouiller</a></li>
+                <li><a id="blockterrain" href="#"><span class="glyphicon glyphicon-lock"></span> Verrouiller</a></li>
                 <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Modifier</a></li>
                 <li class="divider"></li>
                 <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau Terrain</a></li>

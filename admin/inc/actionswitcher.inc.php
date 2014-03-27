@@ -148,4 +148,10 @@ switch ($action) {
         $userMgr = new UserMgr();
 
         break;
+
+    case "getTerrainStatus" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->getTerrainStatus(filter_input(INPUT_POST, "id"));
+
+        break;
 }
