@@ -146,12 +146,37 @@ switch ($action) {
 
     case "deleteUsers" :
         $userMgr = new UserMgr();
+        echo $userMgr->deleteUsers(filter_input(INPUT_POST, "uids"));
 
         break;
 
     case "getTerrainStatus" :
         $terrainMgr = new TerrainMgr2();
         echo $terrainMgr->getTerrainStatus(filter_input(INPUT_POST, "id"));
+
+        break;
+
+    case "blockTerrain" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->blockTerrain(filter_input(INPUT_POST, "id"), filter_input(INPUT_POST, "state"));
+
+        break;
+
+    case "deleteReservation" :
+        $terrainMgr = new TerrainMgr2();
+        echo $terrainMgr->deleteReservation(filter_input(INPUT_POST, "date"), filter_input(INPUT_POST, "day"), filter_input(INPUT_POST, "hour"), filter_input(INPUT_POST, "terrain"));
+
+        break;
+
+    case "deleteInvoices" :
+        $invoiceMgr = new InvoiceMgr();
+        echo $invoiceMgr->deleteMultipleInvoices(filter_input(INPUT_POST, "iids"));
+
+        break;
+
+    case "getUserData" :
+        $userMgr = new UserMgr();
+        echo $userMgr->getUserData(filter_input(INPUT_POST, "uid"));
 
         break;
 }

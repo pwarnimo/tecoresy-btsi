@@ -164,7 +164,7 @@ class PDF extends FPDF {
         $y2  = $y1 + 2;
         $mid = ($r1 + $r2 ) / 2;
 
-        $texte  = $libelle . " EN " . EURO . " N° : " . $num;
+        $texte  = utf8_decode($libelle . " N°: " . $num);
         $szfont = 12;
         $loop   = 0;
 
@@ -195,7 +195,7 @@ class PDF extends FPDF {
 // Invoice
     function addFacture( $numfact )
     {
-        $string = sprintf("FA%04d",$numfact);
+        $string = sprintf(utf8_decode("FA%04d"),$numfact);
         $this->fact_dev( "Facture", $string );
     }
 
@@ -317,13 +317,13 @@ class PDF extends FPDF {
     function addReference($ref)
     {
         $this->SetFont( "Arial", "", 10);
-        $length = $this->GetStringWidth( "Références : " . $ref );
+        $length = $this->GetStringWidth( utf8_decode("Références : " . $ref ));
         $r1  = 10;
         $r2  = $r1 + $length;
         $y1  = 92;
         $y2  = $y1+5;
         $this->SetXY( $r1 , $y1 );
-        $this->Cell($length,4, "Références : " . $ref);
+        $this->Cell($length,4, utf8_decode("Références : " . $ref));
     }
 
     function addCols( $tab )

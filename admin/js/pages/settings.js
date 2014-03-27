@@ -4,9 +4,13 @@ $(document).ready(function() {
     $(".sidebar-nav li").removeClass("linkact");
     $("#settings").addClass("linkact");
 
-    $("#btnAdd").html("SAVE_SETTINGS");
+    $("#btnAdd").html("Sauvegarder");
     $("#btnEdit").attr("disabled", "disabled");
     $("#btnDelete").attr("disabled", "disabled");
+
+    $("#btnAdd").click(function() {
+
+    });
 
     console.log("PAGE LOADED!");
 });

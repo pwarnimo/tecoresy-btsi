@@ -184,4 +184,24 @@ class InvoiceMgr {
             die();
         }
     }
+
+    public function deleteMultipleInvoices($ids) {
+        $arrids = json_decode($ids);
+
+        $qry = "DELETE FROM tblFacture WHERE idFacture = :id";
+
+        try {
+            foreach ($arrids as $id) {
+                $stmt = $this->dbh->prepare($qry);
+
+                $stmt->bindValue(":id", $id);
+
+                $stmt->execute();
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
 }

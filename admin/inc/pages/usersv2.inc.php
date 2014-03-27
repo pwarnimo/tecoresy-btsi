@@ -157,10 +157,74 @@ echo <<< PAGE
     <div id="userview">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">D&eacute;tails sur l'utilisateur </h3>
+                <h3 class="panel-title">D&eacute;tails sur l'utilisateur <span id="idutilisateur"></span></h3>
             </div>
             <div class="panel-body">
-                <p>test</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="edtSUsername">Nom d'utilisateur</label>
+                            <input type="text" class="form-control" id="edtSUsername">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSFirstname">Prénom</label>
+                            <input type="text" class="form-control" id="edtSFirstname">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSLastname">Nom</label>
+                            <input type="text" class="form-control" id="edtSLastname">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSEmail">E-Mail</label>
+                            <input type="text" class="form-control" id="edtSEmail">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSPhone">Phone</label>
+                            <input type="text" class="form-control" id="edtSPhone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSLicence">Licence</label>
+                            <input type="text" class="form-control" id="edtSLicence">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="edtSBirthdate">Date de naissance</label>
+                            <input type="text" class="form-control" id="edtSBirthdate">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSStreet">Addresse</label>
+                            <input type="text" class="form-control" id="edtSStreet">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSLocation">Localité</label>
+                            <input type="text" class="form-control" id="edtSLocation">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSCP">Code postale</label>
+                            <input type="text" class="form-control" id="edtSCP">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edtSCountry">Pays</label>
+                            <input type="text" class="form-control" id="edtSCountry">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
+                </div>
+
+                <button type="button" id="btnEdit" class="btn btn-default">Editer</button>&nbsp;<button type="button" id="btnNewPw" class="btn btn-default">Nouveau mot de passe</button>
             </div>
         </div>
 

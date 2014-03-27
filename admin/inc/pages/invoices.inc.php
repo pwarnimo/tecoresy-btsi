@@ -18,6 +18,14 @@ echo <<< DLGINVOICEDELETE
     </div>
 DLGINVOICEDELETE;
 
+// -- Multi delete --
+
+echo <<< DLGINVOICEDELETEMULTI
+    <div id="dlgInvoiceDelMulti" title="Supprimer">
+        <p>Voulez vous vraiment supprimer multiples factures?</p>
+    </div>
+DLGINVOICEDELETEMULTI;
+
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 echo <<< PAGE

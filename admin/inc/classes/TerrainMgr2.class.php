@@ -281,6 +281,48 @@ class TerrainMgr2 {
     }
 
     public function blockTerrain($id, $state) {
+        $qry = "UPDATE tblTerrain SET dtIsActive = :state WHERE idTerrain = :id";
 
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue("id", $id);
+            $stmt->bindValue(":state", $state);
+
+            if ($stmt->execute()) {
+                return json_encode(true);
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
+    }
+
+    public function deleteReservation($date, $day, $hour, $terrain) {
+        $qry = "DELETE FROM tblReservation WHERE fiDate = :date AND fiTerrain = :terrain AND fiHourWeek = (SELECT idHourWeekDay FROM tblHourWeekDay WHERE fiHour = :hour AND fiWeekDay = :weekday)";
+
+        try {
+            $stmt = $this->dbh->prepare($qry);
+
+            $stmt->bindValue(":date", $date);
+            $stmt->bindValue(":terrain", $terrain);
+            $stmt->bindValue(":hour", $hour);
+            $stmt->bindValue(":weekday", $day);
+
+            if ($stmt->execute()) {
+                return json_encode(true);
+            }
+            else {
+                return json_encode(false);
+            }
+        }
+        catch(PDOException $e) {
+            echo "PDO has encountered an error: " + $e->getMessage();
+            die();
+        }
     }
 }

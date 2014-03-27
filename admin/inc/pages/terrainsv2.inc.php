@@ -53,41 +53,6 @@ echo <<< DLGNEW
     </div>
 DLGNEW;
 
-// -- Edit reservation --
-
-echo <<< DLGREDEDIT
-    <div id="dlgEditReservation" title="Modifier une reservation...">
-        <form class="form-horizontal" role="form" id="frmEditReservation">
-            <div class="form-group">
-                <label for="edtTimestamp" class="col-sm-3 control-label">Date</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control" id="edtTimestamp">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="lbPlayer1" class="col-sm-3 control-label">Joueur 1</label>
-                <div class="col-sm-9">
-                    <select id="lbPlayer1" class="form-control">
-                        <option>Pol Warnimont</option>
-                        <option>Brant Bjork</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="lbPlayer2" class="col-sm-3 control-label">Joueur 2</label>
-                <div class="col-sm-9">
-                    <select id="lbPlayer2" class="form-control">
-                        <option>Pol Warnimont</option>
-                        <option>Brant Bjork</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-    </div>
-DLGREDEDIT;
-
 // -- De/Activate reservation --
 
 echo <<< DLGRESSTATUS
@@ -97,6 +62,12 @@ echo <<< DLGRESSTATUS
 DLGRESSTATUS;
 
 // -- Remove reservation --
+
+echo <<< DLGRESDELETE
+    <div id="dlgResDelete" title="Bloquer">
+        <p>Voulez vous vraiment supprimer cet reservation?</p>
+    </div>
+DLGRESDELETE;
 
 // -- De/Block terrain --
 
@@ -123,10 +94,10 @@ echo <<< PAGE
                  <span class="glyphicon glyphicon-cog"></span> <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                <li><a id="blockterrain" href="#"><span class="glyphicon glyphicon-lock"></span> Verrouiller</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Modifier</a></li>
+                <li><a id="blockterrain" href="#"></a></li>
+                <!--<li><a href="#"><span class="glyphicon glyphicon-pencil"></span> Modifier</a></li>
                 <li class="divider"></li>
-                <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau Terrain</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-plus-sign"></span> Nouveau Terrain</a></li>-->
             </ul>
         </li>
         <li id="T1" class="active terrains"><a class="tabactive" href="#">1</a></li>

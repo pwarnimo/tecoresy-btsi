@@ -394,7 +394,7 @@ function populateUserTable() {
                         "sTitle": "Type"
                     },
                     {
-                        "sTitle": "_CTLS"
+                        "sTitle": ""
                     }
 
                 ],
@@ -438,6 +438,46 @@ function populateUserTable() {
                 var dlg0 = new DlgUserDel($(this).parent().parent().attr("id"));
 
                 dlg0.showDialog();
+            });
+
+            $(".edit").click(function() {
+                var uidr = $(this).parent().parent().attr("id");
+                var uid = uidr.substring(1);
+
+                $("#tableview").fadeOut("fast", function() {
+                    $("#userview").fadeIn("fast");
+
+                    $.ajax({
+                        type       : "POST",
+                        url        : "inc/actionswitcher.inc.php?action=getUserData",
+                        data       : {
+                            uid   : uid
+                        },
+                        statusCode : {
+                            404: function() {
+                                console.log("action.inc.php not found!");
+                            }
+                        },
+                        success    : function(data) {
+                            console.log(data);
+
+                            var result = JSON.parse(data);
+
+                            $("#idutilisateur").html(result[0]["idUser"]);
+                            $("#edtSUsername").val(result[0]["dtUsername"]);
+                            $("#edtSFirstname").val(result[0]["dtFirstname"]);
+                            $("#edtSLastname").val(result[0]["dtLastname"]);
+                            $("#edtSEmail").val(result[0]["dtEmail"]);
+                            $("#edtSPhone").val(result[0]["dtPhone"]);
+                            $("#edtSLicence").val(result[0]["dtLicence"]);
+                            $("#edtSBirthdate").val(result[0]["dtBirthdate"]);
+                            $("#edtSStreet").val(result[0]["dtStreet"]);
+                            $("#edtSLocation").val(result[0]["dtLocation"]);
+                            $("#edtSCP").val(result[0]["dtPostalCode"]);
+                            $("#edtSCountry").val(result[0]["dtCountry"]);
+                        }
+                    });
+                });
             });
         },
         beforeSend : function() {

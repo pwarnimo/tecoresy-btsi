@@ -122,7 +122,7 @@ class UserMgr {
             $stmt = $this->dbh->prepare($qry);
 
             foreach ($user as $key => $property) {
-                $stmt->bindValue(":" . $key, $property);
+                $stmt->bindValue(":" . $key, strip_tags($property));
             }
 
             if ($stmt->execute()) {
@@ -151,36 +151,40 @@ class UserMgr {
     }
 
     public function deleteUserFromDB($id) {
-        $qry = "DELETE FROM tblUser_TypeUser WHERE fiUser = :id";
+        if ($id != $_SESSION["id"]) {
+            $qry = "DELETE FROM tblUser_TypeUser WHERE fiUser = :id";
 
-        try {
-            $stmt = $this->dbh->prepare($qry);
-
-            $stmt->bindValue(":id", $id);
-
-            if ($stmt->execute()) {
-                $qry = "DELETE FROM tblUser WHERE idUser = :id";
-
+            try {
                 $stmt = $this->dbh->prepare($qry);
 
                 $stmt->bindValue(":id", $id);
 
                 if ($stmt->execute()) {
-                    return json_encode(true);
+                    $qry = "DELETE FROM tblUser WHERE idUser = :id";
+
+                    $stmt = $this->dbh->prepare($qry);
+
+                    $stmt->bindValue(":id", $id);
+
+                    if ($stmt->execute()) {
+                        return json_encode(true);
+                    }
+                    else {
+                        return json_encode(false);
+                    }
                 }
                 else {
                     return json_encode(false);
                 }
             }
-            else {
-                return json_encode(false);
+            catch(PDOException $e) {
+                echo "PDO has encountered an error: " + $e->getMessage();
+                die();
             }
         }
-        catch(PDOException $e) {
-            echo "PDO has encountered an error: " + $e->getMessage();
-            die();
+        else {
+            return json_encode(false);
         }
-
         /*$qry = "DELETE FROM tblUser WHERE idUser = :id";
 
         try {
@@ -317,5 +321,58 @@ class UserMgr {
             echo "PDO has encountered an error: " + $e->getMessage();
             die();
         }
+    }
+
+    public function deleteUsers($ids) {
+        $arrids = json_decode($ids);
+
+        if (!in_array($_SESSION["id"], $arrids)) {
+            $qry = "DELETE FROM tblUser WHERE idUser = :id";
+
+            try {
+                foreach ($arrids as $id) {
+                    $stmt = $this->dbh->prepare($qry);
+
+                    $stmt->bindValue(":id", $id);
+
+                    $stmt->execute();
+                }
+            }
+            catch(PDOException $e) {
+                echo "PDO has encountered an error: " + $e->getMessage();
+                die();
+            }
+        }
+    }
+
+    public function getUserData($id) {
+        $qry = "SELECT * FROM tblUser WHERE idUser = :id";
+
+        $stmt = $this->dbh->prepare($qry);
+
+        $stmt->bindValue(":id", $id);
+
+        if ($stmt->execute()) {
+            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            /*foreach ($res as $row) {
+                //$usertypes = $this->getUserTypesOfUser($id);
+
+                //$row["usertypes"] = $usertypes;
+
+                array_push($returnArr, $row);
+            }
+
+            return json_encode($returnArr);*/
+
+            return json_encode($res);
+        }
+        else {
+            return json_encode(false);
+        }
+    }
+
+    public function editUser($userJson) {
+        //$qry = "UPDATE tblUser SET dtUsername = "
     }
 }

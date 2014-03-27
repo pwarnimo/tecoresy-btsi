@@ -132,6 +132,62 @@ DlgInvoiceDelete.prototype.showDialog = function() {
     });
 }
 
+// -- Multi delete --
+
+$("#dlgInvoiceDelMulti").hide();
+
+function DlgInvoiceDelMulti(iids) {
+    this.iids = iids;
+};
+
+DlgInvoiceDelMulti.prototype.showDialog = function() {
+    var iids = this.iids;
+    var iidsJson = JSON.stringify(iids);
+
+    console.log("IIDJSON = " + iidsJson);
+
+    $("#dlgInvoiceDelMulti").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=deleteInvoices",
+                    data       : {
+                        iids   : iidsJson
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        console.log(data);
+
+                        refreshTable();
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
 /* ------------------------------------------------------------------------------------------------------------------ */
 
 $(document).ready(function() {
@@ -166,6 +222,19 @@ $(document).ready(function() {
 
     $("#btnDelete").click(function() {
         console.log("MULTIDELETE");
+
+        var cbs = new Array();
+
+        $("#dataInvoices tbody input:checkbox:checked").each(function() {
+            cbs.push($(this).attr("id"));
+            console.log("checked");
+        });
+
+        console.log(cbs);
+
+        var dlg0 = new DlgInvoiceDelMulti(cbs);
+
+        dlg0.showDialog();
     });
 
     console.log("PAGE LOADED!");
@@ -273,7 +342,7 @@ function populateInvoiceDataTable() {
                         "sTitle": "Payé"
                     },
                     {
-                        "sTitle": "_CTLS"
+                        "sTitle": ""
                     }
 
                 ],

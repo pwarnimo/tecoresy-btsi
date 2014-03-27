@@ -93,6 +93,11 @@ class User {
             if ($_SESSION["login"] === false) {
                 header("Location: index.php");
             }
+            else {
+                if (!in_array(0, $_SESSION["type"])) {
+                    header("Location: index.php");
+                }
+            }
         }
         else {
             header("Location: index.php");

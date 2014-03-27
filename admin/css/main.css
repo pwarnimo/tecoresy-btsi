@@ -341,3 +341,7 @@ table .glyphicon {
 .blocked {
     background-color: #f0ad4e;
 }
+
+.tblocked {
+    background-color: #d9534f;
+}

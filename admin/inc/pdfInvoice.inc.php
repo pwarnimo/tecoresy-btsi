@@ -13,7 +13,7 @@ $pdf = new PDF();
 
 $pdf = new PDF( 'P', 'mm', 'A4' );
 $pdf->AddPage();
-$pdf->addSociete( "TC Residence Walfer", "59, rue de Bridel\nL-7217 Bereldange\nLuxembourg");
+$pdf->addSociete( utf8_decode("TC Résidence Walfer"), "59, rue de Bridel\nL-7217 Bereldange\nLuxembourg");
 
 $pdf->fact_dev( "Facture ", $facture[0]["idFacture"] );
 

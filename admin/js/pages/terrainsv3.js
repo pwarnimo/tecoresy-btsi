@@ -82,10 +82,6 @@ DlgAddReservation.prototype.showDialog = function() {
     });
 };
 
-// -- Edit reservation --
-
-$("#dlgEditReservation").hide();
-
 // -- De/Activate reservation --
 
 $("#dlgResStatus").hide();
@@ -157,6 +153,71 @@ DlgResStatus.prototype.showDialog = function() {
 
 // -- Remove reservation --
 
+$("#dlgResDelete").hide();
+
+function DlgResDelete(id) {
+    this.id = id;
+};
+
+DlgResDelete.prototype.showDialog = function() {
+    var currId = this.id;
+    var dateID = currId.substr(0,10);
+
+    currId = currId.substring(11);
+
+    var hourID = currId.substring(0, currId.indexOf("-"));
+    var dayID = currId.substring(currId.indexOf("-") +1);
+
+    $("#dlgResDelete").dialog({
+        resizable: false,
+        height: 190,
+        width: 400,
+        modal: true,
+        buttons: {
+            Appliquer: function() {
+                console.log("BLOCK-->DA=" + dateID + " DY=" + dayID + " HO=" + hourID + " TR=" + currentTerrain);
+
+                $.ajax({
+                    type       : "POST",
+                    url        : "inc/actionswitcher.inc.php?action=deleteReservation",
+                    data       : {
+                        date    : dateID,
+                        day     : dayID,
+                        hour    : hourID,
+                        terrain : currentTerrain
+                    },
+                    statusCode : {
+                        404: function() {
+                            console.log("action.inc.php not found!");
+                        }
+                    },
+                    success    : function(data) {
+                        var result = JSON.parse(data);
+
+                        console.log(result);
+
+                        $(".cal").removeClass("reserved");
+                        getReservationsForTerrain(currentTerrain);
+                    }
+                });
+
+                $(this).dialog("close");
+            },
+            Annuler: function() {
+                $(this).dialog("close");
+            }
+        },
+        show: {
+            effect: "blind",
+            duration: 200
+        },
+        hide: {
+            effect: "blind",
+            duration: 200
+        }
+    });
+};
+
 // -- De/Block terrain --
 
 $("#dlgTerrainStatus").hide();
@@ -183,8 +244,8 @@ DlgTerrainStatus.prototype.showDialog = function() {
                     type       : "POST",
                     url        : "inc/actionswitcher.inc.php?action=blockTerrain",
                     data       : {
-                        id     : id,
-                        status : status
+                        id    : id,
+                        state : status
                     },
                     statusCode : {
                         404: function() {
@@ -196,7 +257,18 @@ DlgTerrainStatus.prototype.showDialog = function() {
 
                         console.log(result);
 
-                        getBlockedReservationsForTerrain(currentTerrain);
+                        //getBlockedReservationsForTerrain(currentTerrain);
+                        /*if (status == "No") {
+                            console.log("Terrain is now blocked");
+
+                            $(".cal").html("Bloqué");
+                        }
+                        else {
+                            console.log("Terrain is now unblocked");
+                        }*/
+
+                        getBlockedTerrainStatus();
+
                     }
                 });
 
@@ -229,6 +301,9 @@ $(document).ready(function() {
     $(".sidebar-nav li").removeClass("linkact");
     $("#terrains").addClass("linkact");
 
+    $("#btnAdd").attr("disabled", "disabled");
+    $("#btnDelete").attr("disabled", "disabled");
+
     buildTable();
 
     getReservationCounts();
@@ -239,7 +314,7 @@ $(document).ready(function() {
 
     $("#terrainSwitcher li").click(function() {
         if ($(this).hasClass("terrains")) {
-        console.log("Switching to terrain " + $(this).attr("id"));
+            console.log("Switching to terrain " + $(this).attr("id"));
 
 
             $(".icons").html("");
@@ -264,10 +339,39 @@ $(document).ready(function() {
 
             getReservationsForTerrain(tid);
             getBlockedReservationsForTerrain(tid)
+            getBlockedTerrainStatus();
         }
     });
 
     $(".cal").hover(function() {
+        if ($(this).hasClass("reserved")) {
+            $(".btnContResStatus").hide();
+            $(".btnContAdd").hide();
+            $(".btnContEdit").show();
+            $(".btnContDel").show();
+            //$(this).popover("show");
+        }
+        else if ($(this).hasClass("blocked")) {
+            $(".btnContResStatus").show();
+            $(".btnContAdd").hide();
+            $(".btnContEdit").hide();
+            $(".btnContDel").hide();
+            $(".btnContResStatus").removeClass("glyphicon-remove-circle");
+            $(".btnContResStatus").addClass("glyphicon-ok-circle");
+            $(".btnContResStatus").css("color", "#5cb85c");
+            //$(".cal").popover("hide");
+        }
+        else {
+            $(".btnContResStatus").show();
+            $(".btnContAdd").show();
+            $(".btnContEdit").hide();
+            $(".btnContDel").hide();
+            $(".btnContResStatus").removeClass("glyphicon-ok-circle");
+            $(".btnContResStatus").addClass("glyphicon-remove-circle");
+            $(".btnContResStatus").css("color", "#d9534f");
+            //$(".cal").popover("hide");
+        }
+
         $(this).find(".controls").show();
     },
     function() {
@@ -285,6 +389,7 @@ $(document).ready(function() {
         "<ul><li><img src=\"images/reserved.jpg\"> Le terrain est reservé pour l'heure indiqué.</li>" +
         "<li><img src=\"images/blocked.jpg\"> Les utilisateurs ne peut pas fait une reservation pour l'heure indiqué sur le terrain.</li>" +
         "<li><img src=\"images/expired.jpg\"> La reservation est expiré.</li>" +
+        "<li><img src=\"images/tblocked.jpg\"> La terrain est bloqué.</li>" +
         "<li><span class=\"badge\">42</span> Indique le numéro des reservations sur le terrain.</li></ul>" +
         "<p>Pour plusieurs informations ou questions, veuillez envoyer un E-Mail á <a href=\"mailto:pwarnimo@gmail.com\">pwarnimo@gmail.com</a>.</p>";
 
@@ -296,7 +401,6 @@ $(document).ready(function() {
         $.ajax({
             type       : "POST",
             url        : "inc/actionswitcher.inc.php?action=getTerrainStatus",
-            async      : false,
             data       : {
                 id : currentTerrain
             },
@@ -310,15 +414,24 @@ $(document).ready(function() {
 
                 console.log(result[0].dtIsActive);
 
-                var dlg0 = new DlgTerrainStatus(currentTerrain, result[0].dtIsActive);
+                if (result[0].dtIsActive == "Yes") {
+                    var state = "No";
+                }
+                else {
+                    var state = "Yes"
+                }
+
+                var dlg0 = new DlgTerrainStatus(currentTerrain, state);
 
                 dlg0.showDialog();
             }
         });
 
-        var dlg0 = new DlgTerrainStatus();
+        /*var dlg0 = new DlgTerrainStatus();
 
-        dlg0.showDialog();
+        dlg0.showDialog();*/
+
+        console.log("Clicked");
     });
 
     console.log("PAGE LOADED!");
@@ -403,7 +516,7 @@ function buildTable() {
                 }
                 else {
                     console.log("xx");
-                    tHtml += "<td class=\"cal\" id=\"" + dates[j-1] + "-" + (i+8) + "-" + n.substring(4) + "\"><span class=\"icons\"></span><span class=\"controls\"><span style=\"color: #d9534f;\" class=\"glyphicon glyphicon-remove-circle btnContResStatus\"></span><span class=\"glyphicon glyphicon-plus btnContAdd\"></span><span class=\"glyphicon glyphicon-pencil\"></span><span class=\"glyphicon glyphicon-trash\"></span></span></td>";
+                    tHtml += "<td class=\"cal\" id=\"" + dates[j-1] + "-" + (i+8) + "-" + n.substring(4) + "\"><span class=\"icons\"></span><span class=\"controls\"><span style=\"color: #d9534f;\" class=\"glyphicon glyphicon-remove-circle btnContResStatus\"></span><span class=\"glyphicon glyphicon-plus btnContAdd\"></span><span class=\"glyphicon glyphicon-trash btnContDel\"></span></span></td>";
                 }
             }
         }
@@ -414,6 +527,7 @@ function buildTable() {
 
     getReservationsForTerrain(currentTerrain);
     getBlockedReservationsForTerrain(currentTerrain);
+    getBlockedTerrainStatus();
 
     $(".btnContAdd").click(function() {
         dlg0 = new DlgAddReservation($(this).parent().parent().attr("id"));
@@ -434,6 +548,14 @@ function buildTable() {
         console.log("1>" + status);
 
         dlg0 = new DlgResStatus($(this).parent().parent().attr("id"), status);
+        dlg0.showDialog();
+    });
+
+    $(".btnContDel").click(function() {
+        console.log("Deleting " + $(this).parent().parent().attr("id"));
+
+        var dlg0 = new DlgResDelete($(this).parent().parent().attr("id"));
+
         dlg0.showDialog();
     });
 };
@@ -467,8 +589,11 @@ function getReservationsForTerrain(tid) {
                 console.log("RES" + i + " CellID = " + cellid);
 
                 $("#" + cellid).addClass("reserved");
-                $("#" + cellid + " .btnContAdd").remove();
-                $("#" + cellid + " .controls span:first-child").after("<span class=\"glyphicon glyphicon-zoom-in details\"></span>");
+                //$("#" + cellid).append("<div class=\"popover\" data-container=\"body\" data-toggle=\"popover\" data-placement=\"top\" data-content=\"Vivamus sagittis lacus vel augue laoreet rutrum faucibus.\"></div>")
+                $("#" + cellid).attr("data-placement", "above");
+                $("#" + cellid).attr("data-content", "This is your div content");
+                /*$("#" + cellid + " .btnContAdd").remove();
+                $("#" + cellid + " .controls span:first-child").after("<span class=\"glyphicon glyphicon-zoom-in details\"></span>");*/
                 /*$("#" + cellid).find(".icons").html("<span class=\"glyphicon glyphicon-user\"></span>&nbsp;<span class=\"glyphicon glyphicon-user\"></span>");*/
 
                 $(".details").click(function() {
@@ -529,9 +654,39 @@ function getBlockedReservationsForTerrain(tid) {
                 var cellid = "#" + result[i]["fiDate"] + "-" + result[i]["fiHour"] + "-" + n.substring(4);
 
                 $(cellid).addClass("blocked");
-                $(cellid + " .btnContResStatus").removeClass("glyphicon-remove-circle");
+                /*$(cellid + " .btnContResStatus").removeClass("glyphicon-remove-circle");
                 $(cellid + " .btnContResStatus").addClass("glyphicon-ok-circle");
                 $(cellid + " .btnContResStatus").css("color", "#5cb85c");
+                $(cellid + " .btnContDel").remove();*/
+            }
+        }
+    });
+};
+
+function getBlockedTerrainStatus() {
+    $.ajax({
+        type       : "POST",
+        url        : "inc/actionswitcher.inc.php?action=getTerrainStatus",
+        data       : {
+            id : currentTerrain
+        },
+        statusCode : {
+            404: function() {
+                console.log("action.inc.php not found!");
+            }
+        },
+        success    : function(data) {
+            var result = JSON.parse(data);
+
+            console.log(result[0].dtIsActive);
+
+            if (result[0].dtIsActive == "Yes") {
+                $(".cal").removeClass("tblocked");
+                $("#blockterrain").html("<span class=\"glyphicon glyphicon-lock\"></span> Verrouiller");
+            }
+            else {
+                $(".cal").addClass("tblocked");
+                $("#blockterrain").html("<span class=\"glyphicon glyphicon-ok-circle\"></span> Deverrouiller");
             }
         }
     });
